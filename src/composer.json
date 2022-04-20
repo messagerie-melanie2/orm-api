@@ -12,6 +12,6 @@
 		"messagerie-melanie2/orm-m2" : "~0.6.1.0"
 	},
 	"autoload": {
-        "classmap": ["lib"]
+        "classmap": ["lib", "controller"]
     }
 }

@@ -26,6 +26,15 @@ class ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Controller\\Addressbook' => __DIR__ . '/../..' . '/controller/addressbook.php',
+        'Controller\\Calendar' => __DIR__ . '/../..' . '/controller/calendar.php',
+        'Controller\\Contact' => __DIR__ . '/../..' . '/controller/contact.php',
+        'Controller\\Controller' => __DIR__ . '/../..' . '/controller/controller.php',
+        'Controller\\Event' => __DIR__ . '/../..' . '/controller/event.php',
+        'Controller\\Share' => __DIR__ . '/../..' . '/controller/share.php',
+        'Controller\\Task' => __DIR__ . '/../..' . '/controller/task.php',
+        'Controller\\Taskslist' => __DIR__ . '/../..' . '/controller/taskslist.php',
+        'Controller\\User' => __DIR__ . '/../..' . '/controller/user.php',
         'Lib\\Auth' => __DIR__ . '/../..' . '/lib/auth.php',
         'Lib\\Config' => __DIR__ . '/../..' . '/lib/config.php',
         'Lib\\Request' => __DIR__ . '/../..' . '/lib/request.php',

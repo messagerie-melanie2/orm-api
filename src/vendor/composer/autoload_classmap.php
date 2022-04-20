@@ -7,6 +7,15 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Controller\\Addressbook' => $baseDir . '/controller/addressbook.php',
+    'Controller\\Calendar' => $baseDir . '/controller/calendar.php',
+    'Controller\\Contact' => $baseDir . '/controller/contact.php',
+    'Controller\\Controller' => $baseDir . '/controller/controller.php',
+    'Controller\\Event' => $baseDir . '/controller/event.php',
+    'Controller\\Share' => $baseDir . '/controller/share.php',
+    'Controller\\Task' => $baseDir . '/controller/task.php',
+    'Controller\\Taskslist' => $baseDir . '/controller/taskslist.php',
+    'Controller\\User' => $baseDir . '/controller/user.php',
     'Lib\\Auth' => $baseDir . '/lib/auth.php',
     'Lib\\Config' => $baseDir . '/lib/config.php',
     'Lib\\Request' => $baseDir . '/lib/request.php',

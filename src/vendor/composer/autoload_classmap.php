@@ -18,7 +18,9 @@ return array(
     'Controller\\User' => $baseDir . '/controller/user.php',
     'Lib\\Auth' => $baseDir . '/lib/auth.php',
     'Lib\\Config' => $baseDir . '/lib/config.php',
+    'Lib\\Log' => $baseDir . '/lib/log.php',
     'Lib\\Request' => $baseDir . '/lib/request.php',
     'Lib\\Response' => $baseDir . '/lib/response.php',
     'Lib\\Routing' => $baseDir . '/lib/routing.php',
+    'Lib\\Utils' => $baseDir . '/lib/utils.php',
 );

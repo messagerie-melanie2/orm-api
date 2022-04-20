@@ -37,9 +37,11 @@ class ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456
         'Controller\\User' => __DIR__ . '/../..' . '/controller/user.php',
         'Lib\\Auth' => __DIR__ . '/../..' . '/lib/auth.php',
         'Lib\\Config' => __DIR__ . '/../..' . '/lib/config.php',
+        'Lib\\Log' => __DIR__ . '/../..' . '/lib/log.php',
         'Lib\\Request' => __DIR__ . '/../..' . '/lib/request.php',
         'Lib\\Response' => __DIR__ . '/../..' . '/lib/response.php',
         'Lib\\Routing' => __DIR__ . '/../..' . '/lib/routing.php',
+        'Lib\\Utils' => __DIR__ . '/../..' . '/lib/utils.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

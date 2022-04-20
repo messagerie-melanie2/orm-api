@@ -1,2 +1,2 @@
 # orm-api
-API RESTfull pour l'ORM MCE
+API RESTful pour l'ORM MCE

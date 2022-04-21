@@ -19,6 +19,7 @@ return array(
     'Lib\\Auth' => $baseDir . '/lib/auth.php',
     'Lib\\Config' => $baseDir . '/lib/config.php',
     'Lib\\Log' => $baseDir . '/lib/log.php',
+    'Lib\\Objects' => $baseDir . '/lib/objects.php',
     'Lib\\Request' => $baseDir . '/lib/request.php',
     'Lib\\Response' => $baseDir . '/lib/response.php',
     'Lib\\Routing' => $baseDir . '/lib/routing.php',

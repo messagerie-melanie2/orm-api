@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'cd62b1df05ea73bd419842e97cab85c166244b3b',
+    'reference' => 'ea185e0ec1d54a358621a3ee2ec4f6de8610cecf',
     'name' => 'messagerie-melanie2/orm-api',
   ),
   'versions' => 
@@ -44,7 +44,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'cd62b1df05ea73bd419842e97cab85c166244b3b',
+      'reference' => 'ea185e0ec1d54a358621a3ee2ec4f6de8610cecf',
     ),
     'messagerie-melanie2/orm-m2' => 
     array (

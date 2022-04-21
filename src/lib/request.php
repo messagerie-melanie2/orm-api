@@ -48,10 +48,47 @@ class Request
      */
     const INPUT_GPC = 'gpc';
 
+	/**
+	 * Utilisateur courant de la requête (en cas d'auth Basic)
+	 * 
+	 * @var string
+	 */
+	private static $user;
+
     /**
 	 *  Constructeur privé pour ne pas instancier la classe
 	 */
 	private function __construct() {}
+
+	/**
+	 * Positionne le user de la requête
+	 * 
+	 * @param string
+	 */
+	public static function setUser($user)
+	{
+		self::$user = $user;
+	}
+
+	/**
+	 * Récupère le user de la requête
+	 * 
+	 * @return string
+	 */
+	public static function getUser()
+	{
+		return self::$user;
+	}
+
+	/**
+	 * Est-ce que le user de la requête est positionné
+	 * 
+	 * @return boolean
+	 */
+	public static function issetUser()
+	{
+		return isset(self::$user);
+	}
 
     /**
 	 * Retourne l'url filtrée de l'application

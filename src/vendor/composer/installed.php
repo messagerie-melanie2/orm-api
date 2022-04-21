@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'ea185e0ec1d54a358621a3ee2ec4f6de8610cecf',
+    'reference' => '417fe27eea5961e36a8a17a21ab2ee4c9403e4a6',
     'name' => 'messagerie-melanie2/orm-api',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'ea185e0ec1d54a358621a3ee2ec4f6de8610cecf',
+      'reference' => '417fe27eea5961e36a8a17a21ab2ee4c9403e4a6',
     ),
     'messagerie-melanie2/orm-m2' => 
     array (

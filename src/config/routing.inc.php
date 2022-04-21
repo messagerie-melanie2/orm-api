@@ -35,9 +35,9 @@ $config['routing'] = [
         ],
         'routing' => [
             'calendars' => [
-                'class' => 'Calendar',
+                'class' => 'User',
                 'methods'   => [
-                    'GET'       => 'listCalendarsByUser',
+                    'GET'       => 'listCalendars',
                     'POST'      => false,
                 ],
             ],

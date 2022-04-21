@@ -24,4 +24,21 @@
  * 
  * @var array
  */
-$config['mapping'] = [];
+$config['mapping'] = [
+    'user' => [
+        'uid',
+        'fullname',
+        'name',
+        'email',
+        'email_list',
+        'email_send',
+        'email_send_list',
+        'type',
+    ],
+    'calendar' => [
+        'id',
+        'name',
+        'owner',
+        'perm',
+    ],
+];

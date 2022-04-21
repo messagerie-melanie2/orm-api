@@ -35,11 +35,27 @@ class Calendar extends Controller {
         $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
 
         if (isset($id)) {
-            $calendar = \Lib\Objects::gi()->calendar();
+            $user = null;
+
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
+                if (isset($uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $uid;
+                }
+            }
+
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
             $calendar->id = $id;
+
             if ($calendar->load()) {
                 \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', self::toJson($calendar));
+                \Lib\Response::appendData('data', \Lib\Mapping::get('calendar', $calendar));
             }
             else {
                 \Lib\Response::appendData('success', false);
@@ -50,52 +66,5 @@ class Calendar extends Controller {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter id");
         }
-    }
-
-    /**
-     * Récupération des calendriers d'un utilisateur
-     */
-    public static function listCalendarsByUser()
-    {
-        $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
-
-        if (isset($uid)) {
-            $user = \Lib\Objects::gi()->user();
-            $user->uid = $uid;
-            $calendars = $user->getUserCalendars();
-            if (isset($calendars)) {
-                \Lib\Response::appendData('success', true);
-                $data = [];
-                foreach ($calendars as $calendar) {
-                    $data[] = self::toJson($calendar);
-                }
-                \Lib\Response::appendData('data', $data);
-            }
-            else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Calendars not found");
-            }
-        }
-        else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter uid");
-        }
-    }
-
-    /**
-     * Converti un calendrier en array pour faire du json
-     * 
-     * @param \LibMelanie\Api\Defaut\Calendar
-     * 
-     * @return array
-     */
-    private static function toJson($calendar) 
-    {
-        return [
-            'id'        => $calendar->id,
-            'name'      => $calendar->name,
-            'owner'     => $calendar->owner,
-            'perm'      => $calendar->perm,
-        ];
     }
 }

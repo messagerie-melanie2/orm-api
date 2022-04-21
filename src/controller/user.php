@@ -32,14 +32,20 @@ class User extends Controller {
      */
     public static function get()
     {
-        $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+        // Forcer l'uid dans le cas d'un user Basic
+        if (\Lib\Request::issetUser()) {
+            $uid = \Lib\Request::getUser();
+        }
+        else {
+            $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+        }
 
         if (isset($uid)) {
             $user = \Lib\Objects::gi()->user();
             $user->uid = $uid;
             if ($user->load()) {
                 \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', self::toJson($user));
+                \Lib\Response::appendData('data', \Lib\Mapping::get('user', $user));
             }
             else {
                 \Lib\Response::appendData('success', false);
@@ -53,23 +59,38 @@ class User extends Controller {
     }
 
     /**
-     * Converti un utilisateur en array pour faire du json
-     * 
-     * @param \LibMelanie\Api\Defaut\User
-     * 
-     * @return array
+     * Récupération des calendriers d'un utilisateur
      */
-    private static function toJson($user) 
+    public static function listCalendars()
     {
-        return [
-            'uid'               => $user->uid,
-            'fullname'          => $user->fullname,
-            'name'              => $user->name,
-            'email'             => $user->email,
-            'email_list'        => $user->email_list,
-            'email_send'        => $user->email_send,
-            'email_send_list'   => $user->email_send_list,
-            'type'              => $user->type,
-        ];
+        // Forcer l'uid dans le cas d'un user Basic
+        if (\Lib\Request::issetUser()) {
+            $uid = \Lib\Request::getUser();
+        }
+        else {
+            $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+        }
+
+        if (isset($uid)) {
+            $user = \Lib\Objects::gi()->user();
+            $user->uid = $uid;
+            $calendars = $user->getUserCalendars();
+            if (isset($calendars)) {
+                \Lib\Response::appendData('success', true);
+                $data = [];
+                foreach ($calendars as $calendar) {
+                    $data[] = \Lib\Mapping::get('calendar', $calendar);
+                }
+                \Lib\Response::appendData('data', $data);
+            }
+            else {
+                \Lib\Response::appendData('success', false);
+                \Lib\Response::appendData('error', "Calendars not found");
+            }
+        }
+        else {
+            \Lib\Response::appendData('success', false);
+            \Lib\Response::appendData('error', "Missing parameter uid");
+        }
     }
 }

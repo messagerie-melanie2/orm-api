@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
@@ -20,27 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// PAMELA - Application name configuration for ORM Mél
-if (! defined('CONFIGURATION_APP_LIBM2')) {
-    define('CONFIGURATION_APP_LIBM2', 'roundcube');
+namespace Lib;
+
+/**
+ * Classe de gestion du mapping des API
+ * 
+ * @package Lib
+ */
+class Mapping {
+    /**
+	 *  Constructeur privé pour ne pas instancier la classe
+	 */
+	private function __construct() {}
+
+    /**
+	 * Mapping objet vers json
+	 */
+	public static function get($itemName, $item)
+	{
+		$mapping = Config::get('mapping', []);
+        $data = [];
+
+        if (isset($mapping[$itemName])) {
+            foreach($mapping[$itemName] as $name) {
+                $data[$name] = $item->$name;
+            }
+        }
+        return $data;
+	}
 }
-
-require_once 'vendor/autoload.php';
-
-// Lance l'initialisation de la configuration
-Lib\Config::init();
-
-// Gérer l'authentification de la requête
-if (Lib\Auth::validate()) {
-    // Lancement du routing
-    Lib\Routing::process();
-}
-else {
-    Lib\Response::appendData('success', false);
-    Lib\Response::appendData('error', "Authentication is not valid");
-}
-
-
-
-// Retourne la réponse
-Lib\Response::send();

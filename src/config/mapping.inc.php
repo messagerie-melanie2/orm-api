@@ -26,6 +26,7 @@
  */
 $config['mapping'] = [
     'user' => [
+        'dn',
         'uid',
         'fullname',
         'name',

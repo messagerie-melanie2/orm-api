@@ -42,7 +42,9 @@ class Mapping {
 
         if (isset($mapping[$itemName])) {
             foreach($mapping[$itemName] as $name) {
-                $data[$name] = $item->$name;
+                if (isset($item->$name)) {
+                    $data[$name] = $item->$name;
+                }
             }
         }
         return $data;

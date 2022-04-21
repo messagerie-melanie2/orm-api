@@ -43,7 +43,14 @@ class User extends Controller {
         if (isset($uid)) {
             $user = \Lib\Objects::gi()->user();
             $user->uid = $uid;
-            if ($user->load()) {
+
+            // Gestion des attributs
+            $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);;
+            if (isset($attributes)) {
+                $attributes = explode(',', $attributes);
+            }
+
+            if ($user->load($attributes)) {
                 \Lib\Response::appendData('success', true);
                 \Lib\Response::appendData('data', \Lib\Mapping::get('user', $user));
             }

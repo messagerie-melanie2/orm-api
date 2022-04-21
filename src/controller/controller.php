@@ -25,5 +25,8 @@ namespace Controller;
  * Classe générique pour un controleur
  */
 abstract class Controller {
-    
+    /**
+	 *  Constructeur privé pour ne pas instancier la classe
+	 */
+	protected function __construct() {}
 }

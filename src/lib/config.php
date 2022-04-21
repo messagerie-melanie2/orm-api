@@ -23,7 +23,45 @@ namespace Lib;
 
 /**
  * Classe de gestion de la configuration des API
+ * 
+ * @package Lib
  */
 class Config {
-    
+    /**
+	 *  Constructeur privé pour ne pas instancier la classe
+	 */
+	private function __construct() {}
+
+    /**
+     * Initialisation de la configuration
+     */
+    public static function init()
+    {
+        require_once __DIR__.'/../config.inc.phg';
+        require_once __DIR__.'/../config/default.inc.php';
+        require_once __DIR__.'/../config/mapping.inc.php';
+        require_once __DIR__.'/../config/routing.inc.php';
+    }
+
+    /**
+     * Récupération d'une valeur de configuration
+     * 
+     * @param string $name
+     * @param mixed $default
+     * 
+     * @return mixed
+     */
+    public static function get($name, $default = null) {
+        global $config, $default;
+
+        if (isset($config[$name])) {
+            return $config[$name];
+        }
+        else if (isset($default[$name])) {
+            return $default[$name];
+        }
+        else {
+            return $default;
+        }
+    }
 }

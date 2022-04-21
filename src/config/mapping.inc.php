@@ -20,25 +20,8 @@
  */
 
 /**
- * Configuration du routing
- * Si une route n'est pas présente dans routing elle ne sera pas utilisable
- * Par défaut la classe utilisée correspond au nom de la route avec une majuscule
- * La configuration est récursive et permet d'avoir du routing sur une route
+ * Configuration du mapping
+ * 
+ * @var array
  */
-$config['routing'] = [
-    'user'          => [
-        'class'     => 'User',
-        'methods'   => [
-            'GET'       => true,
-            'POST'      => false,
-        ],
-        'routing'   => [],
-    ],
-    'calendar'      => [],
-    'event'         => [],
-    'taskslist'     => [],
-    'task'          => [],
-    'addressbook'   => [],
-    'contact'       => [],
-    'share'         => [],
-];
+$config['mapping'] = [];

@@ -20,5 +20,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = explode( '/', $uri );
+require_once 'vendor/autoload.php';
+
+// Lance l'initialisation de la configuration
+Lib\Config::init();
+
+// Lancement du routing
+Lib\Routing::process();
+
+// Retourne la réponse
+Lib\Response::send();

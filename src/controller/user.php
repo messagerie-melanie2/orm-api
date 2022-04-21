@@ -21,6 +21,42 @@
 
 namespace Controller;
 
+/**
+ * Classe de traitement pour un utilisateur
+ * 
+ * @package Controller
+ */
 class User extends Controller {
-    
+    /**
+     * Récupération d'un utilisateur
+     */
+    public static function get()
+    {
+        $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+
+        if (isset($uid)) {
+            $user = \Lib\Objects::gi()->user();
+            $user->uid = $uid;
+            if ($user->load()) {
+                \Lib\Response::appendData('success', true);
+                \Lib\Response::appendData('data', [
+                    'fullname'          => $user->fullname,
+                    'name'              => $user->name,
+                    'email'             => $user->email,
+                    'email_list'        => $user->email_list,
+                    'email_send'        => $user->email_send,
+                    'email_send_list'   => $user->email_send_list,
+                    'type'              => $user->type,
+                ]);
+            }
+            else {
+                \Lib\Response::appendData('success', false);
+                \Lib\Response::appendData('error', "User not found");
+            }
+        }
+        else {
+            \Lib\Response::appendData('success', false);
+            \Lib\Response::appendData('error', "Missing parameter uid");
+        }
+    }
 }

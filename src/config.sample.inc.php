@@ -21,7 +21,10 @@
 
  /**
   * Configuration générale des API
+  * 
+  * @var array
   */
- $config = [
-
- ];
+$config = [
+    // Configuration du namespace pour la librairie ORM (Mce, Mel, Mi, Dgfip, Gn)
+    'namespace' => 'Mce',
+];

@@ -21,8 +21,12 @@
 
 namespace Lib;
 
+use LibMelanie\Log\M2Log;
+
 /**
  * Classe de gestion des logs pour les API
+ * 
+ * @package Lib
  */
 class Log {
     const NOLOG = 0;
@@ -83,6 +87,37 @@ class Log {
     public static function gi($config = null) 
     {
         return self::get_instance($config);
+    }
+
+    /**
+     * Initialisation des logs pour l'ORM
+     * 
+     * @param array $config Configuration du script
+     */
+    public static function InitORMLogs($config) {
+        // Niveau de log ERROR
+        if ($config['log_level'] >= self::ERROR) {
+            M2Log::InitErrorLog(function($message) {
+                global $config;
+                self::gi($config)->log(self::ERROR, $message);
+            });
+        }
+
+        // Niveau de log INFO
+        if ($config['log_level'] >= self::INFO) {
+            M2Log::InitInfoLog(function($message) {
+                global $config;
+                self::gi($config)->log(self::INFO, $message);
+            });
+        }
+
+        // Niveau de log TRACE
+        if ($config['log_level'] >= self::TRACE) {
+            M2Log::InitDebugLog(function($message) {
+                global $config;
+                self::gi($config)->log(self::TRACE, $message);
+            });
+        }
     }
 
     /**

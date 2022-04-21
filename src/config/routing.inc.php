@@ -19,13 +19,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Lib;
-
 /**
- * Classe de fonctions utilitaires pour les API
+ * Configuration du routing
+ * Si une route n'est pas présente dans routing elle ne sera pas utilisable
+ * Par défaut la classe utilisée correspond au nom de la route avec une majuscule
+ * La configuration est récursive et permet d'avoir du routing sur une route
  * 
- * @package Lib
+ * @var array
  */
-class Utils {
-    
-}
+$config['routing'] = [
+    'user'          => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => false,
+        ],
+    ],
+    'calendar'      => [],
+    'event'         => [],
+    'taskslist'     => [],
+    'task'          => [],
+    'addressbook'   => [],
+    'contact'       => [],
+    'share'         => [],
+];

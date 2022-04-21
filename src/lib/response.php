@@ -23,7 +23,76 @@ namespace Lib;
 
 /**
  * Classe de gestion de la réponse des API
+ * 
+ * @package Lib
  */
 class Response {
+    /**
+     * Données à retourner en réponse au format json
+     * 
+     * @var array
+     */
+    private static $data;
 
+    /**
+     * Liste des headers à retourner au client
+     * 
+     * @var array
+     */
+    private static $headers;
+
+    /**
+	 *  Constructeur privé pour ne pas instancier la classe
+	 */
+	private function __construct() {}
+
+    /**
+     * Envoi des données au client
+     */
+    public static function send() 
+    {
+        // Gestion des headers
+        if (isset(self::$headers) && is_array(self::$headers)) {
+            foreach (self::$headers as $header) {
+                header($header);
+            }
+        }
+        header("Content-Type: application/json");
+
+        // Gestion des data
+        if (isset(self::$data) && is_array(self::$data)) {
+            echo json_encode(self::$data);
+        }
+
+        exit;
+    }
+
+    /**
+     * Ajoute un header pour la réponse
+     * 
+     * @param string $header
+     */
+    public static function appendHeader($header)
+    {
+        if (!isset(self::$headers)) {
+            self::$headers = [];
+        }
+
+        self::$headers[] = $header;
+    }
+
+    /**
+     * Ajoute des data pour la réponse
+     * 
+     * @param string $key
+     * @param string $data
+     */
+    public static function appendData($key, $data)
+    {
+        if (!isset(self::$data)) {
+            self::$data = [];
+        }
+
+        self::$data[$key] = $data;
+    }
 }

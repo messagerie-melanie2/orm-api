@@ -23,7 +23,80 @@ namespace Lib;
 
 /**
  * Classe de gestion de l'authentification (par JWT ou par certificat)
+ * 
+ * @package Lib
  */
 class Auth {
-    
+    /**
+	 *  Constructeur privé pour ne pas instancier la classe
+	 */
+	private function __construct() {}
+
+    /**
+     * Validation de l'authentification des API
+     * 
+     * @return boolean
+     */
+    public static function validate()
+    {
+        // Récupération du type d'authentification
+        $auth_type = Config::get('auth_type');
+
+        // Validation de l'authentification en fonction du type
+        if ($auth_type == 'basic') {
+            return self::basic();
+        }
+        else if ($auth_type == 'token') {
+            return self::token();
+        }
+        else if ($auth_type == 'jwt') {
+            return self::jwt();
+        }
+        else if ($auth_type == 'none') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Validation de l'authentification login/mot de passe
+     * 
+     * Pas implémenté actuellement
+     */
+    private static function basic() 
+    {
+        return false;
+    }
+
+    /**
+     * Validation de l'authentification par API Token dans la configuration
+     */
+    private static function token() 
+    {
+        // Récupération du header Autorization
+        $headers = Request::getHeaders();
+
+        $authorization = trim($headers['Authorization']);
+
+        if (strpos($authorization, 'Bearer') !== false) {
+            // Récupération des tokens d'authentification
+            $auth_tokens = Config::get('auth_tokens', []);
+            $token = trim(str_replace('Bearer', '', $authorization));
+
+            if (in_array($token, $auth_tokens)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Validation de l'authentification par token jwt
+     * 
+     * Pas implémenté actuellement
+     */
+    private static function jwt() {
+        return false;
+    }
 }

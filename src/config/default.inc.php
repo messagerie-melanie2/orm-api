@@ -19,13 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Lib;
+ /**
+  * Configuration par défaut des API
+  * 
+  * @var array
+  */
+ $default = [
 
-/**
- * Classe de fonctions utilitaires pour les API
- * 
- * @package Lib
- */
-class Utils {
-    
-}
+ ];

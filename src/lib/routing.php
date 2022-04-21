@@ -23,7 +23,84 @@ namespace Lib;
 
 /**
  * Classe de gestion du routing des API
+ * 
+ * @package Lib
  */
 class Routing {
-    
+    /**
+	 *  Constructeur privé pour ne pas instancier la classe
+	 */
+	private function __construct() {}
+
+    /**
+	 * Lancement du routing
+	 */
+	public static function process()
+	{
+		$routing = [
+            'routing' => Config::get('routing', [])
+        ];
+        $class = '';
+
+        // Récupérer le bon routing
+        foreach (Request::getUris() as $uri) {
+            $routing = $routing['routing'];
+            if (isset($routing[$uri])) {
+                $routing = $routing[$uri];
+                $class .= ucfirst(strtolower($uri));
+            }
+            else {
+                Response::appendData('success', false);
+                Response::appendData('error', "Routing error for uri '$uri'");
+                $routing = null;
+                break;
+            }
+        }
+
+        // Gestion du routing
+        if (isset($routing)) {
+            // Utiliser la classe configurée ?
+            $file = __DIR__.'/../controller/'.strtolower($class).'.php';
+            $class = "Controller\\". isset($routing['class']) ? $routing['class'] : $class;
+            $method = Request::getMethod();
+
+            if (isset($routing['methods']) && isset($routing['methods'][$method])) {
+                if (is_bool($routing['methods'][$method])) {
+                    if ($routing['methods'][$method] === true) {
+                        $method = strtolower($method);
+                    }
+                    else {
+                        Response::appendData('success', false);
+                        Response::appendData('error', "Method is forbidden");
+                        return;
+                    }
+                }
+                else {
+                    $method = $routing['methods'][$method];
+                }
+                
+                // Charger le fichier controleur
+                if (file_exists($file)) {
+                    require_once $file;
+
+                    // Retrouver la méthode associée
+                    if (method_exists($class, $method)) {
+                        call_user_func([$class, $method]);
+                    }
+                    else {
+                        Response::appendData('success', false);
+                        Response::appendData('error', "Routing method error");
+                    }
+                }
+                else {
+                    Response::appendData('success', false);
+                    Response::appendData('error', "Routing controller error");
+                }
+            }
+            else {
+                Response::appendData('success', false);
+                Response::appendData('error', "Routing configuration error for uri '$uri' and method '$method'");
+            }
+        }
+	}
 }

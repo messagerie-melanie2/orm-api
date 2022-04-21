@@ -33,8 +33,22 @@ $config['routing'] = [
             'GET'       => true,
             'POST'      => false,
         ],
+        'routing' => [
+            'calendars' => [
+                'class' => 'Calendar',
+                'methods'   => [
+                    'GET'       => 'listCalendarsByUser',
+                    'POST'      => false,
+                ],
+            ],
+        ],
     ],
-    'calendar'      => [],
+    'calendar'      => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => false,
+        ],
+    ],
     'event'         => [],
     'taskslist'     => [],
     'task'          => [],

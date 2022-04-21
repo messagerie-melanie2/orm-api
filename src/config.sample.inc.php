@@ -27,4 +27,7 @@
 $config = [
     // Configuration du namespace pour la librairie ORM (Mce, Mel, Mi, Dgfip, Gn)
     'namespace' => 'Mce',
+
+    // URL de base utilisée pour les API
+    'base_url' => '/api/index.php/',
 ];

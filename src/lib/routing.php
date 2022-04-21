@@ -60,8 +60,9 @@ class Routing {
         // Gestion du routing
         if (isset($routing)) {
             // Utiliser la classe configurée ?
+            $class = isset($routing['class']) ? $routing['class'] : $class;
             $file = __DIR__.'/../controller/'.strtolower($class).'.php';
-            $class = "Controller\\". isset($routing['class']) ? $routing['class'] : $class;
+            $class = "Controller\\" . $class;
             $method = Request::getMethod();
 
             if (isset($routing['methods']) && isset($routing['methods'][$method])) {

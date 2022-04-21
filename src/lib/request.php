@@ -60,7 +60,8 @@ class Request
 	 */
 	public static function getURL()
 	{
-		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		$base_url = Config::get('base_url', '');
+		$uri = str_replace($base_url, '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 		$uri = self::parseInputValue($uri);
 
 		return $uri;
@@ -73,9 +74,9 @@ class Request
      */
     public static function getUris() 
     {
-        $uri = self::getURL();
+        $uri = trim(self::getURL(), '/');
 
-        return explode( '/', $uri );
+        return explode('/', $uri);
     }
 
 	/**

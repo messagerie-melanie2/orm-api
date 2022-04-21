@@ -20,6 +20,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// PAMELA - Application name configuration for ORM Mél
+if (! defined('CONFIGURATION_APP_LIBM2')) {
+    define('CONFIGURATION_APP_LIBM2', 'roundcube');
+}
+
 require_once 'vendor/autoload.php';
 
 // Lance l'initialisation de la configuration

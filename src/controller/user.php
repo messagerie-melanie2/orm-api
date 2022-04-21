@@ -39,15 +39,7 @@ class User extends Controller {
             $user->uid = $uid;
             if ($user->load()) {
                 \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', [
-                    'fullname'          => $user->fullname,
-                    'name'              => $user->name,
-                    'email'             => $user->email,
-                    'email_list'        => $user->email_list,
-                    'email_send'        => $user->email_send,
-                    'email_send_list'   => $user->email_send_list,
-                    'type'              => $user->type,
-                ]);
+                \Lib\Response::appendData('data', self::toJson($user));
             }
             else {
                 \Lib\Response::appendData('success', false);
@@ -58,5 +50,26 @@ class User extends Controller {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter uid");
         }
+    }
+
+    /**
+     * Converti un utilisateur en array pour faire du json
+     * 
+     * @param \LibMelanie\Api\Defaut\User
+     * 
+     * @return array
+     */
+    private static function toJson($user) 
+    {
+        return [
+            'uid'               => $user->uid,
+            'fullname'          => $user->fullname,
+            'name'              => $user->name,
+            'email'             => $user->email,
+            'email_list'        => $user->email_list,
+            'email_send'        => $user->email_send,
+            'email_send_list'   => $user->email_send_list,
+            'type'              => $user->type,
+        ];
     }
 }

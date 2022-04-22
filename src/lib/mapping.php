@@ -27,6 +27,10 @@ namespace Lib;
  * @package Lib
  */
 class Mapping {
+    const NAME = 'name';
+    const GET = 'get';
+    const SET = 'set';
+    
     /**
 	 *  Constructeur privé pour ne pas instancier la classe
 	 */
@@ -41,12 +45,45 @@ class Mapping {
         $data = [];
 
         if (isset($mapping[$itemName])) {
-            foreach($mapping[$itemName] as $name) {
-                if (isset($item->$name)) {
-                    $data[$name] = $item->$name;
+            foreach($mapping[$itemName] as $key => $name) {
+                $method = null;
+                if (is_array($name)) {
+                    $method = isset($name[self::GET]) ? $name[self::GET] : null;
+                    $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
+                }
+                $value = $item->$name;
+                if (isset($method)) {
+                    $value = call_user_func($method, $value);
+                }
+                if (isset($value) && !empty($value)) {
+                    $data[$key] = $value;
                 }
             }
         }
         return $data;
 	}
+
+    /**
+     * Mapping json vers objet
+     */
+    public static function set($itemName, $item, $data)
+    {
+        $mapping = Config::get('mapping', []);
+
+        if (isset($mapping[$itemName])) {
+            foreach($mapping[$itemName] as $key => $name) {
+                $method = null;
+                if (is_array($name)) {
+                    $method = isset($name[self::SET]) ? $name[self::SET] : null;
+                    $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
+                }
+                $value = isset($data[$key]) ? $data[$key] : null;
+                if (isset($method)) {
+                    $value = call_user_func($method, $value);
+                }
+                $item->name = $value;
+            }
+        }
+        return $item;
+    }
 }

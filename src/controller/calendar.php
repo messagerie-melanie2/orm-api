@@ -67,4 +67,63 @@ class Calendar extends Controller {
             \Lib\Response::appendData('error', "Missing parameter id");
         }
     }
+
+    /**
+     * Enregistrer/modifier un calendrier
+     */
+    public static function post()
+    {
+        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_POST);
+
+        if (isset($id)) {
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $uid = \Lib\Request::getInputValue('owner', \Lib\Request::INPUT_POST);
+                if (isset($uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $uid;
+                }
+                else {
+                    \Lib\Response::appendData('success', false);
+                    \Lib\Response::appendData('error', "Missing parameter owner");
+                    return;
+                }
+            }
+
+            $name = \Lib\Request::getInputValue('name', \Lib\Request::INPUT_POST);
+
+            if (!isset($name)) {
+                \Lib\Response::appendData('success', false);
+                \Lib\Response::appendData('error', "Missing parameter name");
+                return;
+            }
+
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
+            $calendar->id = $id;
+
+            if (!$calendar->load()) {
+                $calendar->owner = $user->uid;
+            }
+            
+            $calendar->name = $name;
+
+            $ret = $calendar->save();
+
+            if (!is_null($ret)) {
+                \Lib\Response::appendData('success', true);
+            }
+            else {
+                \Lib\Response::appendData('success', false);
+                \Lib\Response::appendData('error', "Error when saving the calendar");
+            }
+        }
+        else {
+            \Lib\Response::appendData('success', false);
+            \Lib\Response::appendData('error', "Missing parameter id");
+        }
+    }
 }

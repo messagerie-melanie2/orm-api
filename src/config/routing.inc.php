@@ -35,10 +35,25 @@ $config['routing'] = [
         ],
         'routing' => [
             'calendars' => [
-                'class' => 'User',
                 'methods'   => [
-                    'GET'       => 'listCalendars',
+                    'GET'       => true,
                     'POST'      => false,
+                ],
+                'routing' => [
+                    'default' => [
+                        'class' => 'UserCalendars',
+                        'methods'   => [
+                            'GET'       => 'default',
+                            'POST'      => false,
+                        ],
+                    ],
+                    'shared' => [
+                        'class' => 'UserCalendars',
+                        'methods'   => [
+                            'GET'       => 'shared',
+                            'POST'      => false,
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -46,10 +61,15 @@ $config['routing'] = [
     'calendar'      => [
         'methods'   => [
             'GET'       => true,
+            'POST'      => true,
+        ],
+    ],
+    'event'         => [
+        'methods'   => [
+            'GET'       => true,
             'POST'      => false,
         ],
     ],
-    'event'         => [],
     'taskslist'     => [],
     'task'          => [],
     'addressbook'   => [],

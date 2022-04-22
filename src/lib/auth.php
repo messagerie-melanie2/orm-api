@@ -62,7 +62,7 @@ class Auth {
     {
         // Récupération du type d'authentification
         list($auth_type, $auth_value) = self::getAuthorization();
-        
+
         if ($auth_type !== false) {
             $auth_type = strtolower($auth_type);
             if (Config::get('auth_type_'.$auth_type, false) === true) {

@@ -40,7 +40,5 @@ else {
     Lib\Response::appendData('error', "Authentication is not valid");
 }
 
-
-
 // Retourne la réponse
 Lib\Response::send();

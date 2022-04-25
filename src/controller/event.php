@@ -60,22 +60,18 @@ class Event extends Controller {
                 $event->uid = $uid;
 
                 if ($event->load()) {
-                    \Lib\Response::appendData('success', true);
-                    \Lib\Response::appendData('data', \Lib\Mapping::get('event', $event));
+                    \Lib\Response::data(\Lib\Mapping::get('event', $event));
                 }
                 else {
-                    \Lib\Response::appendData('success', false);
-                    \Lib\Response::appendData('error', "Event not found");
+                    \Lib\Response::error("Event not found");
                 }
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Missing parameter calendar");
+                \Lib\Response::error("Missing parameter calendar");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter uid");
+            \Lib\Response::error("Missing parameter uid");
         }
     }
 

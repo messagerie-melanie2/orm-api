@@ -40,23 +40,18 @@ class UserCalendars extends Controller {
             $user->uid = $uid;
             $calendars = $user->getUserCalendars();
             if (isset($calendars)) {
-                \Lib\Response::appendData('success', true);
                 $data = [];
                 foreach ($calendars as $calendar) {
                     $data[] = \Lib\Mapping::get('calendar', $calendar);
                 }
-                \Lib\Response::appendData('data', $data);
+                \Lib\Response::data($data);
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Calendars not found");
-                \Lib\Log::LogError("Calendars not found");
+                \Lib\Response::error("Calendars not found");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter uid");
-            \Lib\Log::LogError("Missing parameter uid");
+            \Lib\Response::error("Missing parameter uid");
         }
     }
 
@@ -73,19 +68,14 @@ class UserCalendars extends Controller {
             $user->uid = $uid;
             $calendar = $user->getDefaultCalendar();
             if (isset($calendar)) {
-                \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', \Lib\Mapping::get('calendar', $calendar));
+                \Lib\Response::data(\Lib\Mapping::get('calendar', $calendar));
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Default calendar not found");
-                \Lib\Log::LogError("Default calendar not found");
+                \Lib\Response::error("Default calendar not found");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter uid");
-            \Lib\Log::LogError("Missing parameter uid");
+            \Lib\Response::error("Missing parameter uid");
         }
     }
 
@@ -102,23 +92,18 @@ class UserCalendars extends Controller {
             $user->uid = $uid;
             $calendars = $user->getSharedCalendars();
             if (isset($calendars)) {
-                \Lib\Response::appendData('success', true);
                 $data = [];
                 foreach ($calendars as $calendar) {
                     $data[] = \Lib\Mapping::get('calendar', $calendar);
                 }
-                \Lib\Response::appendData('data', $data);
+                \Lib\Response::data($data);
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Calendars not found");
-                \Lib\Log::LogError("Calendars not found");
+                \Lib\Response::error("Calendars not found");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter uid");
-            \Lib\Log::LogError("Missing parameter uid");
+            \Lib\Response::error("Missing parameter uid");
         }
     }
 }

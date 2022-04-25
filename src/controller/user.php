@@ -46,19 +46,14 @@ class User extends Controller {
             }
 
             if ($user->load($attributes)) {
-                \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', \Lib\Mapping::get('user', $user));
+                \Lib\Response::data(\Lib\Mapping::get('user', $user));
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "User not found");
-                \Lib\Log::LogError("User not found");
+                \Lib\Response::error("User not found");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter uid");
-            \Lib\Log::LogError("Missing parameter uid");
+            \Lib\Response::error("Missing parameter uid");
         }
     }
 

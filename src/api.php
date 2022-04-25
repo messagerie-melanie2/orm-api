@@ -39,9 +39,7 @@ if (Lib\Auth::validate()) {
     Lib\Routing::process();
 }
 else {
-    Lib\Response::appendData('success', false);
-    Lib\Response::appendData('error', "Authentication is not valid");
-    Lib\Log::LogError("Authentication is not valid");
+    Lib\Response::error("Authentication is not valid");
 }
 
 // Retourne la réponse

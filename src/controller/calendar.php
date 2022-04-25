@@ -55,19 +55,14 @@ class Calendar extends Controller {
             $calendar->id = $id;
 
             if ($calendar->load()) {
-                \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', \Lib\Mapping::get('calendar', $calendar));
+                \Lib\Response::data(\Lib\Mapping::get('calendar', $calendar));
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Calendar not found");
-                \Lib\Log::LogError("Calendar not found");
+                \Lib\Response::error("Calendar not found");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter id");
-            \Lib\Log::LogError("Missing parameter id");
+            \Lib\Response::error("Missing parameter id");
         }
     }
 
@@ -106,19 +101,14 @@ class Calendar extends Controller {
                     $data[] = \Lib\Mapping::get('event', $event);
                 }
 
-                \Lib\Response::appendData('success', true);
-                \Lib\Response::appendData('data', $data);
+                \Lib\Response::data($data);
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Calendar not found");
-                \Lib\Log::LogError("Calendar not found");
+                \Lib\Response::error("Calendar not found");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter id");
-            \Lib\Log::LogError("Missing parameter id");
+            \Lib\Response::error("Missing parameter id");
         }
     }
 
@@ -143,9 +133,7 @@ class Calendar extends Controller {
                     $user->uid = $uid;
                 }
                 else {
-                    \Lib\Response::appendData('success', false);
-                    \Lib\Response::appendData('error', "Missing parameter owner");
-                    \Lib\Log::LogError("Missing parameter owner");
+                    \Lib\Response::error("Missing parameter owner");
                     return;
                 }
             }
@@ -153,9 +141,7 @@ class Calendar extends Controller {
             $name = \Lib\Request::getInputValue('name', \Lib\Request::INPUT_POST);
 
             if (!isset($name)) {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Missing parameter name");
-                \Lib\Log::LogError("Missing parameter name");
+                \Lib\Response::error("Missing parameter name");
                 return;
             }
 
@@ -171,18 +157,14 @@ class Calendar extends Controller {
             $ret = $calendar->save();
 
             if (!is_null($ret)) {
-                \Lib\Response::appendData('success', true);
+                \Lib\Response::success(true);
             }
             else {
-                \Lib\Response::appendData('success', false);
-                \Lib\Response::appendData('error', "Error when saving the calendar");
-                \Lib\Log::LogError("Error when saving the calendar");
+                \Lib\Response::error("Error when saving the calendar");
             }
         }
         else {
-            \Lib\Response::appendData('success', false);
-            \Lib\Response::appendData('error', "Missing parameter id");
-            \Lib\Log::LogError("Missing parameter id");
+            \Lib\Response::error("Missing parameter id");
         }
     }
 }

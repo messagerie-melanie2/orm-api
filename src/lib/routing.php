@@ -50,8 +50,7 @@ class Routing {
                 $class .= ucfirst(strtolower($uri));
             }
             else {
-                Response::appendData('success', false);
-                Response::appendData('error', "Routing error for uri '$uri'");
+                Response::error("Routing error for uri '$uri'");
                 $routing = null;
                 break;
             }
@@ -71,8 +70,7 @@ class Routing {
                         $method = strtolower($method);
                     }
                     else {
-                        Response::appendData('success', false);
-                        Response::appendData('error', "Method is forbidden");
+                        Response::error("Method is forbidden");
                         return;
                     }
                 }
@@ -89,18 +87,15 @@ class Routing {
                         call_user_func([$class, $method]);
                     }
                     else {
-                        Response::appendData('success', false);
-                        Response::appendData('error', "Routing method error");
+                        Response::error("Routing method error");
                     }
                 }
                 else {
-                    Response::appendData('success', false);
-                    Response::appendData('error', "Routing controller error");
+                    Response::error("Routing controller error");
                 }
             }
             else {
-                Response::appendData('success', false);
-                Response::appendData('error', "Routing configuration error for uri '$uri' and method '$method'");
+                Response::error("Routing configuration error for uri '$uri' and method '$method'");
             }
         }
 	}

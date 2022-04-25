@@ -87,12 +87,45 @@ class Response {
      * @param string $key
      * @param string $data
      */
-    public static function appendData($key, $data)
+    public static function append($key, $data)
     {
         if (!isset(self::$data)) {
             self::$data = [];
         }
 
         self::$data[$key] = $data;
+    }
+
+    /**
+     * Positionne les data de la réponse
+     * 
+     * @param string $data
+     */
+    public static function data($data)
+    {
+        self::success(true);
+        self::append('data', $data);
+    }
+
+    /**
+     * Positionne le success de la réponse
+     * 
+     * @param boolean $success
+     */
+    public static function success($success)
+    {
+        self::append('success', $success);
+    }
+
+    /**
+     * Positionne l'erreur de la réponse
+     * 
+     * @param string $error
+     */
+    public static function error($error)
+    {
+        self::success(false);
+        self::append('error', $error);
+        \Lib\Log::LogError($error);
     }
 }

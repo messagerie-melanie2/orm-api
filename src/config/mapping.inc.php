@@ -24,7 +24,7 @@
  * 
  * @var array
  */
-$config['mapping'] = [
+$mapping = [
     'user' => [
         'dn',
         'uid',

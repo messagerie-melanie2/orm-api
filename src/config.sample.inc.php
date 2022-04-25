@@ -29,5 +29,23 @@ $config = [
     'namespace' => 'Mce',
 
     // URL de base utilisée pour les API
-    'base_url' => '/api/index.php/',
+    'base_url' => '/api/api.php/',
+
+    // Possibilité de se connecter aux API sans authentification ?
+    'auth_type_none' => false,
+
+    // Authentification possible via une clé d'API ?
+    'auth_type_apikey' => false,
+
+    // Authentification possible via un token Bearer ?
+    'auth_type_bearer' => true,
+
+    // Liste des clés d'API utilisables
+    'api_keys' => [],
+
+    // Configuration d'un mapping personnalisé
+    'mapping' => [],
+
+    // Configuration d'un routing personnalisé
+    'mapping' => [],
 ];

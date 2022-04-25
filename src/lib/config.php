@@ -37,12 +37,18 @@ class Config {
      */
     public static function init()
     {
-        global $config, $default;
+        global $config, $default, $mapping, $routing;
         
         require_once __DIR__.'/../config.inc.php';
         require_once __DIR__.'/../config/default.inc.php';
         require_once __DIR__.'/../config/mapping.inc.php';
         require_once __DIR__.'/../config/routing.inc.php';
+
+        // Gestion du mapping
+        $config['mapping'] = array_merge($mapping, self::get('mapping', []));
+
+        // Gestion du routing
+        $config['routing'] = array_merge($routing, self::get('routing', []));
     }
 
     /**

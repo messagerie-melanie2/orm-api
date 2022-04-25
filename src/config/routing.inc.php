@@ -27,7 +27,7 @@
  * 
  * @var array
  */
-$config['routing'] = [
+$routing = [
     'user'          => [
         'methods'   => [
             'GET'       => true,

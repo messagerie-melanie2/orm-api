@@ -20,38 +20,142 @@
  */
 
  /**
-  * Configuration générale des API
+  * Sample de configuration générale des API
   * 
   * @var array
   */
 $config = [
-    // Configuration du namespace pour la librairie ORM (Mce, Mel, Mi, Dgfip, Gn)
-    'namespace' => 'Mce',
+  /**
+   * Niveau de logs
+   * 
+   * 0 -> pas de log
+   * 1 -> logs erreur
+   * 2 -> logs information
+   * 3 -> logs debug
+   * 4 -> logs trace (+ debug ORM)
+   * 
+   * @var integer
+   */
+  'log_level' => 2,
 
-    // URL de base utilisée pour les API
-    'base_url' => '/api/api.php/',
+  /**
+   * Dans quel fichier doivent être envoyé les logs
+   * 
+   * Plusieurs possibilités de configuration :
+   *  - 'standard' pour la sortie standard
+   *  - 'syslog' pour syslog
+   *  - <path_to_file> chemin complet vers le fichier (ATTENTION: le fichier doit être créé et l'utilisateur web doit avoir les droits d'écriture)
+   * 
+   * @var string
+   */
+  'log_file' => '/var/log/orm-api/api.log',
 
-    // Possibilité de se connecter aux API sans authentification ?
-    'auth_type_none' => false,
+  /**
+   * Configuration du namespace pour la librairie ORM
+   * 
+   * Valeurs possibles :
+   * - Mce, Mel, Mi, Dgfip, Gn
+   * 
+   * @var string
+   */
+  'namespace' => 'Mce',
 
-    // Authentification possible via une clé d'API ?
-    'auth_type_apikey' => false,
+  /**
+   * URL de base utilisée pour les API
+   * 
+   * Doit correspondre exactement à ce qui se trouve derrière l'url racine
+   * Exemple: pour une url "https://api.exemple.com/api/api.php" la base sera "/api/api.php"
+   * 
+   * @var string
+   */
+  'base_url' => '/api/api.php/',
 
-    // Authentification possible via un token Bearer ?
-    'auth_type_bearer' => true,
+  /**
+   * Possibilité de se connecter aux API sans authentification ?
+   * 
+   * ATTENTION: Passer cette valeur à true peut constituer une faille de sécurité
+   * A n'utiliser que pour les tests ou associé avec un filtre sur les adresses IP
+   * 
+   * @var boolean
+   */
+  'auth_type_none' => false,
 
-    // Liste des clés d'API utilisables
-    'api_keys' => [],
+  /**
+   * Possibilité de se connecter aux API via une authentification Basic ?
+   * 
+   * L'authentification de l'utilisateur se fait via l'ORM
+   * 
+   * Authorization: Basic <base64("username:password")>
+   * 
+   * @var boolean
+   */
+  'auth_type_basic' => false,
 
-    // Limiter les connexions possibles à certaines adresse IP
-    'ip_address_filter' => false,
+  /**
+   * Authentification possible via une clé d'API ?
+   * 
+   * La liste des clés d'API utilisables se trouve dans "api_keys"
+   * 
+   * Authorization: Apikey <clé d'API>
+   * 
+   * @var boolean
+   */
+  'auth_type_apikey' => false,
 
-    // Liste des adresses IP autorisées
-    'valid_ip_addresses_list' => [],
+  /**
+   * Authentification possible via un token Bearer ?
+   * 
+   * Possibilité d'utiliser un token JWT ou un token OpenID Connect/OAuth2
+   * Actuellement non implémenté retourne toujours false
+   * 
+   * Authorization: Bearer <Token>
+   * 
+   * @var boolean
+   */
+  'auth_type_bearer' => false,
 
-    // Configuration d'un mapping personnalisé
-    'mapping' => [],
+  /**
+   * Liste des clés d'API utilisables
+   * 
+   * Tableau contenant une clé d'API par ligne
+   * 
+   * @var array
+   */
+  'api_keys' => [],
 
-    // Configuration d'un routing personnalisé
-    'mapping' => [],
+  /**
+   * Limiter les connexions possibles à certaines adresse IP
+   * 
+   * @var boolean
+   */
+  'ip_address_filter' => false,
+
+  /**
+   * Liste des adresses IP autorisées
+   * 
+   * Tableau contenant une adresse IP par ligne
+   * 
+   * @var array
+   */
+  'valid_ip_addresses_list' => [],
+
+  /**
+   * Configuration d'un mapping personnalisé
+   * 
+   * Permet de surcharger le mapping du fichier "config/mapping.inc.php"
+   * Voir ce fichier pour le format de la syntaxe
+   * 
+   * @var array
+   */
+  'mapping' => [],
+
+  /**
+   * Configuration d'un routing personnalisé
+   * 
+   * Permet de surcharger le routing du fichier "config/rouging.inc.php"
+   * Voir ce fichier pour le format de la syntaxe
+   * 
+   * @var array
+   */
+  'mapping' => [],
 ];

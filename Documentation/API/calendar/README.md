@@ -12,6 +12,10 @@ Liste des accès utilisables par l'API calendar
 
 ### events
 
+```url
+/api/api.php/calendar/events
+```
+
 Lister les événements associés à un calendrier
 
 Voir [events](events/README.md)

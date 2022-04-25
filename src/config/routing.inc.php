@@ -31,27 +31,23 @@ $routing = [
     'user'          => [
         'methods'   => [
             'GET'       => true,
-            'POST'      => false,
         ],
         'routing' => [
             'calendars' => [
                 'methods'   => [
                     'GET'       => true,
-                    'POST'      => false,
                 ],
                 'routing' => [
                     'default' => [
                         'class' => 'UserCalendars',
                         'methods'   => [
                             'GET'       => 'default',
-                            'POST'      => false,
                         ],
                     ],
                     'shared' => [
                         'class' => 'UserCalendars',
                         'methods'   => [
                             'GET'       => 'shared',
-                            'POST'      => false,
                         ],
                     ],
                 ],
@@ -68,7 +64,6 @@ $routing = [
                 'class' => 'Calendar',
                 'methods'   => [
                     'GET'       => 'events',
-                    'POST'      => false,
                 ],
             ],
         ],

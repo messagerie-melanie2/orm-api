@@ -30,6 +30,9 @@ require_once 'vendor/autoload.php';
 // Lance l'initialisation de la configuration
 Lib\Config::init();
 
+// Lance l'initialisation des logs
+Lib\Log::init();
+
 // Gérer l'authentification de la requête
 if (Lib\Auth::validate()) {
     // Lancement du routing
@@ -38,6 +41,7 @@ if (Lib\Auth::validate()) {
 else {
     Lib\Response::appendData('success', false);
     Lib\Response::appendData('error', "Authentication is not valid");
+    Lib\Log::LogError("Authentication is not valid");
 }
 
 // Retourne la réponse

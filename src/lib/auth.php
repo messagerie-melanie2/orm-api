@@ -62,6 +62,7 @@ class Auth {
     {
         // Valider l'adresse IP source ?
         if (Config::get('ip_address_filter', false) && !self::validateIP()) {
+            Log::LogError("Source IP isn't listed in autorized IP list");
             return false;
         }
 
@@ -75,6 +76,7 @@ class Auth {
             }
         }
         else if (Config::get('auth_type_none', false) === true) {
+            Log::LogInfo("No authentication");
             return true;
         }
         return false;
@@ -87,7 +89,7 @@ class Auth {
      */
     private static function validateIP()
     {
-        return in_array(Request::ipAddress(), Config::get('ip_address_filter', []));
+        return in_array(Request::ipAddress(), Config::get('valid_ip_addresses_list', []));
     }
 
     /**
@@ -95,10 +97,12 @@ class Auth {
      */
     private static function basic($value) 
     {
+        Log::LogInfo("Basic authentication");
         $value = base64_decode($value);
         list($user, $password) = explode(':', $value, 2);
         $user = Objects::gi()->user();
         $user->uid = $user;
+        \Lib\Log::LogDebug("Basic authentication for user $user");
         return $user->authentification($password);
     }
 
@@ -109,6 +113,7 @@ class Auth {
      */
     private static function bearer($token) 
     {
+        Log::LogInfo("Bearer authentication");
         return false;
     }
 
@@ -119,6 +124,7 @@ class Auth {
      */
     private static function apikey($key) 
     {
+        Log::LogInfo("Apikey authentication");
         return in_array($key, Config::get('api_keys', []));
     }
 

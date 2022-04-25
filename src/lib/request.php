@@ -104,6 +104,20 @@ class Request
 		return $uri;
 	}
 
+	/**
+	 * Retourne le path complet filtré de l'application
+	 * 
+	 * @return string
+	 */
+	public static function getPath() 
+	{
+		$base_url = Config::get('base_url', '');
+		$uri = str_replace($base_url, '', $_SERVER['REQUEST_URI']);
+		$uri = self::parseInputValue($uri);
+
+		return $uri;
+	}
+
     /**
      * Retourne la liste des URIs utilisées pour les API
      * 
@@ -225,6 +239,6 @@ class Request
 	 * @return string
 	 */
 	public static function ipAddress() {
-		return $_SERVER['HTTP_X_FORWARDED_FOR'] ?: $_SERVER['REMOTE_ADDR'];
+		return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
 	}
 }

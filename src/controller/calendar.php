@@ -32,6 +32,7 @@ class Calendar extends Controller {
      */
     public static function get()
     {
+        \Lib\Log::LogDebug("Calendar get");
         $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
 
         if (isset($id)) {
@@ -73,6 +74,7 @@ class Calendar extends Controller {
      */
     public static function events()
     {
+        \Lib\Log::LogDebug("Calendar events");
         $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
 
         if (isset($id)) {
@@ -121,6 +123,7 @@ class Calendar extends Controller {
      */
     public static function post()
     {
+        \Lib\Log::LogDebug("Calendar post");
         $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_POST);
 
         if (isset($id)) {

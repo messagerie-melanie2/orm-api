@@ -32,6 +32,7 @@ class User extends Controller {
      */
     public static function get()
     {
+        \Lib\Log::LogDebug("User get");
         $uid = self::getUid();
 
         if (isset($uid)) {

@@ -54,25 +54,14 @@ class Log {
     ];
 
     /**
-     * @var array Configuration du script
-     */
-    private $config;
-
-    /**
      * Récupération du singleton
-     * 
-     * @param array $config Configuration du script
      * 
      * @return Log
      */
-    public static function get_instance($config = null)
+    public static function get_instance()
     {
-        if (!isset($config)) {
-            global $config;
-        }
-
         if (!isset(self::$instance)) {
-            self::$instance = new self($config);
+            self::$instance = new self();
         }
         return self::$instance;
     }
@@ -80,60 +69,51 @@ class Log {
     /**
      * Raccourcis pour get_instance
      * 
-     * @param array $config Configuration du script
-     * 
      * @return Log
      */
-    public static function gi($config = null) 
+    public static function gi() 
     {
-        return self::get_instance($config);
+        return self::get_instance();
     }
 
     /**
      * Initialisation des logs pour l'ORM
-     * 
-     * @param array $config Configuration du script
      */
-    public static function InitORMLogs($config) {
+    public static function init() {
+        $log_level = Config::get('log_level');
+
         // Niveau de log ERROR
-        if ($config['log_level'] >= self::ERROR) {
+        if ($log_level >= self::ERROR) {
             M2Log::InitErrorLog(function($message) {
-                global $config;
-                self::gi($config)->log(self::ERROR, $message);
+                self::gi()->log(self::ERROR, $message);
             });
         }
 
         // Niveau de log INFO
-        if ($config['log_level'] >= self::INFO) {
+        if ($log_level >= self::INFO) {
             M2Log::InitInfoLog(function($message) {
-                global $config;
-                self::gi($config)->log(self::INFO, $message);
+                self::gi()->log(self::INFO, $message);
             });
         }
 
         // Niveau de log TRACE
-        if ($config['log_level'] >= self::TRACE) {
+        if ($log_level >= self::TRACE) {
             M2Log::InitDebugLog(function($message) {
-                global $config;
-                self::gi($config)->log(self::TRACE, $message);
+                self::gi()->log(self::TRACE, $message);
             });
         }
     }
 
     /**
      * Constructeur par défaut de la classe
-     * 
-     * @param array $config Configuration du script
      */
-    public function __construct($config)
-    {
-        $this->config = $config;
-        
+    public function __construct()
+    {       
         // Valider que le fichier de log existe et est accessible sinon arrêter le script
-        if ($this->config['log_file'] != 'syslog' 
-                && $this->config['log_file'] != 'standard' 
-                && !file_exists($this->config['log_file'])) {
-            $message = "Le fichier '".$this->config['log_file']."' n'existe pas ou n'est pas accessible par l'utilisateur courant";
+        if (Config::get('log_file') != 'syslog' 
+                && Config::get('log_file') != 'standard' 
+                && !file_exists(Config::get('log_file'))) {
+            $message = "Le fichier '".Config::get('log_file')."' n'existe pas ou n'est pas accessible par l'utilisateur courant";
             echo "ERROR 5: $message\r\n";
             exit(5);
         }
@@ -148,7 +128,7 @@ class Log {
      */
     public function is($level)
     {
-        return $level <= $this->config['log_level'];
+        return $level <= Config::get('log_level');
     }
 
     /**
@@ -176,13 +156,17 @@ class Log {
             // Formatter le message avec la date et le level
             $date = date('Y-m-d H:i:s');
             $level = self::$LEVEL[$level];
-            $message = "[$date] $level $message";
+            $ip = Request::ipAddress();
+            $pid = getmypid();
+            $path = Request::getPath();
+            $method = Request::getMethod();
+            $message = "[$date] PID:$pid <$ip> $method $path - $level $message";
 
             // Appeler la méthode de log
-            if ($this->config['log_file'] == 'standard') {
+            if (Config::get('log_file') == 'standard') {
                 $this->standard($message);
             }
-            else if ($this->config['log_file'] == 'syslog') {
+            else if (Config::get('log_file') == 'syslog') {
                 $this->syslog($message);
             }
             else {
@@ -252,7 +236,7 @@ class Log {
      */
     private function file($message) 
     {
-        error_log($message . "\r\n", 3, $this->config['log_file']);
+        error_log($message . "\r\n", 3, Config::get('log_file'));
     }
 
     /**

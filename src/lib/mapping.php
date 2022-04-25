@@ -58,6 +58,8 @@ class Mapping {
                 }
                 $value = $item->$name;
                 if (isset($method)) {
+                    $file = strtolower(str_replace("\\", "/", $method[0]));
+                    require_once __DIR__ . "/../$file.php";
                     $value = call_user_func($method, $value);
                 }
                 if (isset($value) && !empty($value)) {
@@ -88,6 +90,8 @@ class Mapping {
                 }
                 $value = isset($data[$key]) ? $data[$key] : null;
                 if (isset($method)) {
+                    $file = strtolower(str_replace("\\", "/", $method[0]));
+                    require_once __DIR__ . "/../$file.php";
                     $value = call_user_func($method, $value);
                 }
                 $item->name = $value;

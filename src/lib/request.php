@@ -218,4 +218,13 @@ class Request
 
 		return $value;
 	}
+
+	/**
+	 * Retourne l'adresse IP du client
+	 * 
+	 * @return string
+	 */
+	public static function ipAddress() {
+		return $_SERVER['HTTP_X_FORWARDED_FOR'] ?: $_SERVER['REMOTE_ADDR'];
+	}
 }

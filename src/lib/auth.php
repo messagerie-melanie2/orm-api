@@ -60,6 +60,11 @@ class Auth {
      */
     public static function validate()
     {
+        // Valider l'adresse IP source ?
+        if (Config::get('ip_address_filter', false) && !self::validateIP()) {
+            return false;
+        }
+
         // Récupération du type d'authentification
         list($auth_type, $auth_value) = self::getAuthorization();
 
@@ -73,6 +78,16 @@ class Auth {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Est-ce que l'adresse IP du client est dans les IP authorisées ?
+     * 
+     * @return boolean
+     */
+    private static function validateIP()
+    {
+        return in_array(Request::ipAddress(), Config::get('ip_address_filter', []));
     }
 
     /**

@@ -43,6 +43,12 @@
     // Liste des clés d'API utilisables
     'api_keys' => [],
 
+    // Limiter les connexions possibles à certaines adresse IP
+    'ip_address_filter' => false,
+
+    // Liste des adresses IP autorisées
+    'valid_ip_addresses_list' => [],
+
     // Configuration d'un mapping personnalisé
     'mapping' => [],
 

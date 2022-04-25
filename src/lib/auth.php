@@ -62,7 +62,7 @@ class Auth {
     {
         // Valider l'adresse IP source ?
         if (Config::get('ip_address_filter', false) && !self::validateIP()) {
-            Log::LogError("Source IP isn't listed in autorized IP list");
+            Log::LogError("Source IP is not listed in autorized IP list");
             return false;
         }
 

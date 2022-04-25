@@ -157,5 +157,5 @@ $config = [
    * 
    * @var array
    */
-  'mapping' => [],
+  'routing' => [],
 ];

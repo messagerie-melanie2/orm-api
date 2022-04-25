@@ -157,5 +157,5 @@ $default = [
     * 
     * @var array
     */
-   'mapping' => [],
+   'routing' => [],
 ];

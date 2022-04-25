@@ -28,6 +28,7 @@ namespace Lib;
  */
 class Mapping {
     const NAME = 'name';
+    const MAPPING = 'mapping';
     const KEY = 'key';
     const GET = 'get';
     const SET = 'set';
@@ -47,9 +48,12 @@ class Mapping {
 
         if (isset($mapping[$itemName])) {
             foreach($mapping[$itemName] as $name) {
-                $method = null;
+                $method = null; $refMap = null;
+
+                // Traitement de l'enregistrement
                 if (is_array($name)) {
                     $method = isset($name[self::GET]) ? $name[self::GET] : null;
+                    $refMap = isset($name[self::MAPPING]) ? $name[self::MAPPING] : null;
                     $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
                     $key = isset($name[self::KEY]) ? $name[self::KEY] : $name;
                 }
@@ -57,10 +61,26 @@ class Mapping {
                     $key = $name;
                 }
                 $value = $item->$name;
+
+                // Appel une méthode de mapping
                 if (isset($method)) {
                     $file = strtolower(str_replace("\\", "/", $method[0]));
                     require_once __DIR__ . "/../$file.php";
                     $value = call_user_func($method, $value);
+                }
+
+                // Référence vers un mapping automatique
+                if (isset($refMap)) {
+                    if (is_array($value)) {
+                        $t = [];
+                        foreach ($value as $k => $v) {
+                            $t[$k] = self::get($refMap, $v);
+                        }
+                        $value = $t;
+                    }
+                    else {
+                        $value = self::get($refMap, $value);
+                    }
                 }
                 if (isset($value) && !empty($value)) {
                     $data[$key] = $value;

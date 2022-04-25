@@ -76,43 +76,6 @@ class Event extends Controller {
     }
 
     /**
-     * Mapping pour les attendees
-     */
-    public function getAttendees($attendees)
-    {
-        if (isset($attendees) && is_array($attendees) && count($attendees)) {
-            $data = [];
-            foreach ($attendees as $attendee) {
-                $data[] = \Lib\Mapping::get('attendee', $attendee);
-            }
-        }
-        else {
-            $data = null;
-        }
-        return $data;
-    }
-
-    /**
-     * Mapping pour l'organizer
-     */
-    public function getOrganizer($organizer)
-    {
-        if (isset($organizer)) {
-            $email = $organizer->email;
-            if (isset($email)) {
-                $data = \Lib\Mapping::get('organizer', $organizer);
-            }
-            else {
-                $data = null;
-            }
-        }
-        else {
-            $data = null;
-        }
-        return $data;
-    }
-
-    /**
      * Mapping pour la recurrence
      */
     public function getRecurrence($recurrence)
@@ -124,23 +87,6 @@ class Event extends Controller {
             }
             else {
                 $data = null;
-            }
-        }
-        else {
-            $data = null;
-        }
-        return $data;
-    }
-
-    /**
-     * Mapping pour les exceptions
-     */
-    public function getExceptions($exceptions)
-    {
-        if (isset($exceptions) && is_array($exceptions) && count($exceptions)) {
-            $data = [];
-            foreach ($exceptions as $key => $exception) {
-                $data[] = \Lib\Mapping::get('exception', $exception);
             }
         }
         else {

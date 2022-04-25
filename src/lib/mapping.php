@@ -28,6 +28,7 @@ namespace Lib;
  */
 class Mapping {
     const NAME = 'name';
+    const KEY = 'key';
     const GET = 'get';
     const SET = 'set';
     
@@ -45,11 +46,15 @@ class Mapping {
         $data = [];
 
         if (isset($mapping[$itemName])) {
-            foreach($mapping[$itemName] as $key => $name) {
+            foreach($mapping[$itemName] as $name) {
                 $method = null;
                 if (is_array($name)) {
                     $method = isset($name[self::GET]) ? $name[self::GET] : null;
                     $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
+                    $key = isset($name[self::KEY]) ? $name[self::KEY] : $name;
+                }
+                else {
+                    $key = $name;
                 }
                 $value = $item->$name;
                 if (isset($method)) {
@@ -71,11 +76,15 @@ class Mapping {
         $mapping = Config::get('mapping', []);
 
         if (isset($mapping[$itemName])) {
-            foreach($mapping[$itemName] as $key => $name) {
+            foreach($mapping[$itemName] as $name) {
                 $method = null;
                 if (is_array($name)) {
                     $method = isset($name[self::SET]) ? $name[self::SET] : null;
                     $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
+                    $key = isset($name[self::KEY]) ? $name[self::KEY] : $name;
+                }
+                else {
+                    $key = $name;
                 }
                 $value = isset($data[$key]) ? $data[$key] : null;
                 if (isset($method)) {

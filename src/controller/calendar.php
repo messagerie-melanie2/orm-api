@@ -69,6 +69,54 @@ class Calendar extends Controller {
     }
 
     /**
+     * Récupération des événements d'un calendrier
+     */
+    public static function events()
+    {
+        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
+
+        if (isset($id)) {
+            $user = null;
+
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
+                if (isset($uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $uid;
+                }
+            }
+
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
+            $calendar->id = $id;
+
+            if ($calendar->load()) {
+                $events = $calendar->getAllEvents();
+                $data = [];
+
+                foreach ($events as $event) {
+                    $data[] = \Lib\Mapping::get('event', $event);
+                }
+
+                \Lib\Response::appendData('success', true);
+                \Lib\Response::appendData('data', $data);
+            }
+            else {
+                \Lib\Response::appendData('success', false);
+                \Lib\Response::appendData('error', "Calendar not found");
+            }
+        }
+        else {
+            \Lib\Response::appendData('success', false);
+            \Lib\Response::appendData('error', "Missing parameter id");
+        }
+    }
+
+    /**
      * Enregistrer/modifier un calendrier
      */
     public static function post()

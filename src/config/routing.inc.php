@@ -63,6 +63,15 @@ $routing = [
             'GET'       => true,
             'POST'      => true,
         ],
+        'routing' => [
+            'events' => [
+                'class' => 'Calendar',
+                'methods'   => [
+                    'GET'       => 'events',
+                    'POST'      => false,
+                ],
+            ],
+        ],
     ],
     'event'         => [
         'methods'   => [

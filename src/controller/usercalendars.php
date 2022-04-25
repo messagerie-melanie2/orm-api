@@ -50,11 +50,13 @@ class UserCalendars extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Calendars not found");
+                \Lib\Log::LogError("Calendars not found");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter uid");
+            \Lib\Log::LogError("Missing parameter uid");
         }
     }
 
@@ -77,11 +79,13 @@ class UserCalendars extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Default calendar not found");
+                \Lib\Log::LogError("Default calendar not found");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter uid");
+            \Lib\Log::LogError("Missing parameter uid");
         }
     }
 
@@ -108,11 +112,13 @@ class UserCalendars extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Calendars not found");
+                \Lib\Log::LogError("Calendars not found");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter uid");
+            \Lib\Log::LogError("Missing parameter uid");
         }
     }
 }

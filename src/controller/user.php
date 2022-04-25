@@ -52,11 +52,13 @@ class User extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "User not found");
+                \Lib\Log::LogError("User not found");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter uid");
+            \Lib\Log::LogError("Missing parameter uid");
         }
     }
 

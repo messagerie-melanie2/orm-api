@@ -61,11 +61,13 @@ class Calendar extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Calendar not found");
+                \Lib\Log::LogError("Calendar not found");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter id");
+            \Lib\Log::LogError("Missing parameter id");
         }
     }
 
@@ -110,11 +112,13 @@ class Calendar extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Calendar not found");
+                \Lib\Log::LogError("Calendar not found");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter id");
+            \Lib\Log::LogError("Missing parameter id");
         }
     }
 
@@ -141,6 +145,7 @@ class Calendar extends Controller {
                 else {
                     \Lib\Response::appendData('success', false);
                     \Lib\Response::appendData('error', "Missing parameter owner");
+                    \Lib\Log::LogError("Missing parameter owner");
                     return;
                 }
             }
@@ -150,6 +155,7 @@ class Calendar extends Controller {
             if (!isset($name)) {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Missing parameter name");
+                \Lib\Log::LogError("Missing parameter name");
                 return;
             }
 
@@ -170,11 +176,13 @@ class Calendar extends Controller {
             else {
                 \Lib\Response::appendData('success', false);
                 \Lib\Response::appendData('error', "Error when saving the calendar");
+                \Lib\Log::LogError("Error when saving the calendar");
             }
         }
         else {
             \Lib\Response::appendData('success', false);
             \Lib\Response::appendData('error', "Missing parameter id");
+            \Lib\Log::LogError("Missing parameter id");
         }
     }
 }

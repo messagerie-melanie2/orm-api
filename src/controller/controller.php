@@ -29,4 +29,28 @@ abstract class Controller {
 	 *  Constructeur privé pour ne pas instancier la classe
 	 */
 	protected function __construct() {}
+
+	/**
+	 * Méthode GET
+	 */
+	public static function get()
+	{
+		\Lib\Response::error("Method not implemented");
+	}
+
+	/**
+	 * Méthode POST
+	 */
+	public static function post()
+	{
+		\Lib\Response::error("Method not implemented");
+	}
+
+	/**
+	 * Méthode DELETE
+	 */
+	public static function delete()
+	{
+		\Lib\Response::error("Method not implemented");
+	}
 }

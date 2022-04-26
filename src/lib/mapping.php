@@ -29,6 +29,7 @@ namespace Lib;
 class Mapping {
     const NAME = 'name';
     const MAPPING = 'mapping';
+    const LIST = 'list';
     const KEY = 'key';
     const GET = 'get';
     const SET = 'set';
@@ -54,6 +55,7 @@ class Mapping {
                 if (is_array($name)) {
                     $method = isset($name[self::GET]) ? $name[self::GET] : null;
                     $refMap = isset($name[self::MAPPING]) ? $name[self::MAPPING] : null;
+                    $isList = isset($name[self::LIST]) ? $name[self::LIST] : false;
                     $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
                     $key = isset($name[self::KEY]) ? $name[self::KEY] : $name;
                 }
@@ -68,10 +70,9 @@ class Mapping {
                     require_once __DIR__ . "/../$file.php";
                     $value = call_user_func($method, $value);
                 }
-
                 // Référence vers un mapping automatique
-                if (isset($refMap)) {
-                    if (is_array($value)) {
+                else if (isset($refMap)) {
+                    if (is_array($value) && $isList) {
                         $t = [];
                         foreach ($value as $k => $v) {
                             $t[$k] = self::get($refMap, $v);
@@ -82,6 +83,8 @@ class Mapping {
                         $value = self::get($refMap, $value);
                     }
                 }
+
+                // Positionne la valeur si elle n'est pas vide
                 if (isset($value) && !empty($value)) {
                     $data[$key] = $value;
                 }
@@ -102,6 +105,8 @@ class Mapping {
                 $method = null;
                 if (is_array($name)) {
                     $method = isset($name[self::SET]) ? $name[self::SET] : null;
+                    $refMap = isset($name[self::MAPPING]) ? $name[self::MAPPING] : null;
+                    $isList = isset($name[self::LIST]) ? $name[self::LIST] : false;
                     $name = isset($name[self::NAME]) ? $name[self::NAME] : null;
                     $key = isset($name[self::KEY]) ? $name[self::KEY] : $name;
                 }
@@ -109,11 +114,28 @@ class Mapping {
                     $key = $name;
                 }
                 $value = isset($data[$key]) ? $data[$key] : null;
+
+                // Appel une méthode de mapping
                 if (isset($method)) {
                     $file = strtolower(str_replace("\\", "/", $method[0]));
                     require_once __DIR__ . "/../$file.php";
                     $value = call_user_func($method, $value);
                 }
+                // Référence vers un mapping automatique
+                else if (isset($refMap)) {
+                    if (is_array($value) && $isList) {
+                        $t = [];
+                        foreach ($value as $k => $v) {
+                            $t[$k] = self::set($refMap, call_user_func([Objects::gi(), $key], $item), $v);
+                        }
+                        $value = $t;
+                    }
+                    else if (isset($value)) {
+                        $value = self::set($refMap, call_user_func([Objects::gi(), $key], $item), $value);
+                    }
+                }
+
+                // Positionne la valeur
                 $item->name = $value;
             }
         }

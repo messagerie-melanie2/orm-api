@@ -118,53 +118,55 @@ class Calendar extends Controller {
     public static function post()
     {
         \Lib\Log::LogDebug("Calendar post");
-        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_POST);
+        $json = \Lib\Request::readJson();
 
-        if (isset($id)) {
-            // Forcer l'uid dans le cas d'un user Basic
-            if (\Lib\Request::issetUser()) {
-                $user = \Lib\Objects::gi()->user();
-                $user->uid = \Lib\Request::getUser();
-            }
-            else {
-                $uid = \Lib\Request::getInputValue('owner', \Lib\Request::INPUT_POST);
-                if (isset($uid)) {
+        if (isset($json) && $json !== false) {
+            if (isset($json['id'])) {
+                // Forcer l'uid dans le cas d'un user Basic
+                if (\Lib\Request::issetUser()) {
                     $user = \Lib\Objects::gi()->user();
-                    $user->uid = $uid;
+                    $user->uid = \Lib\Request::getUser();
                 }
                 else {
-                    \Lib\Response::error("Missing parameter owner");
+                    if (isset($json['owner'])) {
+                        $user = \Lib\Objects::gi()->user();
+                        $user->uid = $json['owner'];
+                    }
+                    else {
+                        \Lib\Response::error("Missing parameter owner");
+                        return;
+                    }
+                }
+
+                if (!isset($json['name'])) {
+                    \Lib\Response::error("Missing parameter name");
                     return;
                 }
-            }
 
-            $name = \Lib\Request::getInputValue('name', \Lib\Request::INPUT_POST);
+                $calendar = \Lib\Objects::gi()->calendar([$user]);
+                $calendar->id = $json['id'];
 
-            if (!isset($name)) {
-                \Lib\Response::error("Missing parameter name");
-                return;
-            }
+                if (!$calendar->load()) {
+                    $calendar->owner = $user->uid;
+                }
+                
+                $calendar->name = $json['name'];
 
-            $calendar = \Lib\Objects::gi()->calendar([$user]);
-            $calendar->id = $id;
+                $ret = $calendar->save();
 
-            if (!$calendar->load()) {
-                $calendar->owner = $user->uid;
-            }
-            
-            $calendar->name = $name;
-
-            $ret = $calendar->save();
-
-            if (!is_null($ret)) {
-                \Lib\Response::success(true);
+                if (!is_null($ret)) {
+                    \Lib\Response::success(true);
+                }
+                else {
+                    \Lib\Response::error("Error when saving the calendar");
+                }
             }
             else {
-                \Lib\Response::error("Error when saving the calendar");
+                \Lib\Response::error("Missing parameter id");
             }
         }
         else {
-            \Lib\Response::error("Missing parameter id");
+            \Lib\Response::error("Invalid json parameter");
         }
     }
 }

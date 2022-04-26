@@ -238,7 +238,18 @@ class Request
 	 * 
 	 * @return string
 	 */
-	public static function ipAddress() {
+	public static function ipAddress() 
+	{
 		return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+	}
+
+	/**
+	 * Récupération du JSON envoyé en entrée
+	 * 
+	 * @return mixed false si échec sinon array
+	 */
+	public static function readJson()
+	{
+		return json_decode(file_get_contents('php://input'));
 	}
 }

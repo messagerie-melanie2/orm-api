@@ -14,6 +14,7 @@ GET /api/api.php/event?calendar=<calendar_id>&uid=<event_uid>
 
 ### Résultat
 
+#### Événement simple
 ```json
 {
   "success": true,
@@ -31,6 +32,94 @@ GET /api/api.php/event?calendar=<calendar_id>&uid=<event_uid>
     "created": 1620814548,
     "modified": 1620814548,
     "timezone": "Europe/Paris"
+  }
+}
+```
+
+#### Réunion récurrente avec exceptions
+```json
+{
+  "success": true,
+  "data": {
+    "uid": "<event_uid>",
+    "realuid": "<event_realuid>",
+    "calendar": "<calendar_id>",
+    "owner": "<event_owner>",
+    "title": "Test invitation récurrente",
+    "location": "Lyon",
+    "status": "confirmed",
+    "class": "public",
+    "sequence": 6,
+    "transparency": "OPAQUE",
+    "attendees": [
+      {
+        "name": "Nom participant",
+        "email": "<email_participant>",
+        "role": "req_participant",
+        "response": "need_action"
+      }
+    ],
+    "organizer": {
+      "name": "Nom organisateur",
+      "email": "<email_organisateur>"
+    },
+    "start": "2022-04-04 11:00:00",
+    "end": "2022-04-04 13:30:00",
+    "created": 1649339702,
+    "modified": 1650634623,
+    "timezone": "Europe/Paris",
+    "exceptions": {
+      "20220408": {
+        "uid": "<event_uid>",
+        "realuid": "<exception_realuid>",
+        "calendar": "<calendar_id>",
+        "owner": "<event_owner>",
+        "title": "Test invitation récurrente",
+        "location": "Lyon",
+        "status": "confirmed",
+        "class": "public",
+        "sequence": 6,
+        "transparency": "OPAQUE",
+        "attendees": [
+          {
+            "name": "Nom participant",
+            "email": "<email_participant>",
+            "role": "req_participant",
+            "response": "need_action"
+          }
+        ],
+        "organizer": {
+          "name": "Nom organisateur",
+          "email": "<email_organisateur>"
+        },
+        "start": "2022-04-08 14:00:00",
+        "end": "2022-04-08 16:30:00",
+        "created": 1649341475,
+        "modified": 1649341475,
+        "timezone": "Europe/Paris",
+        "recurrence_id": "2022-04-08 11:00:00"
+      },
+      "20220420": {
+        "uid": "<event_uid>",
+        "realuid": "<exception_realuid>",
+        "calendar": "<calendar_id>",
+        "status": "confirmed",
+        "class": "public",
+        "deleted": true,
+        "transparency": "OPAQUE",
+        "organizer": {
+          "name": "Nom organisateur",
+          "email": "<email_organisateur>"
+        },
+        "timezone": "Europe/Paris",
+        "recurrence_id": "2022-04-20 11:00:00"
+      }
+    },
+    "recurrence": {
+      "enddate": "2022-04-22 11:30:00",
+      "interval": "1",
+      "type": "daily"
+    }
   }
 }
 ```
@@ -56,17 +145,93 @@ POST /api/api.php/event
     "realuid": "<event_realuid>",
     "calendar": "<calendar_id>",
     "owner": "<event_owner>",
-    "title": "Test",
+    "title": "Test invitation récurrente",
+    "location": "Lyon",
     "status": "confirmed",
     "class": "public",
+    "sequence": 6,
     "transparency": "OPAQUE",
-    "start": "2021-05-13 12:30:00",
-    "end": "2021-05-13 17:30:00",
-    "created": 1620814548,
-    "modified": 1620814548,
-    "timezone": "Europe/Paris"
+    "attendees": [
+      {
+        "name": "Nom participant",
+        "email": "<email_participant>",
+        "role": "req_participant",
+        "response": "need_action"
+      }
+    ],
+    "organizer": {
+      "name": "Nom organisateur",
+      "email": "<email_organisateur>"
+    },
+    "start": "2022-04-04 11:00:00",
+    "end": "2022-04-04 13:30:00",
+    "created": 1649339702,
+    "modified": 1650634623,
+    "timezone": "Europe/Paris",
+    "exceptions": {
+      "20220408": {
+        "uid": "<event_uid>",
+        "realuid": "<exception_realuid>",
+        "calendar": "<calendar_id>",
+        "owner": "<event_owner>",
+        "title": "Test invitation récurrente",
+        "location": "Lyon",
+        "status": "confirmed",
+        "class": "public",
+        "sequence": 6,
+        "transparency": "OPAQUE",
+        "attendees": [
+          {
+            "name": "Nom participant",
+            "email": "<email_participant>",
+            "role": "req_participant",
+            "response": "need_action"
+          }
+        ],
+        "organizer": {
+          "name": "Nom organisateur",
+          "email": "<email_organisateur>"
+        },
+        "start": "2022-04-08 14:00:00",
+        "end": "2022-04-08 16:30:00",
+        "created": 1649341475,
+        "modified": 1649341475,
+        "timezone": "Europe/Paris",
+        "recurrence_id": "2022-04-08 11:00:00"
+      },
+      "20220420": {
+        "uid": "<event_uid>",
+        "realuid": "<exception_realuid>",
+        "calendar": "<calendar_id>",
+        "status": "confirmed",
+        "class": "public",
+        "deleted": true,
+        "transparency": "OPAQUE",
+        "organizer": {
+          "name": "Nom organisateur",
+          "email": "<email_organisateur>"
+        },
+        "timezone": "Europe/Paris",
+        "recurrence_id": "2022-04-20 11:00:00"
+      }
+    },
+    "recurrence": {
+      "enddate": "2022-04-22 11:30:00",
+      "interval": "1",
+      "type": "daily"
+    }
 }
 ```
+
+#### Informations
+ - `status` : Valeurs possibles : `confirmed`, `cancelled`, `tentative`, `none`
+ - `class` : Valeurs possibles : `public`, `private`
+ - `transparency` : Valeurs possibles : `OPAQUE`, `TRANSPARENT`
+ - `attendees` :
+   - `role` : Valeurs possibles : `chair`, `req_participant`, `opt_participant`, `non_participant`
+   - `response` : Valeurs possibles : `need_action`, `accepted`, `declined`, `in_process`
+ - `recurrence` :
+   - `type` : Valeurs possibles : `daily`, `weekly`, `monthly`, `monthly_by_day`, `yearly`, `yearly_by_day`
 
 ### Résultat
 

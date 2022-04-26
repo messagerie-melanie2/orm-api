@@ -65,6 +65,10 @@ POST /api/api.php/calendar
 }
 ```
 
+#### Informations
+ - `id` : Par convention l'id du calendrier principal de l'utilisateur est son identifiant
+ - `name` : Par convention le name du calendrier principal de l'utilisateur est son fullname
+
 ### Résultat
 
 ```json

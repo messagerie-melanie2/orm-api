@@ -51,10 +51,14 @@ GET /api/api.php/calendar?id=<calendar_id>
 
 ### Utilisation
 
-```url
+```json
 POST /api/api.php/calendar
 
-id=<calendar_id>&name=<calendar_name>&owner=<calendar_owner>
+{
+  "id": "<calendar_id>",
+  "name": "<calendar_name>",
+  "owner": "<calendar_owner>"
+}
 ```
 
 ### Résultat
@@ -70,3 +74,24 @@ id=<calendar_id>&name=<calendar_name>&owner=<calendar_owner>
  - `id` : [Obligatoire] identifiant du calendrier à créer ou modifier
  - `name` : [Obligatoire] nom du calendrier à créer ou modifier
  - `owner` : [Obligatoire en création] identifiant du propriétaire du calendrier à créer
+
+## DELETE calendar
+
+### Utilisation
+
+```url
+DELETE /api/api.php/calendar?id=<calendar_id>
+```
+
+### Résultat
+
+```json
+{
+  "success": true,
+}
+```
+
+### Paramètres
+
+ - `id` : [Obligatoire] identifiant du calendrier à récupérer
+ - `user` : [Optionnel] identifiant de l'utilisateur à associer au calendrier (change la valeur de perm voir)

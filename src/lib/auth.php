@@ -140,6 +140,10 @@ class Auth {
         if (isset($headers['Authorization'])) {
             return explode(' ', trim($headers['Authorization']), 2);
         }
+        // Bug w/ fetch lower case header
+        else if (isset($headers['authorization'])) {
+            return explode(' ', trim($headers['authorization']), 2);
+        }
         else {
             return [false, false];
         }

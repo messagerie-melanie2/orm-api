@@ -169,4 +169,48 @@ class Calendar extends Controller {
             \Lib\Response::error("Invalid json parameter");
         }
     }
+
+    /**
+     * Suppression d'un calendrier
+     */
+    public static function delete()
+    {
+        \Lib\Log::LogDebug("Calendar delete");
+        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
+
+        if (isset($id)) {
+            $user = null;
+
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
+                if (isset($uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $uid;
+                }
+            }
+
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
+            $calendar->id = $id;
+
+            if ($calendar->load()) {
+                if ($calendar->delete()) {
+                    \Lib\Response::success(true);
+                }
+                else {
+                    \Lib\Response::error("Error when deleting calendar");
+                }
+            }
+            else {
+                \Lib\Response::error("Calendar not found");
+            }
+        }
+        else {
+            \Lib\Response::error("Missing parameter id");
+        }
+    }
 }

@@ -58,6 +58,7 @@ $routing = [
         'methods'   => [
             'GET'       => true,
             'POST'      => true,
+            'DELETE'    => true,
         ],
         'routing' => [
             'events' => [

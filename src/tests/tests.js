@@ -1,4 +1,26 @@
 /**
+ * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
+ * Ces API permettent d'accéder à la librairie en REST
+ *
+ * ORM API Copyright © 2022  Groupe MCD/MTE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+var commands = [];
+
+/**
  * Envoi de la requête
  */
 function send() {
@@ -8,6 +30,9 @@ function send() {
     const apikey = document.querySelector('#apikey').value,
         url = document.querySelector('#url').value
         method = document.querySelector('#method').value;
+
+    window.commands.unshift({ method: method, url: url });
+    refreshHistory();
 
     let myHeaders = new Headers();
     myHeaders.append("Authorization", "Apikey " + apikey);
@@ -40,6 +65,22 @@ function send() {
 }
 
 /**
+ * Rafraichi la liste des commandes
+ */
+function refreshHistory() {
+    document.querySelector('#commands').innerHTML = '';
+    for (const key in window.commands) {
+        if (Object.hasOwnProperty.call(window.commands, key)) {
+            const element = window.commands[key];
+            let option = document.createElement('option');
+            option.value = element.method + '|' + element.url;
+            option.text = element.method + " " + element.url;
+            document.querySelector('#commands').add(option, null);
+        }
+    }
+}
+
+/**
  * Changement dans le select
  * 
  * @param {string} value 
@@ -51,6 +92,17 @@ function change(value) {
     else {
         document.querySelector('#request div.data').style.display = 'none';
     }
+}
+
+/**
+ * Permet de rejouer une commande
+ * @param {string} value 
+ */
+function command(value) {
+    let command = value.split('|');
+    document.querySelector('#method').value = command[0];
+    document.querySelector('#method').onchange();
+    document.querySelector('#url').value = command[1];
 }
 
 /**

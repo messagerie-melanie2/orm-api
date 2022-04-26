@@ -16,13 +16,16 @@
         input {
             width: 30em;
         }
+        #history select {
+            width: 46em;
+        }
         #request textarea {
             width: 50em;
-            height: 20em;
+            height: 12em;
         }
         #response textarea {
             width: 50em;
-            height: 30em;
+            height: 25em;
             background: #eee;
         }
     </style>
@@ -58,6 +61,12 @@
         <h2>Réponse</h2>
         <p>
             <textarea id="result" readonly></textarea>
+        </p>
+    </article>
+    <article id="history">
+        <h2>Historique</h2>
+        <p>
+            <select id="commands" size="6" ondblclick="command(this.options[this.selectedIndex].value);"></select>
         </p>
     </article>
   </body>

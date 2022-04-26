@@ -1,6 +1,6 @@
-[Retour à la documentation API](../../README.md) | [Retour au endpoint user](../README.md)
+# user/calendars
 
-# calendars
+[Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint user](../README.md#user)
 
 API permettant de récupérer les calendriers d'un utilisateur
 
@@ -10,7 +10,7 @@ Il propose également des endpoints supplémentaires associés aux calendriers d
 
 Liste des accès utilisables par l'API calendars
 
-### default
+### user/calendars/default
 
 ```url
 /api/api.php/user/calendars/default
@@ -18,9 +18,9 @@ Liste des accès utilisables par l'API calendars
 
 Récupérer le calendrier par défaut de l'utilisateur
 
-Voir [default](default/README.md)
+Voir [default](default/README.md#usercalendarsdefault)
 
-### shared
+### user/calendars/shared
 
 ```url
 /api/api.php/user/calendars/shared
@@ -28,9 +28,9 @@ Voir [default](default/README.md)
 
 Récupérer la liste de tous les calendriers accessibles à l'utilisateur
 
-Voir [shared](shared/README.md)
+Voir [shared](shared/README.md#usercalendarsshared)
 
-## GET calendars
+## GET user/calendars
 
 ### Utilisation
 

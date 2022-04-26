@@ -51,9 +51,13 @@ GET /api/api.php/calendar?id=<calendar_id>
 
 ### Utilisation
 
-```json
+#### Url
+```url
 POST /api/api.php/calendar
+```
 
+#### Body
+```json
 {
   "id": "<calendar_id>",
   "name": "<calendar_name>",

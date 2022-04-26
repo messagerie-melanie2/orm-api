@@ -1,6 +1,6 @@
-[Retour à la documentation API](../README.md)
-
 # user
+
+[Retour à la documentation API](../README.md#utilisation-de-lapi)
 
 API permettant de récupérer les informations d'un utilisateur
 
@@ -10,7 +10,7 @@ Il propose également des endpoints supplémentaires associés à l'utilisateur
 
 Liste des accès utilisables par l'API user
 
-### calendars
+### user/calendars
 
 ```url
 /api/api.php/user/calendars
@@ -18,7 +18,7 @@ Liste des accès utilisables par l'API user
 
 Lister les calendriers associés à un utilisateur
 
-Voir [calendars](calendars/README.md)
+Voir [calendars](calendars/README.md#usercalendars)
 
 ## GET user
 

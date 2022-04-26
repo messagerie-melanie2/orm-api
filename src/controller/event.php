@@ -32,46 +32,123 @@ class Event extends Controller {
      */
     public static function get()
     {
-        $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+        if (\Lib\Request::checkInputValues(['uid', 'calendar'], \Lib\Request::INPUT_GET)) {
+            $user = null;
 
-        if (isset($uid)) {
-            $calendar_id = \Lib\Request::getInputValue('calendar', \Lib\Request::INPUT_GET);
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $user_uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
+                if (isset($user_uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $user_uid;
+                }
+            }
 
-            if (isset($calendar_id)) {
-                $user = null;
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
+            $calendar->id = \Lib\Request::getInputValue('calendar', \Lib\Request::INPUT_GET);
 
+            $event = \Lib\Objects::gi()->event([$user, $calendar]);
+            $event->uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+
+            if ($event->load()) {
+                \Lib\Response::data(\Lib\Mapping::get('event', $event));
+            }
+            else {
+                \Lib\Response::error("Event not found");
+            }
+        }
+    }
+
+    /**
+     * Enregistrer/modifier un événement
+     */
+    public static function post()
+    {
+        $json = \Lib\Request::readJson();
+
+        if (isset($json) && $json !== false) {
+
+            if (\Lib\Request::checkInputValues(['uid', 'calendar'], null, $json)) {
                 // Forcer l'uid dans le cas d'un user Basic
                 if (\Lib\Request::issetUser()) {
                     $user = \Lib\Objects::gi()->user();
                     $user->uid = \Lib\Request::getUser();
                 }
                 else {
-                    $user_uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
-                    if (isset($user_uid)) {
+                    if (isset($json['owner'])) {
                         $user = \Lib\Objects::gi()->user();
-                        $user->uid = $user_uid;
+                        $user->uid = $json['owner'];
+                    }
+                    else {
+                        $user = null;
                     }
                 }
-    
+
                 $calendar = \Lib\Objects::gi()->calendar([$user]);
-                $calendar->id = $calendar_id;
+                $calendar->id = $json['calendar'];
 
                 $event = \Lib\Objects::gi()->event([$user, $calendar]);
-                $event->uid = $uid;
+                $event->uid = $json['uid'];
+                $event->load();
 
-                if ($event->load()) {
-                    \Lib\Response::data(\Lib\Mapping::get('event', $event));
+                $event = \Lib\Mapping::set('event', $event, $json);
+                $ret = $event->save();
+
+                if (!is_null($ret)) {
+                    \Lib\Response::success(true);
                 }
                 else {
-                    \Lib\Response::error("Event not found");
+                    \Lib\Response::error("Error when saving the event");
                 }
-            }
-            else {
-                \Lib\Response::error("Missing parameter calendar");
             }
         }
         else {
-            \Lib\Response::error("Missing parameter uid");
+            \Lib\Response::error("Invalid json parameter");
+        }
+    }
+
+    /**
+     * Suppression d'un événement
+     */
+    public static function delete()
+    {
+        if (\Lib\Request::checkInputValues(['uid', 'calendar'], \Lib\Request::INPUT_GET)) {
+            $user = null;
+
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $user_uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
+                if (isset($user_uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $user_uid;
+                }
+            }
+
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
+            $calendar->id = \Lib\Request::getInputValue('calendar', \Lib\Request::INPUT_GET);
+
+            $event = \Lib\Objects::gi()->event([$user, $calendar]);
+            $event->uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+
+            if ($event->load()) {
+                if ($event->load()) {
+                    \Lib\Response::success(true);
+                }
+                else {
+                    \Lib\Response::error("Error when deleting event");
+                }
+            }
+            else {
+                \Lib\Response::error("Event not found");
+            }
         }
     }
 

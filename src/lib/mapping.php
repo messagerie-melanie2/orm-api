@@ -49,7 +49,7 @@ class Mapping {
 
         if (isset($mapping[$itemName])) {
             foreach($mapping[$itemName] as $name) {
-                $method = null; $refMap = null;
+                $method = null; $refMap = null; $isList = false;
 
                 // Traitement de l'enregistrement
                 if (is_array($name)) {
@@ -102,7 +102,8 @@ class Mapping {
 
         if (isset($mapping[$itemName])) {
             foreach($mapping[$itemName] as $name) {
-                $method = null;
+                $method = null; $refMap = null; $isList = false;
+                
                 if (is_array($name)) {
                     $method = isset($name[self::SET]) ? $name[self::SET] : null;
                     $refMap = isset($name[self::MAPPING]) ? $name[self::MAPPING] : null;
@@ -126,17 +127,19 @@ class Mapping {
                     if (is_array($value) && $isList) {
                         $t = [];
                         foreach ($value as $k => $v) {
-                            $t[$k] = self::set($refMap, call_user_func([Objects::gi(), $key], $item), $v);
+                            $t[$k] = self::set($refMap, call_user_func([Objects::gi(), $key], [$item]), $v);
                         }
                         $value = $t;
                     }
                     else if (isset($value)) {
-                        $value = self::set($refMap, call_user_func([Objects::gi(), $key], $item), $value);
+                        $value = self::set($refMap, call_user_func([Objects::gi(), $key], [$item]), $value);
                     }
                 }
 
                 // Positionne la valeur
-                $item->name = $value;
+                if (isset($value)) {
+                    $item->$name = $value;
+                }
             }
         }
         return $item;

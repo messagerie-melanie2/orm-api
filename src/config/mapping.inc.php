@@ -68,7 +68,7 @@ $mapping = [
         'modified',
         'timezone',
         [\Lib\Mapping::NAME => 'exceptions', \Lib\Mapping::MAPPING => 'exception', \Lib\Mapping::LIST => true],
-        [\Lib\Mapping::NAME => 'recurrence', \Lib\Mapping::GET => ["Controller\\Event", "getRecurrence"]],
+        [\Lib\Mapping::NAME => 'recurrence', \Lib\Mapping::MAPPING => 'recurrence', \Lib\Mapping::GET => ["Controller\\Event", "getRecurrence"]],
     ],
     'exception' => [
         'uid',

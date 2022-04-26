@@ -32,10 +32,7 @@ class Calendar extends Controller {
      */
     public static function get()
     {
-        \Lib\Log::LogDebug("Calendar get");
-        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
-
-        if (isset($id)) {
+        if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = null;
 
             // Forcer l'uid dans le cas d'un user Basic
@@ -52,7 +49,7 @@ class Calendar extends Controller {
             }
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
-            $calendar->id = $id;
+            $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
 
             if ($calendar->load()) {
                 \Lib\Response::data(\Lib\Mapping::get('calendar', $calendar));
@@ -61,9 +58,6 @@ class Calendar extends Controller {
                 \Lib\Response::error("Calendar not found");
             }
         }
-        else {
-            \Lib\Response::error("Missing parameter id");
-        }
     }
 
     /**
@@ -71,10 +65,7 @@ class Calendar extends Controller {
      */
     public static function events()
     {
-        \Lib\Log::LogDebug("Calendar events");
-        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
-
-        if (isset($id)) {
+        if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = null;
 
             // Forcer l'uid dans le cas d'un user Basic
@@ -91,7 +82,7 @@ class Calendar extends Controller {
             }
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
-            $calendar->id = $id;
+            $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
 
             if ($calendar->load()) {
                 $events = $calendar->getAllEvents();
@@ -107,9 +98,6 @@ class Calendar extends Controller {
                 \Lib\Response::error("Calendar not found");
             }
         }
-        else {
-            \Lib\Response::error("Missing parameter id");
-        }
     }
 
     /**
@@ -117,11 +105,11 @@ class Calendar extends Controller {
      */
     public static function post()
     {
-        \Lib\Log::LogDebug("Calendar post");
         $json = \Lib\Request::readJson();
 
         if (isset($json) && $json !== false) {
-            if (isset($json['id'])) {
+
+            if (\Lib\Request::checkInputValues(['id', 'name'], null, $json)) {
                 // Forcer l'uid dans le cas d'un user Basic
                 if (\Lib\Request::issetUser()) {
                     $user = \Lib\Objects::gi()->user();
@@ -136,11 +124,6 @@ class Calendar extends Controller {
                         \Lib\Response::error("Missing parameter owner");
                         return;
                     }
-                }
-
-                if (!isset($json['name'])) {
-                    \Lib\Response::error("Missing parameter name");
-                    return;
                 }
 
                 $calendar = \Lib\Objects::gi()->calendar([$user]);
@@ -161,9 +144,6 @@ class Calendar extends Controller {
                     \Lib\Response::error("Error when saving the calendar");
                 }
             }
-            else {
-                \Lib\Response::error("Missing parameter id");
-            }
         }
         else {
             \Lib\Response::error("Invalid json parameter");
@@ -175,10 +155,7 @@ class Calendar extends Controller {
      */
     public static function delete()
     {
-        \Lib\Log::LogDebug("Calendar delete");
-        $id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
-
-        if (isset($id)) {
+        if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = null;
 
             // Forcer l'uid dans le cas d'un user Basic
@@ -195,7 +172,7 @@ class Calendar extends Controller {
             }
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
-            $calendar->id = $id;
+            $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
 
             if ($calendar->load()) {
                 if ($calendar->delete()) {
@@ -208,9 +185,6 @@ class Calendar extends Controller {
             else {
                 \Lib\Response::error("Calendar not found");
             }
-        }
-        else {
-            \Lib\Response::error("Missing parameter id");
         }
     }
 }

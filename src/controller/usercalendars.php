@@ -32,7 +32,6 @@ class UserCalendars extends Controller {
      */
     public static function get()
     {
-        \Lib\Log::LogDebug("UserCalendars get");
         $uid = User::getUid();
 
         if (isset($uid)) {
@@ -60,7 +59,6 @@ class UserCalendars extends Controller {
      */
     public static function default()
     {
-        \Lib\Log::LogDebug("UserCalendars default");
         $uid = User::getUid();
 
         if (isset($uid)) {
@@ -84,7 +82,6 @@ class UserCalendars extends Controller {
      */
     public static function shared()
     {
-        \Lib\Log::LogDebug("UserCalendars shared");
         $uid = User::getUid();
 
         if (isset($uid)) {

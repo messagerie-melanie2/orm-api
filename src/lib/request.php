@@ -188,6 +188,61 @@ class Request
 	}
 
 	/**
+	 * Check if input value isset
+	 *
+	 * @param  string   Field name to read
+	 * @param  int      Source to get value from (GPC)
+	 * 
+	 * @return boolean
+	 */
+	public static function issetInputValue($fname, $source)
+	{
+		if ($source == self::INPUT_GET) {
+			return isset($_GET[$fname]);
+		} else if ($source == self::INPUT_POST) {
+			return isset($_POST[$fname]);
+        } else if ($source == self::INPUT_COOKIE) {
+			return isset($_COOKIE[$fname]);
+		} else if ($source == self::INPUT_GPC) {
+			return isset($_POST[$fname]) || isset($_GET[$fname]) || isset($_COOKIE[$fname]);
+		}
+		return false;
+	}
+
+	/**
+	 * Vérifie si les inputs sont présents
+	 * 
+	 * @param array $inputs Liste des inputs à vérifier
+	 * @param int $source Source to get value from (GPC)
+	 * @param array $data Si on ne passe pas par la source on fourni les data
+	 * @param boolean $error Envoyer une erreur à la response
+	 * 
+	 * @return boolean
+	 */
+	public static function checkInputValues($inputs, $source = null, $data = null, $error = true)
+	{
+		foreach ($inputs as $input) {
+			$isset = false;
+			// Vérifier si la valeur existe
+			if (isset($source)) {
+				$isset = self::issetInputValue($input, $source);
+			}
+			else if (isset($data)) {
+				$isset = isset($data[$input]);
+			}
+
+			// Si la valeur n'existe pas erreur
+			if (!$isset) {
+				if ($error) {
+					Response::error("Missing parameter '$input'");
+				}
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Read Json value and convert it for internal use
 	 * Performs stripslashes() and charset conversion if necessary
      * 

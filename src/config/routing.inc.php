@@ -72,7 +72,8 @@ $routing = [
     'event'         => [
         'methods'   => [
             'GET'       => true,
-            'POST'      => false,
+            'POST'      => true,
+            'DELETE'    => true,
         ],
     ],
     'taskslist'     => [],

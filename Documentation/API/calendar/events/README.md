@@ -4,7 +4,7 @@
 
 API permettant de récupérer les événements associés à un calendrier
 
-## GET events
+## GET calendar/events
 
 ### Utilisation
 

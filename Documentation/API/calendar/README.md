@@ -10,7 +10,7 @@ Il propose également des endpoints supplémentaires associés au calendrier
 
 Liste des accès utilisables par l'API calendar
 
-### events
+### calendar/events
 
 ```url
 /api/api.php/calendar/events
@@ -18,7 +18,7 @@ Liste des accès utilisables par l'API calendar
 
 Lister les événements associés à un calendrier
 
-Voir [events](events/README.md)
+Voir [events](events/README.md#calendarevents)
 
 ## GET calendar
 

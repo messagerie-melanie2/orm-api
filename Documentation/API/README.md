@@ -14,7 +14,7 @@ Liste des accès utilisables par l'API
 
 Action autour d'un utilisateur et des objets associés à un utilisateur (partages, calendriers, ...).
 
-Voir [user](user/README.md)
+Voir [user](user/README.md#user)
 
 ### calendar
 
@@ -24,7 +24,7 @@ Voir [user](user/README.md)
 
 Action autour d'un calendrier et des objets associés à un calendrier (partages, événements, ...).
 
-Voir [calendar](calendar/README.md)
+Voir [calendar](calendar/README.md#calendar)
 
 ### event
 
@@ -34,4 +34,4 @@ Voir [calendar](calendar/README.md)
 
 Action autour d'un événement et des objets associés à un événement (pièces jointes, participants, ...).
 
-Voir [event](event/README.md)
+Voir [event](event/README.md#event)

@@ -31,8 +31,7 @@ function send() {
         url = document.querySelector('#url').value
         method = document.querySelector('#method').value;
 
-    window.commands.unshift({ method: method, url: url });
-    refreshHistory();
+    addToHistory({ method: method, url: url });
 
     let myHeaders = new Headers();
     myHeaders.append("Authorization", "Apikey " + apikey);
@@ -78,6 +77,24 @@ function refreshHistory() {
             document.querySelector('#commands').add(option, null);
         }
     }
+}
+
+/**
+ * Ajoute la commande a l'historique
+ * 
+ * @param {object} command 
+ */
+function addToHistory(command) {
+    for (const key in window.commands) {
+        if (Object.hasOwnProperty.call(window.commands, key)) {
+            const element = window.commands[key];
+            if (element.method == command.method && element.url == command.url) {
+                delete window.commands[key];
+            }
+        }
+    }
+    window.commands.unshift(command);
+    refreshHistory();
 }
 
 /**

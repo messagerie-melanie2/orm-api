@@ -1,6 +1,6 @@
-[Retour à la documentation API](../README.md)
-
 # calendar
+
+[Retour à la documentation API](../README.md#utilisation-de-lapi)
 
 API permettant de récupérer les informations d'un calendrier, créer, modifier ou supprimer un calendrier
 

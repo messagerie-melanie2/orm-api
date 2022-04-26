@@ -14,7 +14,7 @@ L'installation de l'API est expliquée dans le fichier [INSTALL](INSTALL.md).
 
 ## Documentation
 
-La documentation d'utilisation de l'API se trouve dans [Documentation/API](Documentation/API/README.md).
+La documentation d'utilisation de l'API se trouve dans [Documentation/API](Documentation/API/README.md#utilisation-de-lapi).
 
 La documentation de configuration de l'API se trouve dans [Documentation/Configuration](Documentation/Configuration/README.md)
 

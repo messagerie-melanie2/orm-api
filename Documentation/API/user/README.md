@@ -18,7 +18,7 @@ Liste des accès utilisables par l'API user
 
 Lister les calendriers associés à un utilisateur
 
-Voir [calendars](calendars/README.md#usercalendars)
+Voir [user/calendars](calendars/README.md#usercalendars)
 
 ## GET user
 

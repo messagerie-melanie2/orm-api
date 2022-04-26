@@ -18,7 +18,7 @@ Liste des accès utilisables par l'API calendars
 
 Récupérer le calendrier par défaut de l'utilisateur
 
-Voir [default](default/README.md#usercalendarsdefault)
+Voir [user/calendars/default](default/README.md#usercalendarsdefault)
 
 ### user/calendars/shared
 
@@ -28,7 +28,7 @@ Voir [default](default/README.md#usercalendarsdefault)
 
 Récupérer la liste de tous les calendriers accessibles à l'utilisateur
 
-Voir [shared](shared/README.md#usercalendarsshared)
+Voir [user/calendars/shared](shared/README.md#usercalendarsshared)
 
 ## GET user/calendars
 

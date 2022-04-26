@@ -18,7 +18,7 @@ Liste des accès utilisables par l'API calendar
 
 Lister les événements associés à un calendrier
 
-Voir [events](events/README.md#calendarevents)
+Voir [calendar/events](events/README.md#calendarevents)
 
 ## GET calendar
 

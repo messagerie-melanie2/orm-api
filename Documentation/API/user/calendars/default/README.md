@@ -1,6 +1,6 @@
 # user/calendars/default
 
-[Retour à la documentation API](../../../README.md#utilisation-de-lapi) | [Retour au endpoint user](../../README.md#user) | [Retour au endpoint calendars](../README.md#usercalendars)
+[Retour à la documentation API](../../../README.md#utilisation-de-lapi) | [Retour au endpoint user](../../README.md#user) | [Retour au endpoint user/calendars](../README.md#usercalendars)
 
 API permettant de récupérer le calendrier par défaut d'un utilisateur
 

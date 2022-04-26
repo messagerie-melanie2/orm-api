@@ -127,12 +127,12 @@ class Mapping {
                     if (is_array($value) && $isList) {
                         $t = [];
                         foreach ($value as $k => $v) {
-                            $t[$k] = self::set($refMap, call_user_func([Objects::gi(), $key], [$item]), $v);
+                            $t[$k] = self::set($refMap, call_user_func([Objects::gi(), $refMap], [$item]), $v);
                         }
                         $value = $t;
                     }
                     else if (isset($value)) {
-                        $value = self::set($refMap, call_user_func([Objects::gi(), $key], [$item]), $value);
+                        $value = self::set($refMap, call_user_func([Objects::gi(), $refMap], [$item]), $value);
                     }
                 }
 

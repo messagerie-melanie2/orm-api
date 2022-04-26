@@ -95,7 +95,7 @@ class Routing {
                 }
             }
             else {
-                Response::error("Routing configuration error for uri '$uri' and method '$method'");
+                Response::error("Routing configuration error");
             }
         }
 	}

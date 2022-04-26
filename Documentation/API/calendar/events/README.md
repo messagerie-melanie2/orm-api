@@ -1,4 +1,4 @@
-# events
+# calendar/events
 
 [Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint calendar](../README.md#calendar)
 

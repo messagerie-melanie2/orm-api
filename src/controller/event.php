@@ -139,7 +139,7 @@ class Event extends Controller {
             $event->uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
 
             if ($event->load()) {
-                if ($event->load()) {
+                if ($event->delete()) {
                     \Lib\Response::success(true);
                 }
                 else {

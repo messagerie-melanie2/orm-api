@@ -20,6 +20,26 @@ Lister les calendriers associés à un utilisateur
 
 Voir [user/calendars](calendars/README.md#usercalendars)
 
+### user/calendars/default
+
+```url
+/api/api.php/user/calendars/default
+```
+
+Récupérer le calendrier par défaut de l'utilisateur
+
+Voir [user/calendars/default](calendars/default/README.md#usercalendarsdefault)
+
+### user/calendars/shared
+
+```url
+/api/api.php/user/calendars/shared
+```
+
+Récupérer la liste de tous les calendriers accessibles à l'utilisateur
+
+Voir [user/calendars/shared](calendars/shared/README.md#usercalendarsshared)
+
 ## GET user
 
 ### Utilisation

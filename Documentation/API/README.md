@@ -16,6 +16,36 @@ Action autour d'un utilisateur et des objets associés à un utilisateur (partag
 
 Voir [user](user/README.md#user)
 
+### user/calendars
+
+```url
+/api/api.php/user/calendars
+```
+
+Lister les calendriers associés à un utilisateur
+
+Voir [user/calendars](user/calendars/README.md#usercalendars)
+
+### user/calendars/default
+
+```url
+/api/api.php/user/calendars/default
+```
+
+Récupérer le calendrier par défaut de l'utilisateur
+
+Voir [user/calendars/default](user/calendars/default/README.md#usercalendarsdefault)
+
+### user/calendars/shared
+
+```url
+/api/api.php/user/calendars/shared
+```
+
+Récupérer la liste de tous les calendriers accessibles à l'utilisateur
+
+Voir [user/calendars/shared](user/calendars/shared/README.md#usercalendarsshared)
+
 ### calendar
 
 ```url
@@ -25,6 +55,26 @@ Voir [user](user/README.md#user)
 Action autour d'un calendrier et des objets associés à un calendrier (partages, événements, ...).
 
 Voir [calendar](calendar/README.md#calendar)
+
+### calendar/events
+
+```url
+/api/api.php/calendar/events
+```
+
+Lister les événements associés à un calendrier
+
+Voir [calendar/events](calendar/events/README.md#calendarevents)
+
+### calendar/shares
+
+```url
+/api/api.php/calendar/shares
+```
+
+Lister les partages associés à un calendrier
+
+Voir [calendar/shares](calendar/shares/README.md#calendarshares)
 
 ### event
 

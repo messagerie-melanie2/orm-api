@@ -28,7 +28,7 @@ Voir [calendar/events](events/README.md#calendarevents)
 
 Lister les partages associés à un calendrier
 
-Voir [calendar/shares](events/README.md#calendarshares)
+Voir [calendar/shares](shares/README.md#calendarshares)
 
 ## GET calendar
 

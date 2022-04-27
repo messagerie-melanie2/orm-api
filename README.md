@@ -18,7 +18,7 @@ La documentation d'utilisation de l'API se trouve dans [Documentation/API](Docum
 
 La documentation de configuration de l'API se trouve dans [Documentation/Configuration](Documentation/Configuration/README.md)
 
-La documentation de développement de l'API se trouve dans [Documentation/Developpement](Documentation/Developpement/README.md)
+La documentation de développement de l'API se trouve dans [Documentation/Developpement](Documentation/Developpement/README.md#développement-des-api-pour-lorm-mce)
 
 ## LICENCE
 

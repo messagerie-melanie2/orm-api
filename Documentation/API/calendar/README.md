@@ -20,6 +20,16 @@ Lister les événements associés à un calendrier
 
 Voir [calendar/events](events/README.md#calendarevents)
 
+### calendar/shares
+
+```url
+/api/api.php/calendar/shares
+```
+
+Lister les partages associés à un calendrier
+
+Voir [calendar/shares](events/README.md#calendarshares)
+
 ## GET calendar
 
 ### Utilisation

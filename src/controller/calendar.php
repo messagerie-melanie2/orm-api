@@ -101,6 +101,50 @@ class Calendar extends Controller {
     }
 
     /**
+     * Récupération des partages d'un calendrier
+     */
+    public static function shares()
+    {
+        if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
+            $user = null;
+
+            // Forcer l'uid dans le cas d'un user Basic
+            if (\Lib\Request::issetUser()) {
+                $user = \Lib\Objects::gi()->user();
+                $user->uid = \Lib\Request::getUser();
+            }
+            else {
+                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
+                if (isset($uid)) {
+                    $user = \Lib\Objects::gi()->user();
+                    $user->uid = $uid;
+                }
+            }
+
+            $calendar = \Lib\Objects::gi()->calendar([$user]);
+            $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
+
+            if ($calendar->load()) {
+                $shares = \Lib\Objects::gi()->share([$calendar]);
+                $is_group = \Lib\Request::getInputValue('is_group', \Lib\Request::INPUT_GET);
+
+                $shares->type = isset($is_group) && $is_group ? \LibMelanie\Api\Defaut\Share::TYPE_GROUP : \LibMelanie\Api\Defaut\Share::TYPE_USER;
+                $data = [];
+                foreach ($shares->getList() as $share) {
+                    $data[] = [
+                        'user' => $share->name,
+                        'acl' => $share->acl,
+                    ];
+                }
+                \Lib\Response::data($data);
+            }
+            else {
+                \Lib\Response::error("Calendar not found");
+            }
+        }
+    }
+
+    /**
      * Enregistrer/modifier un calendrier
      */
     public static function post()

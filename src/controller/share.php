@@ -21,6 +21,11 @@
 
 namespace Controller;
 
+/**
+ * Classe de traitement pour les partages
+ * 
+ * @package Controller
+ */
 class Share extends Controller {
     
 }

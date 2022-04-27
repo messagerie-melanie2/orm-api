@@ -67,6 +67,12 @@ $routing = [
                     'GET'       => 'events',
                 ],
             ],
+            'shares' => [
+                'class' => 'Calendar',
+                'methods'   => [
+                    'GET'       => 'shares',
+                ],
+            ],
         ],
     ],
     'event'         => [

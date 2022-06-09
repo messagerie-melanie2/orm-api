@@ -121,7 +121,6 @@ $mapping = [
         'perm',
     ],
     'contact' => [
-        "id",
         "addressbook",
         "uid",
         "type",

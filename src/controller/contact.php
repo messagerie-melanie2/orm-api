@@ -21,6 +21,95 @@
 
 namespace Controller;
 
+/**
+ * Classe de traitement pour les contacts
+ * 
+ * @package Controller
+ */
 class Contact extends Controller {
-    
+    /**
+     * Récupération d'un contact
+     */
+    public static function get()
+    {
+        if (\Lib\Request::checkInputValues(['uid', 'addressbook'], \Lib\Request::INPUT_GET)) {
+            $user = \Lib\Utils::getCurrentUser();
+
+            $addressbook = \Lib\Objects::gi()->addressbook([$user]);
+            $addressbook->id = \Lib\Request::getInputValue('addressbook', \Lib\Request::INPUT_GET);
+
+            $contact = \Lib\Objects::gi()->contact([$user, $addressbook]);
+            $contact->uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+
+            if ($contact->load()) {
+                \Lib\Response::data(\Lib\Mapping::get('contact', $contact));
+            }
+            else {
+                \Lib\Response::error("Contact not found");
+            }
+        }
+    }
+
+    /**
+     * Enregistrer/modifier un contact
+     */
+    public static function post()
+    {
+        $json = \Lib\Request::readJson();
+
+        if (isset($json) && $json !== false) {
+
+            if (\Lib\Request::checkInputValues(['uid', 'addressbook'], null, $json)) {
+                $user = \Lib\Utils::getCurrentUser('owner', null, $json);
+
+                $addressbook = \Lib\Objects::gi()->addressbook([$user]);
+                $addressbook->id = $json['addressbook'];
+
+                $contact = \Lib\Objects::gi()->contact([$user, $addressbook]);
+                $contact->uid = $json['uid'];
+                $contact->load();
+
+                $contact = \Lib\Mapping::set('contact', $contact, $json);
+                $ret = $contact->save();
+
+                if (!is_null($ret)) {
+                    \Lib\Response::success(true);
+                }
+                else {
+                    \Lib\Response::error("Error when saving the contact");
+                }
+            }
+        }
+        else {
+            \Lib\Response::error("Invalid json parameter");
+        }
+    }
+
+    /**
+     * Suppression d'un contact
+     */
+    public static function delete()
+    {
+        if (\Lib\Request::checkInputValues(['uid', 'addressbook'], \Lib\Request::INPUT_GET)) {
+            $user = \Lib\Utils::getCurrentUser();
+
+            $addressbook = \Lib\Objects::gi()->addressbook([$user]);
+            $addressbook->id = \Lib\Request::getInputValue('addressbook', \Lib\Request::INPUT_GET);
+
+            $contact = \Lib\Objects::gi()->contact([$user, $addressbook]);
+            $contact->uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
+
+            if ($contact->load()) {
+                if ($contact->delete()) {
+                    \Lib\Response::success(true);
+                }
+                else {
+                    \Lib\Response::error("Error when deleting contact");
+                }
+            }
+            else {
+                \Lib\Response::error("Contact not found");
+            }
+        }
+    }
 }

@@ -120,7 +120,7 @@ class Addressbook extends Controller {
                 $data = [];
                 foreach ($shares->getList() as $share) {
                     $data[] = [
-                        'user' => $share->name,
+                        'name' => $share->name,
                         'acl' => $share->acl,
                     ];
                 }

@@ -19,15 +19,15 @@ GET /api/api.php/addressbook/shares?id=<addressbook_id>&is_group=0
   "success": true,
   "data": [
     {
-      "user": "<user_uid>",
+      "name": "<user_uid>",
       "acl": "6"
     },
     {
-      "user": "<user_uid1>",
+      "name": "<user_uid1>",
       "acl": "30"
     },
     {
-      "user": "<user_uid2>",
+      "name": "<user_uid2>",
       "acl": "4"
     }
   ]
@@ -35,7 +35,7 @@ GET /api/api.php/addressbook/shares?id=<addressbook_id>&is_group=0
 ```
 
 #### Informations
- - `user` : Identifiant de l'utilisateur ou du groupe
+ - `name` : Identifiant de l'utilisateur ou du groupe
  - `acl` : Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
 
 ### Paramètres

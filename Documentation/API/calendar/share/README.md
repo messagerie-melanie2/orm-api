@@ -2,14 +2,14 @@
 
 [Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint calendar](../README.md#calendar)
 
-API permettant de récupérer les partages associés à un calendrier
+API permettant de récupérer les informations d'un partage, créer, modifier ou supprimer un partage associé à un calendrier
 
 ## GET calendar/share
 
 ### Utilisation
 
 ```url
-GET /api/api.php/calendar/share?id=<calendar_id>&is_group=0
+GET /api/api.php/calendar/share?id=<calendar_id>&name=<user_uid>
 ```
 
 ### Résultat
@@ -17,29 +17,69 @@ GET /api/api.php/calendar/share?id=<calendar_id>&is_group=0
 ```json
 {
   "success": true,
-  "data": [
-    {
-      "user": "<user_uid>",
-      "acl": "6"
-    },
-    {
-      "user": "<user_uid1>",
-      "acl": "30"
-    },
-    {
-      "user": "<user_uid2>",
-      "acl": "4"
-    }
-  ]
+  "data": {
+    "acl": "30"
+  }
 }
 ```
 
 #### Informations
- - `user` : Identifiant de l'utilisateur ou du groupe
  - `acl` : Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
 
 ### Paramètres
 
  - `id` : [Obligatoire] identifiant du calendrier à récupérer
- - `user` : [Optionnel] identifiant de l'utilisateur à associer au calendrier
- - `is_group` : [Optionnel] Récupérer les droits sur les groupes ou sur les utilisateurs (valeurs `0` ou `1`)
+ - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage est positionné
+
+## POST calendar/share
+
+### Utilisation
+
+#### Url
+```url
+POST /api/api.php/calendar/share
+```
+
+#### Body
+```json
+{
+  "id": "<calendar_id>",
+  "name": "<user_uid>",
+  "acl": "6"
+}
+```
+
+### Résultat
+
+```json
+{
+  "success": true
+}
+```
+
+### Paramètres
+
+ - `id` : [Obligatoire] identifiant du calendrier sur lequel doit être positionné le partage
+ - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage doit être positionné
+ - `acl` : Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
+
+## DELETE calendar/share
+
+### Utilisation
+
+```url
+DELETE /api/api.php/calendar/share?id=<calendar_id>&name=<user_uid>
+```
+
+### Résultat
+
+```json
+{
+  "success": true,
+}
+```
+
+### Paramètres
+
+ - `calendar_id` : [Obligatoire] identifiant du calendrier auquel appartient l'événement
+ - `event_uid` : [Obligatoire] identifiant de l'événement à supprimer

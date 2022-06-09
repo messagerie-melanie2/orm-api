@@ -30,12 +30,13 @@ class Utils {
     /**
      * Retourne l'utilisateur courant basé sur l'auth Basic ou la requête
      * 
-     * @param string $param Nom du paramètre pour récupérer l'uid depuis la requête
+     * @param string $param Nom du paramètre pour récupérer l'uid depuis la requête ou le json
      * @param string $source Type de requête (GET ou POST)
+     * @param array $json Si les données doivent plutôt être récupérees du json
      * 
      * @return \LibMelanie\Api\Defaut\User|null Null si non trouvé
      */
-    public static function getCurrentUser($param = 'user', $source = Request::INPUT_GET)
+    public static function getCurrentUser($param = 'user', $source = Request::INPUT_GET, $json = null)
     {
         $user = null;
 
@@ -43,6 +44,12 @@ class Utils {
         if (Request::issetUser()) {
             $user = Objects::gi()->user();
             $user->uid = Request::getUser();
+        }
+        else if (isset($json)) {
+            if (isset($json[$param])) {
+                $user = Objects::gi()->user();
+                $user->uid = $json[$param];
+            }
         }
         else {
             $uid = Request::getInputValue($param, $source);

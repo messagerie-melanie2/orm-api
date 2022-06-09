@@ -27,5 +27,31 @@ namespace Lib;
  * @package Lib
  */
 class Utils {
-    
+    /**
+     * Retourne l'utilisateur courant basé sur l'auth Basic ou la requête
+     * 
+     * @param string $param Nom du paramètre pour récupérer l'uid depuis la requête
+     * @param string $source Type de requête (GET ou POST)
+     * 
+     * @return \LibMelanie\Api\Defaut\User|null Null si non trouvé
+     */
+    public static function getCurrentUser($param = 'user', $source = Request::INPUT_GET)
+    {
+        $user = null;
+
+        // Forcer l'uid dans le cas d'un user Basic
+        if (Request::issetUser()) {
+            $user = Objects::gi()->user();
+            $user->uid = Request::getUser();
+        }
+        else {
+            $uid = Request::getInputValue($param, $source);
+            if (isset($uid)) {
+                $user = Objects::gi()->user();
+                $user->uid = $uid;
+            }
+        }
+
+        return $user;
+    }
 }

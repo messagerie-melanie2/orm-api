@@ -33,20 +33,7 @@ class Calendar extends Controller {
     public static function get()
     {
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
-            $user = null;
-
-            // Forcer l'uid dans le cas d'un user Basic
-            if (\Lib\Request::issetUser()) {
-                $user = \Lib\Objects::gi()->user();
-                $user->uid = \Lib\Request::getUser();
-            }
-            else {
-                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
-                if (isset($uid)) {
-                    $user = \Lib\Objects::gi()->user();
-                    $user->uid = $uid;
-                }
-            }
+            $user = \Lib\Utils::getCurrentUser();
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
             $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
@@ -66,20 +53,7 @@ class Calendar extends Controller {
     public static function events()
     {
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
-            $user = null;
-
-            // Forcer l'uid dans le cas d'un user Basic
-            if (\Lib\Request::issetUser()) {
-                $user = \Lib\Objects::gi()->user();
-                $user->uid = \Lib\Request::getUser();
-            }
-            else {
-                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
-                if (isset($uid)) {
-                    $user = \Lib\Objects::gi()->user();
-                    $user->uid = $uid;
-                }
-            }
+            $user = \Lib\Utils::getCurrentUser();
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
             $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
@@ -106,20 +80,7 @@ class Calendar extends Controller {
     public static function shares()
     {
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
-            $user = null;
-
-            // Forcer l'uid dans le cas d'un user Basic
-            if (\Lib\Request::issetUser()) {
-                $user = \Lib\Objects::gi()->user();
-                $user->uid = \Lib\Request::getUser();
-            }
-            else {
-                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
-                if (isset($uid)) {
-                    $user = \Lib\Objects::gi()->user();
-                    $user->uid = $uid;
-                }
-            }
+            $user = \Lib\Utils::getCurrentUser();
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
             $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
@@ -200,20 +161,7 @@ class Calendar extends Controller {
     public static function delete()
     {
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
-            $user = null;
-
-            // Forcer l'uid dans le cas d'un user Basic
-            if (\Lib\Request::issetUser()) {
-                $user = \Lib\Objects::gi()->user();
-                $user->uid = \Lib\Request::getUser();
-            }
-            else {
-                $uid = \Lib\Request::getInputValue('user', \Lib\Request::INPUT_GET);
-                if (isset($uid)) {
-                    $user = \Lib\Objects::gi()->user();
-                    $user->uid = $uid;
-                }
-            }
+            $user = \Lib\Utils::getCurrentUser();
 
             $calendar = \Lib\Objects::gi()->calendar([$user]);
             $calendar->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);

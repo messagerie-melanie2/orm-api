@@ -17,14 +17,12 @@ GET /api/api.php/user/calendars/default?uid=<user_uid>
 ```json
 {
   "success": true,
-  "data": [
-    {
+  "data": {
       "id": "<calendar_id>",
       "name": "<calendar_name>",
       "owner": "<calendar_owner>",
       "perm": "<perm_value>"
-    }
-  ]
+  }
 }
 ```
 

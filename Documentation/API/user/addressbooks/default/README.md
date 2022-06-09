@@ -17,14 +17,12 @@ GET /api/api.php/user/addressbooks/default?uid=<user_uid>
 ```json
 {
   "success": true,
-  "data": [
-    {
-      "id": "<addressbook_id>",
-      "name": "<addressbook_name>",
-      "owner": "<addressbook_owner>",
-      "perm": "<perm_value>"
-    }
-  ]
+  "data": {
+    "id": "<addressbook_id>",
+    "name": "<addressbook_name>",
+    "owner": "<addressbook_owner>",
+    "perm": "<perm_value>"
+  }
 }
 ```
 

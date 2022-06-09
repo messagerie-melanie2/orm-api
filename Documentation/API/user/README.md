@@ -40,6 +40,36 @@ Récupérer la liste de tous les calendriers accessibles à l'utilisateur
 
 Voir [user/calendars/shared](calendars/shared/README.md#usercalendarsshared)
 
+### user/addressbooks
+
+```url
+/api/api.php/user/addressbooks
+```
+
+Lister les carnets d'adresses associés à un utilisateur
+
+Voir [user/addressbooks](addressbooks/README.md#useraddressbooks)
+
+### user/addressbooks/default
+
+```url
+/api/api.php/user/addressbooks/default
+```
+
+Récupérer le carnet d'adresses par défaut de l'utilisateur
+
+Voir [user/addressbooks/default](addressbooks/default/README.md#useraddressbooksdefault)
+
+### user/addressbooks/shared
+
+```url
+/api/api.php/user/addressbooks/shared
+```
+
+Récupérer la liste de tous les carnets d'adresses accessibles à l'utilisateur
+
+Voir [user/addressbooks/shared](addressbooks/shared/README.md#useraddressbooksshared)
+
 ## GET user
 
 ### Utilisation

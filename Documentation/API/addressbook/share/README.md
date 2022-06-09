@@ -1,15 +1,15 @@
-# calendar/share
+# addressbook/share
 
-[Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint calendar](../README.md#calendar)
+[Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint addressbook](../README.md#addressbook)
 
-API permettant de récupérer les partages associés à un calendrier
+API permettant de récupérer les informations d'un partage, créer, modifier ou supprimer un partage associé à un carnet d'adresses
 
-## GET calendar/share
+## GET addressbook/share
 
 ### Utilisation
 
 ```url
-GET /api/api.php/calendar/share?id=<calendar_id>&is_group=0
+GET /api/api.php/addressbook/share?id=<addressbook_id>&name=<user_uid>
 ```
 
 ### Résultat
@@ -17,29 +17,69 @@ GET /api/api.php/calendar/share?id=<calendar_id>&is_group=0
 ```json
 {
   "success": true,
-  "data": [
-    {
-      "user": "<user_uid>",
-      "acl": "6"
-    },
-    {
-      "user": "<user_uid1>",
-      "acl": "30"
-    },
-    {
-      "user": "<user_uid2>",
-      "acl": "4"
-    }
-  ]
+  "data": {
+    "acl": "30"
+  }
 }
 ```
 
 #### Informations
- - `user` : Identifiant de l'utilisateur ou du groupe
- - `acl` : Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
+ - `acl` : Niveau de droit : `6` Lecture seule, `30` Lecture/écriture 
 
 ### Paramètres
 
- - `id` : [Obligatoire] identifiant du calendrier à récupérer
- - `user` : [Optionnel] identifiant de l'utilisateur à associer au calendrier
- - `is_group` : [Optionnel] Récupérer les droits sur les groupes ou sur les utilisateurs (valeurs `0` ou `1`)
+ - `id` : [Obligatoire] identifiant du carnet d'adresses à récupérer
+ - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage est positionné
+
+## POST addressbook/share
+
+### Utilisation
+
+#### Url
+```url
+POST /api/api.php/addressbook/share
+```
+
+#### Body
+```json
+{
+  "id": "<addressbook_id>",
+  "name": "<user_uid>",
+  "acl": "6"
+}
+```
+
+### Résultat
+
+```json
+{
+  "success": true
+}
+```
+
+### Paramètres
+
+ - `id` : [Obligatoire] identifiant du carnet d'adresses sur lequel doit être positionné le partage
+ - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage doit être positionné
+ - `acl` : [Obligatoire] Niveau de droit : `6` Lecture seule, `30` Lecture/écriture 
+
+## DELETE addressbook/share
+
+### Utilisation
+
+```url
+DELETE /api/api.php/addressbook/share?id=<addressbook_id>&name=<user_uid>
+```
+
+### Résultat
+
+```json
+{
+  "success": true,
+}
+```
+
+### Paramètres
+
+ - `addressbook_id` : [Obligatoire] identifiant du carnet d'adresses auquel appartient l'événement
+ - `event_uid` : [Obligatoire] identifiant de l'événement à supprimer

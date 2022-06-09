@@ -61,7 +61,7 @@ POST /api/api.php/calendar/share
 
  - `id` : [Obligatoire] identifiant du calendrier sur lequel doit être positionné le partage
  - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage doit être positionné
- - `acl` : Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
+ - `acl` : [Obligatoire] Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
 
 ## DELETE calendar/share
 

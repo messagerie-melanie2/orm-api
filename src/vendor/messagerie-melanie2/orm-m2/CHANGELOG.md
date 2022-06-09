@@ -1,3 +1,34 @@
+ORM M2 - 0.6.2.4
+------
+- 0006800: Pour une invitation interne, un participant ne peut pas modifier l'horaire
+- 0006759: [Event] Ajouter un champ version pour les évolutions de schéma
+- 0006803: [Attendee] Support du CUTYPE
+- 0006802: [Attendee] Ajoute une méthode is_ressource
+- 0006801: [En attente] Gestion des boites partagées
+
+ORM M2 - 0.6.2.3
+------
+- Fix sur la fonctionnalité de s'inviter pour un participant
+
+ORM M2 - 0.6.2.2
+------
+- 0006295: [En attente] Identifier des changements de lieu non majeur
+- 0006752: Lors du saveAttendees, forcer la date de l'événement de l'organisateur
+- 0006751: MR MCE 0000007 Allow ldap servers that forbid anonymous binds
+
+ORM M2 - 0.6.2.1
+------
+- 0006686: Problème de sequence en ICS
+- 0006698: Incrémenter la séquence des participants dans le cas d'une suppression par l'organisateur
+- 0006730: [VCard] Gestion des membres par uid
+- 0006750: [VCard] Problème lorsque la propriété TYPE n'est pas présente
+- 0006729: Ajouter des méthodes getAllGroups et getAllGroupsAndContacts dans Addressbook
+- 0006721: Lors de la création de l'occurence chez l'organisateur, ne pas récupérer les dates du participants
+
+ORM M2 - 0.6.2
+------
+- 0006191: Mode en attente lorsque le participant est une liste
+
 ORM M2 - 0.6.1.37
 ------
 - Fix sur les caractères non supportés par Lightning

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5af2700c7c34fc1c82b0553bdafa10d1",
+    "content-hash": "c830216757a0782192ea71a3c8ac970b",
     "packages": [
         {
             "name": "messagerie-melanie2/orm-m2",
-            "version": "0.6.1.37",
+            "version": "0.6.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/messagerie-melanie2/ORM-M2.git",
-                "reference": "50f8cc50fde364bbd399cef5bc2131761d1e5882"
+                "reference": "d28b6ca8c246a771f81b3960a4ae7ecc4c4a36ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/messagerie-melanie2/ORM-M2/zipball/50f8cc50fde364bbd399cef5bc2131761d1e5882",
-                "reference": "50f8cc50fde364bbd399cef5bc2131761d1e5882",
+                "url": "https://api.github.com/repos/messagerie-melanie2/ORM-M2/zipball/d28b6ca8c246a771f81b3960a4ae7ecc4c4a36ac",
+                "reference": "d28b6ca8c246a771f81b3960a4ae7ecc4c4a36ac",
                 "shasum": ""
             },
             "require": {
@@ -59,10 +59,10 @@
                 "Tasks"
             ],
             "support": {
-                "source": "https://github.com/messagerie-melanie2/ORM-M2/tree/0.6.1.37",
+                "source": "https://github.com/messagerie-melanie2/ORM-M2/tree/0.6.2.4",
                 "issues": "https://github.com/messagerie-melanie2/ORM-M2/issues"
             },
-            "time": "2022-04-06T09:55:09+00:00"
+            "time": "2022-06-09T08:56:24+00:00"
         }
     ],
     "packages-dev": [],

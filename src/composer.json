@@ -9,7 +9,7 @@
 	],
 	"require" : {
 		"php" : ">=7.3.0",
-		"messagerie-melanie2/orm-m2" : "~0.6.1.0"
+		"messagerie-melanie2/orm-m2" : "~0.6.2.0"
 	},
 	"autoload": {
         "classmap": ["lib", "controller"]

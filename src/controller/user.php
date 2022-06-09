@@ -32,11 +32,9 @@ class User extends Controller {
      */
     public static function get()
     {
-        $uid = self::getUid();
+        $user = \Lib\Utils::getCurrentUser('uid');
 
-        if (isset($uid)) {
-            $user = \Lib\Objects::gi()->user();
-            $user->uid = $uid;
+        if (isset($user)) {
 
             // Gestion des attributs
             $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);;
@@ -54,22 +52,5 @@ class User extends Controller {
         else {
             \Lib\Response::error("Missing parameter uid");
         }
-    }
-
-    /**
-     * Retourne l'uid de l'utilisateur
-     * 
-     * @return string
-     */
-    public static function getUid()
-    {
-        // Forcer l'uid dans le cas d'un user Basic
-        if (\Lib\Request::issetUser()) {
-            $uid = \Lib\Request::getUser();
-        }
-        else {
-            $uid = \Lib\Request::getInputValue('uid', \Lib\Request::INPUT_GET);
-        }
-        return $uid;
     }
 }

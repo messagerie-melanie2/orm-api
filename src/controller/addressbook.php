@@ -115,21 +115,7 @@ class Addressbook extends Controller {
         if (isset($json) && $json !== false) {
 
             if (\Lib\Request::checkInputValues(['id', 'name'], null, $json)) {
-                // Forcer l'uid dans le cas d'un user Basic
-                if (\Lib\Request::issetUser()) {
-                    $user = \Lib\Objects::gi()->user();
-                    $user->uid = \Lib\Request::getUser();
-                }
-                else {
-                    if (isset($json['owner'])) {
-                        $user = \Lib\Objects::gi()->user();
-                        $user->uid = $json['owner'];
-                    }
-                    else {
-                        \Lib\Response::error("Missing parameter owner");
-                        return;
-                    }
-                }
+                $user = \Lib\Utils::getCurrentUser('owner', null, $json);
 
                 $addressbook = \Lib\Objects::gi()->addressbook([$user]);
                 $addressbook->id = $json['id'];

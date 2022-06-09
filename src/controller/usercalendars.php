@@ -32,11 +32,9 @@ class UserCalendars extends Controller {
      */
     public static function get()
     {
-        $uid = User::getUid();
+        $user = \Lib\Utils::getCurrentUser('uid');
 
-        if (isset($uid)) {
-            $user = \Lib\Objects::gi()->user();
-            $user->uid = $uid;
+        if (isset($user)) {
             $calendars = $user->getUserCalendars();
             if (isset($calendars)) {
                 $data = [];
@@ -59,11 +57,9 @@ class UserCalendars extends Controller {
      */
     public static function default()
     {
-        $uid = User::getUid();
+        $user = \Lib\Utils::getCurrentUser('uid');
 
-        if (isset($uid)) {
-            $user = \Lib\Objects::gi()->user();
-            $user->uid = $uid;
+        if (isset($user)) {
             $calendar = $user->getDefaultCalendar();
             if (isset($calendar)) {
                 \Lib\Response::data(\Lib\Mapping::get('calendar', $calendar));
@@ -82,11 +78,9 @@ class UserCalendars extends Controller {
      */
     public static function shared()
     {
-        $uid = User::getUid();
+        $user = \Lib\Utils::getCurrentUser('uid');
 
-        if (isset($uid)) {
-            $user = \Lib\Objects::gi()->user();
-            $user->uid = $uid;
+        if (isset($user)) {
             $calendars = $user->getSharedCalendars();
             if (isset($calendars)) {
                 $data = [];

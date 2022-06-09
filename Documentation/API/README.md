@@ -46,6 +46,36 @@ Récupérer la liste de tous les calendriers accessibles à l'utilisateur
 
 Voir [user/calendars/shared](user/calendars/shared/README.md#usercalendarsshared)
 
+### user/addressbooks
+
+```url
+/api/api.php/user/addressbooks
+```
+
+Lister les carnets d'adresses associés à un utilisateur
+
+Voir [user/addressbooks](user/addressbooks/README.md#useraddressbooks)
+
+### user/addressbooks/default
+
+```url
+/api/api.php/user/addressbooks/default
+```
+
+Récupérer le carnet d'adresses par défaut de l'utilisateur
+
+Voir [user/addressbooks/default](user/addressbooks/default/README.md#useraddressbooksdefault)
+
+### user/addressbooks/shared
+
+```url
+/api/api.php/user/addressbooks/shared
+```
+
+Récupérer la liste de tous les carnets d'adresses accessibles à l'utilisateur
+
+Voir [user/addressbooks/shared](user/addressbooks/shared/README.md#useraddressbooksshared)
+
 ### calendar
 
 ```url
@@ -76,6 +106,16 @@ Lister les partages associés à un calendrier
 
 Voir [calendar/shares](calendar/shares/README.md#calendarshares)
 
+### calendar/share
+
+```url
+/api/api.php/calendar/share
+```
+
+Actions sur un partage associés à un calendrier
+
+Voir [calendar/share](calendar/share/README.md#calendarshare)
+
 ### event
 
 ```url
@@ -85,6 +125,56 @@ Voir [calendar/shares](calendar/shares/README.md#calendarshares)
 Action autour d'un événement et des objets associés à un événement (pièces jointes, participants, ...).
 
 Voir [event](event/README.md#event)
+
+### addressbook
+
+```url
+/api/api.php/addressbook
+```
+
+Action autour d'un carnet d'adresses et des objets associés à un carnet d'adresse (partages, contacts, ...).
+
+Voir [addressbook](addressbook/README.md#addressbook)
+
+### addressbook/contacts
+
+```url
+/api/api.php/addressbook/contacts
+```
+
+Lister les contacts associés à un carnet d'adresses
+
+Voir [addressbook/contacts](addressbook/contacts/README.md#addressbookcontacts)
+
+### addressbook/shares
+
+```url
+/api/api.php/addressbook/shares
+```
+
+Lister les partages associés à un carnet d'adresses
+
+Voir [addressbook/shares](addressbook/shares/README.md#addressbookshares)
+
+### addressbook/share
+
+```url
+/api/api.php/addressbook/share
+```
+
+Actions sur un partage associés à un carnet d'adresses
+
+Voir [addressbook/share](addressbook/share/README.md#addressbookshare)
+
+### contact
+
+```url
+/api/api.php/contact
+```
+
+Action autour d'un contact
+
+Voir [contact](contact/README.md#contact)
 
 ## Authentification
 

@@ -41,4 +41,3 @@ GET /api/api.php/calendar/events?id=<calendar_id>
 ### Paramètres
 
  - `id` : [Obligatoire] identifiant du calendrier à récupérer
- - `user` : [Optionnel] identifiant de l'utilisateur à associer au calendrier (change la valeur de perm voir)

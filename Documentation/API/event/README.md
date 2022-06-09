@@ -265,4 +265,4 @@ DELETE /api/api.php/event?calendar=<calendar_id>&uid=<event_uid>
 ### Paramètres
 
  - `calendar_id` : [Obligatoire] identifiant du calendrier auquel appartient l'événement
- - `event_uid` : [Obligatoire] identifiant de l'événement à récupérer
+ - `event_uid` : [Obligatoire] identifiant de l'événement à supprimer

@@ -123,7 +123,6 @@ $mapping = [
     'contact' => [
         "addressbook",
         "uid",
-        "type",
         "modified",
         "members",
         "name",
@@ -171,5 +170,12 @@ $mapping = [
         "geo",
         "pager",
         "role",
+    ],
+    'group' => [
+        "addressbook",
+        "uid",
+        "modified",
+        "members",
+        "lastname",
     ],
 ];

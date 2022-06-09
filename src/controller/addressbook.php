@@ -75,6 +75,33 @@ class Addressbook extends Controller {
     }
 
     /**
+     * Récupération des groupes d'un carnet d'adresses
+     */
+    public static function groups()
+    {
+        if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
+            $user = \Lib\Utils::getCurrentUser();
+
+            $addressbook = \Lib\Objects::gi()->addressbook([$user]);
+            $addressbook->id = \Lib\Request::getInputValue('id', \Lib\Request::INPUT_GET);
+
+            if ($addressbook->load()) {
+                $groups = $addressbook->getAllGroups();
+                $data = [];
+
+                foreach ($groups as $group) {
+                    $data[] = \Lib\Mapping::get('group', $group);
+                }
+
+                \Lib\Response::data($data);
+            }
+            else {
+                \Lib\Response::error("Addressbook not found");
+            }
+        }
+    }
+
+    /**
      * Récupération des partages d'un carnet d'adresses
      */
     public static function shares()

@@ -121,6 +121,12 @@ $routing = [
                     'GET'       => 'contacts',
                 ],
             ],
+            'groups' => [
+                'class' => 'Addressbook',
+                'methods'   => [
+                    'GET'       => 'groups',
+                ],
+            ],
             'shares' => [
                 'class' => 'Addressbook',
                 'methods'   => [

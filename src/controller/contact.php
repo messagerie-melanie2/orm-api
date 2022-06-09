@@ -67,9 +67,19 @@ class Contact extends Controller {
 
                 $contact = \Lib\Objects::gi()->contact([$user, $addressbook]);
                 $contact->uid = $json['uid'];
-                $contact->load();
+                
+                if (!$contact->load()) {
+                    // Gérer l'id
+                    $contact->id = hash('sha256', $contact->uid . $contact->calendar . uniqid(), false);
+                    $contact->type = \LibMelanie\Api\Defaut\Contact::TYPE_CONTACT;
+                }
 
                 $contact = \Lib\Mapping::set('contact', $contact, $json);
+
+                // Gérer le modified
+                if (!isset($json['modified'])) {
+                    $contact->modified = time();
+                }
                 $ret = $contact->save();
 
                 if (!is_null($ret)) {

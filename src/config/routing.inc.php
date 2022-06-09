@@ -92,6 +92,13 @@ $routing = [
                     'GET'       => 'shares',
                 ],
             ],
+            'share' => [
+                'methods'   => [
+                    'GET'       => true,
+                    'POST'      => true,
+                    'DELETE'    => true,
+                ],
+            ],
         ],
     ],
     'event'         => [
@@ -118,6 +125,13 @@ $routing = [
                 'class' => 'Addressbook',
                 'methods'   => [
                     'GET'       => 'shares',
+                ],
+            ],
+            'share' => [
+                'methods'   => [
+                    'GET'       => true,
+                    'POST'      => true,
+                    'DELETE'    => true,
                 ],
             ],
         ],

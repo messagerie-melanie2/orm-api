@@ -52,6 +52,25 @@ $routing = [
                     ],
                 ],
             ],
+            'addressbooks' => [
+                'methods'   => [
+                    'GET'       => true,
+                ],
+                'routing' => [
+                    'default' => [
+                        'class' => 'UserAddressbooks',
+                        'methods'   => [
+                            'GET'       => 'default',
+                        ],
+                    ],
+                    'shared' => [
+                        'class' => 'UserAddressbooks',
+                        'methods'   => [
+                            'GET'       => 'shared',
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
     'calendar'      => [
@@ -82,9 +101,35 @@ $routing = [
             'DELETE'    => true,
         ],
     ],
+    'addressbook'      => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => true,
+        ],
+        'routing' => [
+            'contacts' => [
+                'class' => 'Addressbook',
+                'methods'   => [
+                    'GET'       => 'contacts',
+                ],
+            ],
+            'shares' => [
+                'class' => 'Addressbook',
+                'methods'   => [
+                    'GET'       => 'shares',
+                ],
+            ],
+        ],
+    ],
+    'contact'         => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => true,
+        ],
+    ],
     'taskslist'     => [],
     'task'          => [],
-    'addressbook'   => [],
-    'contact'       => [],
     'share'         => [],
 ];

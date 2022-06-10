@@ -2,9 +2,11 @@
 
 [Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint addressbook](../README.md#addressbook)
 
-API permettant de récupérer les partages associés à un calendrier
+API permettant de récupérer les partages associés à un carnet d'adresses
 
 ## GET addressbook/shares
+
+Récupérer les partages associés à un carnet d'adresses à partir de l'identifiant du carnet
 
 ### Utilisation
 
@@ -41,5 +43,5 @@ GET /api/api.php/addressbook/shares?id=<addressbook_id>&is_group=0
 ### Paramètres
 
  - `id` : [Obligatoire] identifiant du carnet d'adresses à récupérer
- - `user` : [Optionnel] identifiant de l'utilisateur à associer au carnet d'adresses
+ - `name` : [Optionnel] identifiant de l'utilisateur à associer au carnet d'adresses
  - `is_group` : [Optionnel] Récupérer les droits sur les groupes ou sur les utilisateurs (valeurs `0` ou `1`)

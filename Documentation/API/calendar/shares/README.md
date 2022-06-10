@@ -6,6 +6,8 @@ API permettant de récupérer les partages associés à un calendrier
 
 ## GET calendar/shares
 
+Récupérer les partages associés à un calendrier à partir de l'identifiant du calendrier
+
 ### Utilisation
 
 ```url
@@ -41,5 +43,5 @@ GET /api/api.php/calendar/shares?id=<calendar_id>&is_group=0
 ### Paramètres
 
  - `id` : [Obligatoire] identifiant du calendrier à récupérer
- - `user` : [Optionnel] identifiant de l'utilisateur à associer au calendrier
+ - `name` : [Optionnel] identifiant de l'utilisateur à associer au calendrier
  - `is_group` : [Optionnel] Récupérer les droits sur les groupes ou sur les utilisateurs (valeurs `0` ou `1`)

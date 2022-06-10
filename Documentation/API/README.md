@@ -12,7 +12,7 @@ Liste des accès utilisables par l'API
 /api/api.php/user
 ```
 
-Action autour d'un utilisateur et des objets associés à un utilisateur (partages, calendriers, ...).
+Actions autour d'un utilisateur et des objets associés à un utilisateur (partages, calendriers, ...).
 
 Voir [user](user/README.md#user)
 
@@ -82,7 +82,7 @@ Voir [user/addressbooks/shared](user/addressbooks/shared/README.md#useraddressbo
 /api/api.php/calendar
 ```
 
-Action autour d'un calendrier et des objets associés à un calendrier (partages, événements, ...).
+Actions autour d'un calendrier et des objets associés à un calendrier (partages, événements, ...).
 
 Voir [calendar](calendar/README.md#calendar)
 
@@ -122,7 +122,7 @@ Voir [calendar/share](calendar/share/README.md#calendarshare)
 /api/api.php/event
 ```
 
-Action autour d'un événement et des objets associés à un événement (pièces jointes, participants, ...).
+Actions autour d'un événement et des objets associés à un événement (pièces jointes, participants, ...).
 
 Voir [event](event/README.md#event)
 
@@ -132,7 +132,7 @@ Voir [event](event/README.md#event)
 /api/api.php/addressbook
 ```
 
-Action autour d'un carnet d'adresses et des objets associés à un carnet d'adresse (partages, contacts, ...).
+Actions autour d'un carnet d'adresses et des objets associés à un carnet d'adresse (partages, contacts, ...).
 
 Voir [addressbook](addressbook/README.md#addressbook)
 
@@ -172,7 +172,7 @@ Voir [addressbook/share](addressbook/share/README.md#addressbookshare)
 /api/api.php/contact
 ```
 
-Action autour d'un contact
+Actions autour d'un contact
 
 Voir [contact](contact/README.md#contact)
 

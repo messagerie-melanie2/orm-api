@@ -6,6 +6,8 @@ API permettant de récupérer les informations d'un partage, créer, modifier ou
 
 ## GET calendar/share
 
+Récupérer un partage de calendrier depuis le carnet et l'identifiant du partage
+
 ### Utilisation
 
 ```url
@@ -32,6 +34,8 @@ GET /api/api.php/calendar/share?id=<calendar_id>&name=<user_uid>
  - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage est positionné
 
 ## POST calendar/share
+
+Créer un nouveau partage de calendrier ou en modifier un existant
 
 ### Utilisation
 
@@ -64,6 +68,8 @@ POST /api/api.php/calendar/share
  - `acl` : [Obligatoire] Niveau de droit : `4` Disponibilités, `6` Lecture seule, `30` Lecture/écriture 
 
 ## DELETE calendar/share
+
+Supprimer un partage de calendrier existant
 
 ### Utilisation
 

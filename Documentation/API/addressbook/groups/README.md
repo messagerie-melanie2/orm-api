@@ -1,17 +1,17 @@
-# addressbook/contacts
+# addressbook/groups
 
 [Retour à la documentation API](../../README.md#utilisation-de-lapi) | [Retour au endpoint addressbook](../README.md#addressbook)
 
-API permettant de récupérer les contacts associés à un carnet d'adresses
+API permettant de récupérer les groupes de contacts associés à un carnet d'adresses
 
-## GET addressbook/contacts
+## GET addressbook/groups
 
-Récupérer tous les contacts associés à un carnet d'adresses
+Récupérer tous les groupes de contacts associés à un carnet d'adresses
 
 ### Utilisation
 
 ```url
-GET /api/api.php/addressbook/contacts?id=<addressbook_id>
+GET /api/api.php/addressbook/groups?id=<addressbook_id>
 ```
 
 ### Résultat

@@ -146,6 +146,16 @@ Lister les contacts associés à un carnet d'adresses
 
 Voir [addressbook/contacts](addressbook/contacts/README.md#addressbookcontacts)
 
+### addressbook/groups
+
+```url
+/api/api.php/addressbook/groups
+```
+
+Lister les groupes de contacts associés à un carnet d'adresses
+
+Voir [addressbook/groups](addressbook/groups/README.md#addressbookgroups)
+
 ### addressbook/shares
 
 ```url

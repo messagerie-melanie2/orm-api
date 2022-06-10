@@ -20,6 +20,16 @@ Lister les contacts associés à un carnet d'adresses
 
 Voir [addressbook/contacts](contacts/README.md#addressbookcontacts)
 
+### addressbook/groups
+
+```url
+/api/api.php/addressbook/groups
+```
+
+Lister les groupes de contacts associés à un carnet d'adresses
+
+Voir [addressbook/groups](groups/README.md#addressbookgroups)
+
 ### addressbook/shares
 
 ```url
@@ -31,6 +41,8 @@ Lister les partages associés à un carnet d'adresses
 Voir [addressbook/shares](shares/README.md#addressbookshares)
 
 ## GET addressbook
+
+Récupérer un carnet d'adresses à partir de son identifiant
 
 ### Utilisation
 
@@ -58,6 +70,8 @@ GET /api/api.php/addressbook?id=<addressbook_id>
  - `user` : [Optionnel] identifiant de l'utilisateur à associer au carnet d'adresses (change la valeur de perm voir)
 
 ## POST addressbook
+
+Créer un nouveau carnet d'adresses ou en modifier un existant
 
 ### Utilisation
 
@@ -94,6 +108,8 @@ POST /api/api.php/addressbook
  - `owner` : [Obligatoire en création] identifiant du propriétaire du carnet d'adresses à créer
 
 ## DELETE addressbook
+
+Supprimer un carnet d'adresses existant
 
 ### Utilisation
 

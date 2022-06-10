@@ -112,7 +112,7 @@ Voir [calendar/shares](calendar/shares/README.md#calendarshares)
 /api/api.php/calendar/share
 ```
 
-Actions sur un partage associés à un calendrier
+Actions sur un partage associé à un calendrier
 
 Voir [calendar/share](calendar/share/README.md#calendarshare)
 
@@ -172,7 +172,7 @@ Voir [addressbook/shares](addressbook/shares/README.md#addressbookshares)
 /api/api.php/addressbook/share
 ```
 
-Actions sur un partage associés à un carnet d'adresses
+Actions sur un partage associé à un carnet d'adresses
 
 Voir [addressbook/share](addressbook/share/README.md#addressbookshare)
 

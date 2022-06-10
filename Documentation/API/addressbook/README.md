@@ -40,6 +40,16 @@ Lister les partages associés à un carnet d'adresses
 
 Voir [addressbook/shares](shares/README.md#addressbookshares)
 
+### addressbook/share
+
+```url
+/api/api.php/addressbook/share
+```
+
+Actions sur un partage associé à un carnet d'adresses
+
+Voir [addressbook/share](share/README.md#addressbookshare)
+
 ## GET addressbook
 
 Récupérer un carnet d'adresses à partir de son identifiant

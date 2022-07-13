@@ -6,6 +6,8 @@ API permettant de récupérer les informations d'un contacts, créer, modifier o
 
 ## GET contact
 
+Récupérer un contact à partir de son uid et de son carnet d'adresses
+
 ### Utilisation
 
 ```url
@@ -63,6 +65,8 @@ GET /api/api.php/contact?addressbook=<addressbook_id>&uid=<contact_uid>
  - `contact_uid` : [Obligatoire] identifiant du contact à récupérer
 
 ## POST contact
+
+Créer un nouveau contact ou en modifier un existant
 
 ### Utilisation
 
@@ -126,6 +130,8 @@ POST /api/api.php/contact
  - `uid` : [Obligatoire] identifiant du contact à récupérer
 
 ## DELETE contact
+
+Supprimer un contact existant
 
 ### Utilisation
 

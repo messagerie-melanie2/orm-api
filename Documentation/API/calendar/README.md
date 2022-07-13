@@ -30,6 +30,16 @@ Lister les partages associés à un calendrier
 
 Voir [calendar/shares](shares/README.md#calendarshares)
 
+### calendar/share
+
+```url
+/api/api.php/calendar/share
+```
+
+Actions sur un partage associé à un calendrier
+
+Voir [calendar/share](share/README.md#calendarshare)
+
 ## GET calendar
 
 ### Utilisation

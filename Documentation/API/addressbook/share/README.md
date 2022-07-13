@@ -6,6 +6,8 @@ API permettant de récupérer les informations d'un partage, créer, modifier ou
 
 ## GET addressbook/share
 
+Récupérer un partage de carnet d'adresses depuis le carnet et l'identifiant du partage
+
 ### Utilisation
 
 ```url
@@ -32,6 +34,8 @@ GET /api/api.php/addressbook/share?id=<addressbook_id>&name=<user_uid>
  - `name` : [Obligatoire] identifiant de l'utilisateur ou du groupe pour lequel le partage est positionné
 
 ## POST addressbook/share
+
+Créer un nouveau partage de carnet d'adresses ou en modifier un existant
 
 ### Utilisation
 
@@ -64,6 +68,8 @@ POST /api/api.php/addressbook/share
  - `acl` : [Obligatoire] Niveau de droit : `6` Lecture seule, `30` Lecture/écriture 
 
 ## DELETE addressbook/share
+
+Supprimer un partage de carnet d'adresses existant
 
 ### Utilisation
 

@@ -6,6 +6,8 @@ API permettant de récupérer les informations d'un événement, créer, modifie
 
 ## GET event
 
+Récupérer un événement à partir de son uid et son calendrier
+
 ### Utilisation
 
 ```url
@@ -131,6 +133,8 @@ GET /api/api.php/event?calendar=<calendar_id>&uid=<event_uid>
 
 ## POST event
 
+Créer un nouvel événement ou en modifier un existant
+
 ### Utilisation
 
 #### Url
@@ -247,6 +251,8 @@ POST /api/api.php/event
  - `uid` : [Obligatoire] identifiant de l'événement à récupérer
 
 ## DELETE event
+
+Supprimer un événement existant
 
 ### Utilisation
 

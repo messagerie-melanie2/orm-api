@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456
+class ComposerStaticInit2de54c8b06e66f8e302af452636d39bb
 {
     public static $files = array (
         '3a36fb0a6bafb8b516d4768ba4636f67' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/includes/includes_conf.php',
@@ -25,7 +25,6 @@ class ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456
     );
 
     public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Controller\\Addressbook' => __DIR__ . '/../..' . '/controller/addressbook.php',
         'Controller\\AddressbookShare' => __DIR__ . '/../..' . '/controller/addressbookshare.php',
         'Controller\\Calendar' => __DIR__ . '/../..' . '/controller/calendar.php',
@@ -100,6 +99,39 @@ class ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456
         'LibMelanie\\Api\\Dgfip\\Users\\Outofoffice' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Dgfip/Users/Outofoffice.php',
         'LibMelanie\\Api\\Dgfip\\Users\\Share' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Dgfip/Users/Share.php',
         'LibMelanie\\Api\\Dgfip\\Users\\Type' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Dgfip/Users/Type.php',
+        'LibMelanie\\Api\\Ens\\Addressbook' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Addressbook.php',
+        'LibMelanie\\Api\\Ens\\AddressbookSync' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/AddressbookSync.php',
+        'LibMelanie\\Api\\Ens\\Attachment' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Attachment.php',
+        'LibMelanie\\Api\\Ens\\Attendee' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Attendee.php',
+        'LibMelanie\\Api\\Ens\\Calendar' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Calendar.php',
+        'LibMelanie\\Api\\Ens\\CalendarSync' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/CalendarSync.php',
+        'LibMelanie\\Api\\Ens\\Contact' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Contact.php',
+        'LibMelanie\\Api\\Ens\\Event' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Event.php',
+        'LibMelanie\\Api\\Ens\\EventProperty' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/EventProperty.php',
+        'LibMelanie\\Api\\Ens\\Exception' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Exception.php',
+        'LibMelanie\\Api\\Ens\\Group' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Group.php',
+        'LibMelanie\\Api\\Ens\\Member' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Member.php',
+        'LibMelanie\\Api\\Ens\\News\\News' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/News/News.php',
+        'LibMelanie\\Api\\Ens\\News\\NewsShare' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/News/NewsShare.php',
+        'LibMelanie\\Api\\Ens\\News\\Rss' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/News/Rss.php',
+        'LibMelanie\\Api\\Ens\\Notification' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Notification.php',
+        'LibMelanie\\Api\\Ens\\ObjectShare' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/ObjectShare.php',
+        'LibMelanie\\Api\\Ens\\Organizer' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Organizer.php',
+        'LibMelanie\\Api\\Ens\\Recurrence' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Recurrence.php',
+        'LibMelanie\\Api\\Ens\\Share' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Share.php',
+        'LibMelanie\\Api\\Ens\\Task' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Task.php',
+        'LibMelanie\\Api\\Ens\\TaskProperty' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/TaskProperty.php',
+        'LibMelanie\\Api\\Ens\\Taskslist' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Taskslist.php',
+        'LibMelanie\\Api\\Ens\\TaskslistSync' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/TaskslistSync.php',
+        'LibMelanie\\Api\\Ens\\User' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/User.php',
+        'LibMelanie\\Api\\Ens\\UserPrefs' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/UserPrefs.php',
+        'LibMelanie\\Api\\Ens\\Users\\Outofoffice' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Users/Outofoffice.php',
+        'LibMelanie\\Api\\Ens\\Users\\Share' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Users/Share.php',
+        'LibMelanie\\Api\\Ens\\Users\\Type' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Users/Type.php',
+        'LibMelanie\\Api\\Ens\\Workspace' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Workspace.php',
+        'LibMelanie\\Api\\Ens\\Workspaces\\Hashtag' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Workspaces/Hashtag.php',
+        'LibMelanie\\Api\\Ens\\Workspaces\\HashtagWorkspaceRef' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Workspaces/HashtagWorkspaceRef.php',
+        'LibMelanie\\Api\\Ens\\Workspaces\\Share' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Ens/Workspaces/Share.php',
         'LibMelanie\\Api\\Gn\\Addressbook' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Gn/Addressbook.php',
         'LibMelanie\\Api\\Gn\\AddressbookSync' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Gn/AddressbookSync.php',
         'LibMelanie\\Api\\Gn\\Attachment' => __DIR__ . '/..' . '/messagerie-melanie2/orm-m2/src/Api/Gn/Attachment.php',
@@ -308,9 +340,9 @@ class ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit38df98c26d1f0a1ba94f02b80f611456::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2de54c8b06e66f8e302af452636d39bb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2de54c8b06e66f8e302af452636d39bb::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2de54c8b06e66f8e302af452636d39bb::$classMap;
 
         }, null, ClassLoader::class);
     }

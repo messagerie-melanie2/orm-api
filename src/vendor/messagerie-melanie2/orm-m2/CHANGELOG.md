@@ -1,3 +1,33 @@
+ORM M2 - 0.6.3.2
+------
+- 0006984: Ajouter une méthode asRight dans l'objet User
+- 0006971: [ICS] pour les tâches, une alarme de 2 jours est enregistrée sur 1 min
+- Mise à jour du mapping pour le MI
+
+ORM M2 - 0.6.3.1
+------
+- 0006964: Supporter un statut "Télétravail" dans les événements
+
+ORM M2 - 0.6.3
+------
+- 0006920: Utiliser le champs event_attachments_json pour stocker les informations sur les pieces jointes
+- 0005093: Ne plus utiliser la table lightning_attributes
+- 0006850: Supporter la syntaxe MCE/DGFIP pour le gestionnaire d'absence
+- Ajout d'un Api/Ens
+
+ORM M2 - 0.6.2.7
+------
+- 0006899: [Event] pourvoir filtrer par catégorie dans getRangeEvent()
+
+ORM M2 - 0.6.2.6
+------
+- 0006889: [Recurrence] Problème de BYDAY vide retourné en ICS
+- 0006890: Amélioration du mapping des champs de type énumération
+
+ORM M2 - 0.6.2.5
+------
+- 0006864: [Attendee] Problème de valeur de retour en cas d'erreur
+
 ORM M2 - 0.6.2.4
 ------
 - 0006800: Pour une invitation interne, un participant ne peut pas modifier l'horaire

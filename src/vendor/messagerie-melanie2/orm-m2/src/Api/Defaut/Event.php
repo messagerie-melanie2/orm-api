@@ -29,6 +29,7 @@ use LibMelanie\Log\M2Log;
 use LibMelanie\Lib\ICS;
 use LibMelanie\Config\Config;
 use LibMelanie\Config\DefaultConfig;
+use stdClass;
 
 /**
  * Classe evenement par defaut,
@@ -227,6 +228,7 @@ class Event extends MceObject {
   const STATUS_CONFIRMED = DefaultConfig::CONFIRMED;
   const STATUS_CANCELLED = DefaultConfig::CANCELLED;
   const STATUS_NONE = DefaultConfig::NONE;
+  const STATUS_TELEWORK = DefaultConfig::TELEWORK;
   // TRANS Fields
   const TRANS_TRANSPARENT = ICS::TRANSP_TRANSPARENT;
   const TRANS_OPAQUE = ICS::TRANSP_OPAQUE;
@@ -313,14 +315,28 @@ class Event extends MceObject {
    */
   public function getAttribute($name) {
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getAttribute($name)");
-    // Si les attributs n'ont pas été chargés
-    if (!$this->attributes_loaded) {
-      $this->loadAttributes();
+    // Schéma de version 2
+    if ($this->version >= 2) {
+      $attributes = json_decode($this->objectmelanie->properties, true);
+      if (isset($attributes[$name])) {
+        return $attributes[$name];
+      }
+      else {
+        return null;
+      }
     }
-    if (!isset($this->attributes[$name])) {
-      return null;
+    else {
+      // Version 1 on prend les attributs de HordePref
+      // Si les attributs n'ont pas été chargés
+      if (!$this->attributes_loaded) {
+        $this->loadAttributes();
+      }
+      if (!isset($this->attributes[$name])) {
+        return null;
+      }
+      return $this->attributes[$name]->value;
     }
-    return $this->attributes[$name]->value;
+    
   }
   /**
    * Met à jour ou ajoute l'attribut
@@ -367,6 +383,8 @@ class Event extends MceObject {
         $eventproperty->setIsExist(false);
         $this->attributes[$name] = $eventproperty;
       }
+      // 0005093: Ne plus utiliser la table lightning_attributes
+      $this->objectmelanie->properties = $this->attributesToJson($this->attributes);
     }
   }
   /**
@@ -379,6 +397,8 @@ class Event extends MceObject {
     // Positionne la liste des attributs
     $this->attributes = $attributes;
     $this->attributes_loaded = true;
+    // 0005093: Ne plus utiliser la table lightning_attributes
+    $this->objectmelanie->properties = $this->attributesToJson($this->attributes);
   }
   /**
    * Suppression d'un attribut
@@ -392,9 +412,26 @@ class Event extends MceObject {
     }
     // Si l'atrribut existe, on le supprime
     if (isset($this->attributes[$name])) {
-      return $this->attributes[$name]->delete();
+      if ($this->attributes[$name]->delete()) {
+        unset($this->attributes[$name]);
+        // 0005093: Ne plus utiliser la table lightning_attributes
+        $this->objectmelanie->properties = $this->attributesToJson($this->attributes);
+      }
     }
     return false;
+  }
+
+  /**
+   * Converti la liste des attributs en une valeur json exploitable
+   * 
+   * @return string json properties
+   */
+  protected function attributesToJson() {
+    $properties = [];
+    foreach ($this->attributes as $name => $attribute) {
+      $properties[$name] = $attribute->value;
+    }
+    return json_encode($properties);
   }
   
   /**
@@ -1575,7 +1612,7 @@ class Event extends MceObject {
       $this->owner = $this->user->uid;
     }
     // Version du schéma par défaut
-    $this->version = 1;
+    $this->version = 2;
     // Sauvegarde l'objet
     $insert = $this->objectmelanie->save();
     if (!is_null($insert)) {
@@ -2004,8 +2041,8 @@ class Event extends MceObject {
   protected function setMapClass($class) {
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setMapClass($class)");
     if (!isset($this->objectmelanie)) throw new Exceptions\ObjectMelanieUndefinedException();
-    if (isset(MappingMce::$MapClassObjectMelanie[$class]))
-      $this->objectmelanie->class = MappingMce::$MapClassObjectMelanie[$class];
+    if (isset(MappingMce::$MapClassObjectToMce[$class]))
+      $this->objectmelanie->class = MappingMce::$MapClassObjectToMce[$class];
   }
   /**
    * Mapping class field
@@ -2013,8 +2050,8 @@ class Event extends MceObject {
   protected function getMapClass() {
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapClass()");
     if (!isset($this->objectmelanie)) throw new Exceptions\ObjectMelanieUndefinedException();
-    if (isset(MappingMce::$MapClassObjectMelanie[$this->objectmelanie->class]))
-      return MappingMce::$MapClassObjectMelanie[$this->objectmelanie->class];
+    if (isset(MappingMce::$MapClassMceToObject[$this->objectmelanie->class]))
+      return MappingMce::$MapClassMceToObject[$this->objectmelanie->class];
     else
       return self::CLASS_PUBLIC;
   }
@@ -2027,8 +2064,8 @@ class Event extends MceObject {
   protected function setMapStatus($status) {
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setMapStatus($status)");
     if (!isset($this->objectmelanie)) throw new Exceptions\ObjectMelanieUndefinedException();
-    if (isset(MappingMce::$MapStatusObjectMelanie[$status]))
-      $this->objectmelanie->status = MappingMce::$MapStatusObjectMelanie[$status];
+    if (isset(MappingMce::$MapStatusObjectToMce[$status]))
+      $this->objectmelanie->status = MappingMce::$MapStatusObjectToMce[$status];
   }
   /**
    * Mapping status field
@@ -2036,8 +2073,8 @@ class Event extends MceObject {
   protected function getMapStatus() {
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapStatus()");
     if (!isset($this->objectmelanie)) throw new Exceptions\ObjectMelanieUndefinedException();
-    if (isset(MappingMce::$MapStatusObjectMelanie[$this->objectmelanie->status]))
-      return MappingMce::$MapStatusObjectMelanie[$this->objectmelanie->status];
+    if (isset(MappingMce::$MapStatusMceToObject[$this->objectmelanie->status]))
+      return MappingMce::$MapStatusMceToObject[$this->objectmelanie->status];
     else
       return self::STATUS_CONFIRMED;
   }
@@ -2435,6 +2472,28 @@ class Event extends MceObject {
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setMapAttachments()");
     if (!isset($this->objectmelanie)) throw new Exceptions\ObjectMelanieUndefinedException();
     $this->attachments = $attachments;
+
+    // Enregister les pièces jointes en v2
+    $_attachments = [];
+
+    foreach ($attachments as $attachment) {
+      $_attachment = new stdClass();
+      $_attachment->type = $attachment->type;
+
+      if ($attachment->type == Attachment::TYPE_URL) {
+        // pieces jointes de type url
+        $_attachment->url = $attachment->url;              
+      }
+      else {
+        // pieces jointes de type binaire
+        foreach (['name', 'path', 'modified', 'owner', 'hash', 'size', 'contenttype'] as $field) {
+          $_attachment->$field = $attachment->$field;
+        }
+        $_attachment->storage = 'horde_vfs';
+      }
+      $_attachments[] = $_attachment;
+    }
+    $this->objectmelanie->attachments = json_encode((array)$_attachments);
   }
   /**
    * Mapping attachments field
@@ -2453,37 +2512,61 @@ class Event extends MceObject {
         return $this->attachments;
       }
       $Attachment = $this->__getNamespace() . '\\Attachment';
-      // Récupération des pièces jointes binaires
-      $attachment = new $Attachment();
-      $path = Config::get(Config::ATTACHMENTS_PATH);
-      $calendar = $this->getMapOrganizer()->calendar;
-      if (!isset($calendar))
-        $calendar = $this->objectmelanie->calendar;
-      $path = str_replace('%c', $calendar, $path);
-      // Pour les exceptions lister les pièces jointes de l'exception et de la récurrence maitre
-      if (strpos($this->get_class, '\Exception') !== false) {
-        $path_ex = str_replace('%e', $this->objectmelanie->uid, $path);
-        $path_rec = str_replace('%e', $this->objectmelanie->realuid, $path);
-        $path = [$path_ex, $path_rec];
+      // MANTIS 0006920: Utiliser le champs event_attachments_json pour stocker les informations sur les pieces jointes
+      if ($this->version >= 2) {
+        $_attachments = json_decode($this->objectmelanie->attachments);
+        if (isset($_attachments)) {
+          foreach ($_attachments as $_attachment) {
+            $attachment = new $Attachment();
+            
+            $attachment->type = $_attachment->type;
+            if ($_attachment->type == Attachment::TYPE_URL) {
+              // pieces jointes de type url
+              $attachment->url = $_attachment->url;              
+            }
+            else {
+              // pieces jointes de type binaire
+              foreach (['name', 'path', 'modified', 'owner', 'hash', 'size', 'contenttype'] as $field) {
+                $attachment->$field = $_attachment->$field;
+              }
+            }
+            $this->attachments[] = $attachment;
+          }
+        }
       }
       else {
-        $path = str_replace('%e', $this->objectmelanie->uid, $path);
-      }
-      $attachment->path = $path;
-      // MANTIS 0004689: Mauvaise optimisation du chargement des pièces jointes
-      $fields = ["id", "type", "path", "name", "modified", "owner"];
-      $this->attachments = $attachment->getList($fields);
-      
-      // Récupération des pièces jointes URL
-      $attach_uri = $this->getAttribute('ATTACH-URI');
-      if (isset($attach_uri)) {
-        foreach (explode('%%URI-SEPARATOR%%', $attach_uri) as $uri) {
-          if (isset($uri) && $uri !== "") {
-            M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapAttachments(): $uri");
-            $attachment = new $Attachment();
-            $attachment->url = $uri;
-            $attachment->type = Attachment::TYPE_URL;
-            $this->attachments[] = $attachment;
+        // Récupération des pièces jointes binaires
+        $attachment = new $Attachment();
+        $path = Config::get(Config::ATTACHMENTS_PATH);
+        $calendar = $this->getMapOrganizer()->calendar;
+        if (!isset($calendar))
+          $calendar = $this->objectmelanie->calendar;
+        $path = str_replace('%c', $calendar, $path);
+        // Pour les exceptions lister les pièces jointes de l'exception et de la récurrence maitre
+        if (strpos($this->get_class, '\Exception') !== false) {
+          $path_ex = str_replace('%e', $this->objectmelanie->uid, $path);
+          $path_rec = str_replace('%e', $this->objectmelanie->realuid, $path);
+          $path = [$path_ex, $path_rec];
+        }
+        else {
+          $path = str_replace('%e', $this->objectmelanie->uid, $path);
+        }
+        $attachment->path = $path;
+        // MANTIS 0004689: Mauvaise optimisation du chargement des pièces jointes
+        $fields = ["id", "type", "path", "name", "modified", "owner"];
+        $this->attachments = $attachment->getList($fields);
+        
+        // Récupération des pièces jointes URL
+        $attach_uri = $this->getAttribute('ATTACH-URI');
+        if (isset($attach_uri)) {
+          foreach (explode('%%URI-SEPARATOR%%', $attach_uri) as $uri) {
+            if (isset($uri) && $uri !== "") {
+              M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapAttachments(): $uri");
+              $attachment = new $Attachment();
+              $attachment->url = $uri;
+              $attachment->type = Attachment::TYPE_URL;
+              $this->attachments[] = $attachment;
+            }
           }
         }
       }

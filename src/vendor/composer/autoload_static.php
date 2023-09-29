@@ -25,6 +25,7 @@ class ComposerStaticInit2de54c8b06e66f8e302af452636d39bb
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Controller\\Addressbook' => __DIR__ . '/../..' . '/controller/addressbook.php',
         'Controller\\AddressbookShare' => __DIR__ . '/../..' . '/controller/addressbookshare.php',
         'Controller\\Calendar' => __DIR__ . '/../..' . '/controller/calendar.php',

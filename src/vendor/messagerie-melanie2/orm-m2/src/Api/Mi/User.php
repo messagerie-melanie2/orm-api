@@ -67,6 +67,19 @@ use LibMelanie\Config\MappingMce;
  */
 class User extends Mce\User {
   /**
+   * Filtre pour la méthode getBalpEmission()
+   * 
+   * @ignore
+   */
+  const GET_BALP_EMISSION_FILTER = "(|(mcedelegation=%%uid%%:C)(mcedelegation=%%uid%%:G))";
+  /**
+   * Filtre pour la méthode getBalpGestionnaire()
+   * 
+   * @ignore
+   */
+  const GET_BALP_GESTIONNAIRE_FILTER = "(mcedelegation=%%uid%%:G)";
+  
+  /**
    * Configuration du mapping qui surcharge la conf
    */
   const MAPPING = [
@@ -81,11 +94,13 @@ class User extends Mce\User {
     "shares"                  => [MappingMce::name => 'mcedelegation', MappingMce::type => MappingMce::arrayLdap], // Liste des partages pour cette boite
     "server_routage"          => 'mailhost',                      // Champ utilisé pour le routage des messages
     "type"                    => 'mcetypecompte',                 // Type d'entrée (boite individuelle, partagée, ressource, ...)
+    "postaladdress"           => 'postaladdress',                 // Postal address
     "street"                  => 'street',                        // Rue
     "postalcode"              => 'postalcode',                    // Code postal
     "locality"                => 'l',                             // Ville
     "title"                   => 'title',                         // Titre
     "outofoffices"            => [MappingMce::name => 'mcevacation', MappingMce::type => MappingMce::arrayLdap], // Affichage du message d'absence de l'utilisateur
+    "service"                 => 'departmentnumber',              // Department Number
 
     // Nouveaux champs
     "lastname"                => 'sn',                            // Last name de l'utilisateur
@@ -94,22 +109,28 @@ class User extends Mce\User {
     "faxnumber"               => 'facsimiletelephonenumber',      // Numéro de fax
     "mobilephone"             => 'mobile',                        // Numéro de mobile
     "personaltitle"           => 'personaltitle',                 // Genre
-    "postaladdress"           => 'postaladdress',                 // Adresse postale, différent de street ?
 
     "mcevisibilite"           => [MappingMce::name => 'mcevisibilite', MappingMce::type => MappingMce::arrayLdap], // Gestion de l'affichage dans l'annuaire ministériel et interministériel
 
-    "email_routage"           => 'mcemailroutingaddress',         // Email pour le routage interne
+    "email_routage"           => 'mailroutingaddress',         // Email pour le routage interne
     "quota"                   => 'mailquotasize',                 // Taille de quota pour la boite
-    "delegation"              => 'delegation',                    // Delegation
-    "miaccess"                => 'miaccess',                      // Acces distant
-    "direction"               => 'direction',                     // Direction
+    "delegation"              => 'mceportaildelegation',                    // Delegation
+    "delegationtarget"        => [MappingMce::name => 'mceportaildelegationtarget', MappingMce::type => MappingMce::arrayLdap],                    // Delegation
+    "mceaccess"               => 'mceaccess',                     // Acces distant
+    "mcedomain"               => 'mcedomain',                     // Domaine interne
     "nomadeaccess"            => 'nomadeaccess',                  // Acces VPN
+    "password"                => 'userpassword',                  // Mot de passe
+    "mceportailpassworddelay" => 'mceportailpassworddelay',       // Délai d'expiration du mot de passe
+    "passwordexpirationtime"  => 'passwordexpirationtime',        // Date d'expiration du mot de passe
+    "mceportailmethodauth"    => 'mceportailmethodauth',          // Method d'authentification
 
     "ou"                      => 'ou',                            // OU associé à l'entrée
-    "gestionnaire"            => 'gestionnaire',                  // Gestionnaire de la boite
-    "mirio"                   => 'mirio',                         // Numéro RIO
-    "initials"                => 'initials',                      // Initials du compte
+    "gestionnaire"            => 'mceportailgestionnaire',        // Gestionnaire de la boite
     "matricule"               => 'matricule',                     // Matricule de l'utilisateur
+    "employeenumber"          => 'employeenumber',                // Employee number de l'utilisateur
+    "profil"                  => 'mceportailprofil',
+    "direction"               => 'mceportaildirection',
+    "modifiedtime"            => 'mcemodifiedtimestamp',
   ];
 
   /**
@@ -122,7 +143,7 @@ class User extends Mce\User {
    * @param Share[] $shares
    */
   protected function setMapShares($shares) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setMapShares()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->setMapShares()");
     if (!isset($this->objectmelanie)) {
       throw new \LibMelanie\Exceptions\ObjectMelanieUndefinedException();
     }
@@ -155,28 +176,30 @@ class User extends Mce\User {
    * @return Share[] Liste des partages positionnés sur cette boite
    */
   protected function getMapShares() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapShares()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getMapShares()");
     if (!isset($this->_shares)) {
       $_shares = $this->objectmelanie->shares;
       $this->_shares = [];
-      foreach ($_shares as $_share) {
-        $share = new Share();
-        list($share->user, $right) = \explode(':', $_share, 2);
-        switch (\strtoupper($right)) {
-          case 'G':
-            $share->type = Share::TYPE_ADMIN;
-            break;
-          case 'C':
-            $share->type = Share::TYPE_SEND;
-            break;
-          case 'E':
-            $share->type = Share::TYPE_WRITE;
-            break;
-          case 'L':
-            $share->type = Share::TYPE_READ;
-            break;
+      if (is_array($_shares)) {
+        foreach ($_shares as $_share) {
+          $share = new Share();
+          list($share->user, $right) = \explode(':', $_share, 2);
+          switch (\strtoupper($right)) {
+            case 'G':
+              $share->type = Share::TYPE_ADMIN;
+              break;
+            case 'C':
+              $share->type = Share::TYPE_SEND;
+              break;
+            case 'E':
+              $share->type = Share::TYPE_WRITE;
+              break;
+            case 'L':
+              $share->type = Share::TYPE_READ;
+              break;
+          }
+          $this->_shares[$share->user] = $share;
         }
-        $this->_shares[$share->user] = $share;
       }
     }
     return $this->_shares;
@@ -188,14 +211,14 @@ class User extends Mce\User {
    * @return Outofoffice[] Tableau de d'objets Outofoffice
    */
   protected function getMapOutofoffices() {
-		M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapOutofoffices()");
+		M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getMapOutofoffices()");
     $objects = [];
     if (is_array($this->objectmelanie->outofoffices)) {
       $i = 0;
       foreach ($this->objectmelanie->outofoffices as $oof) {
         $object = new Outofoffice($oof);
-        if ($object->type == Outofoffice::TYPE_ALL) {
-          $key = $object->type.$i++;
+        if (isset($object->days)) {
+          $key = Outofoffice::HEBDO.$i++;
         }
         else {
           $key = $object->type;
@@ -212,7 +235,7 @@ class User extends Mce\User {
    * @param Outofoffice[] $OofObjects
    */
   protected function setMapOutofoffices($OofObjects) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setMapOutofoffices()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->setMapOutofoffices()");
     $reponses = [];
     if (is_array($OofObjects)) {
       foreach ($OofObjects as $OofObject) {

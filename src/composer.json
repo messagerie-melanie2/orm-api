@@ -1,6 +1,8 @@
 {
 	"name" : "messagerie-melanie2/orm-api",
 	"description" : "API RESTful pour l'ORM MCE",
+	"version" : "0.2",
+	"version_normalized" : "0.2.0.0",
 	"license" : "GPL-3.0+",
 	"repositories" : [{
 			"type" : "vcs",
@@ -9,7 +11,7 @@
 	],
 	"require" : {
 		"php" : ">=7.3.0",
-		"messagerie-melanie2/orm-m2" : "~0.6.3.0"
+		"messagerie-melanie2/orm-m2" : "~0.6.5.0"
 	},
 	"autoload": {
         "classmap": ["lib", "controller"]

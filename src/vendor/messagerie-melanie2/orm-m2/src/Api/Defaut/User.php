@@ -87,12 +87,14 @@ abstract class User extends MceObject {
    * Liste des workspaces de l'utilisateur
    * 
    * @var Workspace[]
+   * @ignore
    */
   protected $_userWorkspaces;
   /**
    * Liste de tous les workspaces auquel l'utilisateur a accés
    * 
    * @var Workspace[]
+   * @ignore
    */
   protected $_sharedWorkspaces;
 
@@ -100,18 +102,28 @@ abstract class User extends MceObject {
    * Liste des news que l'utilisateur peut consulter
    * 
    * @var News\News[]
+   * @ignore
    */
   protected $_userNews;
+  /**
+   * Dernière news que l'utilisateur peut consulter
+   * 
+   * @var News\News
+   * @ignore
+   */
+  protected $_userLastNews;
   /**
    * Liste des rss que l'utilisateur peut consulter
    * 
    * @var News\Rss[]
+   * @ignore
    */
   protected $_userRss;
   /**
    * Liste des droits de l'utilisateur sur les news et rss
    * 
    * @var News\NewsShare[]
+   * @ignore
    */
   protected $_userNewsShares;
 
@@ -119,18 +131,21 @@ abstract class User extends MceObject {
    * Calendrier par défaut de l'utilisateur
    * 
    * @var Calendar
+   * @ignore
    */
   protected $_defaultCalendar;
   /**
    * Liste des calendriers de l'utilisateur
    * 
    * @var Calendar[]
+   * @ignore
    */
   protected $_userCalendars;
   /**
    * Liste de tous les calendriers auquel l'utilisateur a accés
    * 
    * @var Calendar[]
+   * @ignore
    */
   protected $_sharedCalendars;
 
@@ -144,12 +159,14 @@ abstract class User extends MceObject {
    * Liste des carnets d'adresses de l'utilisateur
    * 
    * @var Addressbook
+   * @ignore
    */
   protected $_userAddressbooks;
   /**
    * Liste de tous les carnets d'adresses auquel l'utilisateur a accés
    * 
    * @var Addressbook
+   * @ignore
    */
   protected $_sharedAddressbooks;
 
@@ -157,18 +174,21 @@ abstract class User extends MceObject {
    * Liste de tâches par défaut de l'utilisateur
    * 
    * @var Taskslist
+   * @ignore
    */
   protected $_defaultTaskslist;
   /**
    * Liste des listes de tâches de l'utilisateur
    * 
    * @var Taskslist
+   * @ignore
    */
   protected $_userTaskslists;
   /**
    * Liste de toutes les listes de tâches auquel l'utilisateur a accés
    * 
    * @var Taskslist
+   * @ignore
    */
   protected $_sharedTaskslists;
 
@@ -176,18 +196,21 @@ abstract class User extends MceObject {
    * Liste des objets partagés accessibles à l'utilisateur
    * 
    * @var ObjectShare[]
+   * @ignore
    */
   protected $_objectsShared;
   /**
    * Liste des objets partagés accessibles en emission à l'utilisateur
    * 
    * @var ObjectShare[]
+   * @ignore
    */
   protected $_objectsSharedEmission;
   /**
    * Liste des objets partagés accessibles en gestionnaire à l'utilisateur
    * 
    * @var ObjectShare[]
+   * @ignore
    */
   protected $_objectsSharedGestionnaire;
 
@@ -195,18 +218,21 @@ abstract class User extends MceObject {
    * Liste des boites partagées accessibles à l'utilisateur
    * 
    * @var User[]
+   * @ignore
    */
   protected $_shared;
   /**
    * Liste des boites partagées accessibles en emission à l'utilisateur
    * 
    * @var User[]
+   * @ignore
    */
   protected $_sharedEmission;
   /**
    * Liste des boites partagées accessibles en gestionnaire à l'utilisateur
    * 
    * @var User[]
+   * @ignore
    */
   protected $_sharedGestionnaire;
 
@@ -214,12 +240,14 @@ abstract class User extends MceObject {
    * Liste des partages pour l'objet courant
    * 
    * @var Share[]
+   * @ignore
    */
   protected $_shares;
   /**
    * Liste des groupes pour l'objet courant
    * 
    * @var Group[]
+   * @ignore
    */
   protected $_lists;
 
@@ -227,6 +255,7 @@ abstract class User extends MceObject {
    * Nom de la conf serveur utilisé pour le LDAP
    * 
    * @var string
+   * @ignore
    */
   protected $_server;
 
@@ -234,6 +263,7 @@ abstract class User extends MceObject {
    * Est-ce que l'objet est déjà chargé depuis l'annuaire ?
    * 
    * @var boolean
+   * @ignore
    */
   protected $_isLoaded;
 
@@ -241,6 +271,7 @@ abstract class User extends MceObject {
    * Est-ce que l'objet existe dans l'annuaire ?
    * 
    * @var boolean
+   * @ignore
    */
   protected $_isExist;
 
@@ -248,6 +279,7 @@ abstract class User extends MceObject {
    * Liste des preferences de l'utilisateur
    * 
    * @var UserPrefs[]
+   * @ignore
    */
   protected $_preferences;
 
@@ -255,7 +287,6 @@ abstract class User extends MceObject {
    * Liste des propriétés à sérialiser pour le cache
    */
   protected $serializedProperties = [
-    'objectshare',
     'otherldapobject',
     '_userWorkspaces',
     '_sharedWorkspaces',
@@ -298,6 +329,14 @@ abstract class User extends MceObject {
    * Droits de niveau administrateur ou gestionnaire sur la boite
    */
   protected static $_sharesAdmin = ['G'];
+
+  /**
+   * Configuration de l'item name associé à l'objet courant
+   * 
+   * @var string
+   * @ignore
+   */
+  protected $_itemName;
 
   // **** Constantes pour les preferences
   /**
@@ -353,6 +392,24 @@ abstract class User extends MceObject {
    * @ignore
    */
   const LOAD_ATTRIBUTES = ['fullname', 'uid', 'name', 'email', 'email_list', 'email_send', 'email_send_list', 'server_routage', 'shares', 'type'];
+  /**
+   * Filtre pour la méthode load() si c'est un objet de partage
+   * 
+   * @ignore
+   */
+  const LOAD_OBJECTSHARE_FILTER = null;
+  /**
+   * Filtre pour la méthode load() avec un email si c'est un object de partage
+   * 
+   * @ignore
+   */
+  const LOAD_OBJECTSHARE_FROM_EMAIL_FILTER = null;
+  /**
+   * Attributs par défauts pour la méthode load() si c'est un objet de partage
+   * 
+   * @ignore
+   */
+  const LOAD_OBJECTSHARE_ATTRIBUTES = ['fullname', 'uid', 'email_send', 'email_send_list', 'shares'];
   /**
    * Filtre pour la méthode getBalp()
    * 
@@ -442,11 +499,15 @@ abstract class User extends MceObject {
     $this->get_class = get_class($this);
     
     M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->__construct($server)");
+
+    // Récupération de l'itemName
+    $this->_itemName = $itemName;
+
     // Définition de l'utilisateur
-    $this->objectmelanie = new UserMelanie($server, null, static::MAPPING, $itemName);
+    $this->objectmelanie = new UserMelanie($server, null, static::MAPPING, $this->_itemName);
     // Gestion d'un second serveur d'annuaire dans le cas ou les informations sont répartis
     if (isset(\LibMelanie\Config\Ldap::$OTHER_LDAP)) {
-      $this->otherldapobject = new UserMelanie(\LibMelanie\Config\Ldap::$OTHER_LDAP, null, static::MAPPING, $itemName);
+      $this->otherldapobject = new UserMelanie(\LibMelanie\Config\Ldap::$OTHER_LDAP, null, static::MAPPING, $this->_itemName);
     }
     $this->_server = $server ?: \LibMelanie\Config\Ldap::$SEARCH_LDAP;
   }
@@ -496,13 +557,21 @@ abstract class User extends MceObject {
    * @param boolean $master Utiliser le serveur maitre (nécessaire pour faire des modifications)
    * @param string $user_dn DN de l'utilisateur si ce n'est pas le courant a utiliser
    * @param boolean $gssapi Utiliser une authentification GSSAPI sans mot de passe
+   * @param string $itemName Nom de l'objet associé dans la configuration LDAP
+   * 
    * @return boolean
    */
-  public function authentification($password = null, $master = false, $user_dn = null, $gssapi = false) {
+  public function authentification($password = null, $master = false, $user_dn = null, $gssapi = false, $itemName = null) {
     if ($master) {
       $this->_server = \LibMelanie\Config\Ldap::$MASTER_LDAP;
     }
-    return $this->objectmelanie->authentification($password, $master, $user_dn, $gssapi);
+
+    // Récupération de l'itemName
+    if (isset($itemName)) {
+      $this->_itemName = $itemName;
+    }
+
+    return $this->objectmelanie->authentification($password, $master, $user_dn, $gssapi, $this->_itemName);
   }
 
   /**
@@ -521,11 +590,21 @@ abstract class User extends MceObject {
       return $this->_isLoaded;
     }
     $useIsLoaded = !isset($attributes);
-    if (!isset($attributes)) {
-      $attributes = static::LOAD_ATTRIBUTES;
+    // MANTIS 0006995: [User] Permettre un load() différent sur un objet de partage
+    if ($this->getMapIs_objectshare()) {
+      if (!isset($attributes)) {
+        $attributes = static::LOAD_OBJECTSHARE_ATTRIBUTES;
+      }
+      $filter = static::LOAD_OBJECTSHARE_FILTER;
+      $filterFromEmail = static::LOAD_OBJECTSHARE_FROM_EMAIL_FILTER;
     }
-    $filter = static::LOAD_FILTER;
-    $filterFromEmail = static::LOAD_FROM_EMAIL_FILTER;
+    else {
+      if (!isset($attributes)) {
+        $attributes = static::LOAD_ATTRIBUTES;
+      }
+      $filter = static::LOAD_FILTER;
+      $filterFromEmail = static::LOAD_FROM_EMAIL_FILTER;
+    }
     if (isset(\LibMelanie\Config\Ldap::$SERVERS[$this->_server])) {
       if (isset(\LibMelanie\Config\Ldap::$SERVERS[$this->_server]['get_user_infos_filter'])) {
         $filter = \LibMelanie\Config\Ldap::$SERVERS[$this->_server]['get_user_infos_filter'];
@@ -608,7 +687,7 @@ abstract class User extends MceObject {
    * @return ObjectShare[] Liste d'objets
    */
   public function getObjectsShared($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getObjectsShared() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getObjectsShared() [" . $this->_server . "]");
     if (!isset($this->_objectsShared)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -625,7 +704,7 @@ abstract class User extends MceObject {
       $this->_objectsShared = [];
       $class = $this->__getNamespace() . '\\ObjectShare';
       foreach ($list as $key => $object) {
-        $this->_objectsShared[$key] = new $class($this->_server);
+        $this->_objectsShared[$key] = new $class($this->_server, $this->_itemName);
         $this->_objectsShared[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -641,7 +720,7 @@ abstract class User extends MceObject {
    * @return User[] Liste de boites
    */
   public function getShared($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getShared() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVLEVEL_TRACEEL_DEBUG, $this->get_class . "->getShared() [" . $this->_server . "]");
     if (!isset($this->_shared)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -657,7 +736,7 @@ abstract class User extends MceObject {
       $list = $this->objectmelanie->getBalp($attributes, $filter);
       $this->_shared = [];
       foreach ($list as $key => $object) {
-        $this->_shared[$key] = new static($this->_server);
+        $this->_shared[$key] = new static($this->_server, $this->_itemName);
         $this->_shared[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -673,7 +752,7 @@ abstract class User extends MceObject {
    * @return ObjectShare[] Liste d'objets
    */
   public function getObjectsSharedEmission($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getObjectsSharedEmission() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getObjectsSharedEmission() [" . $this->_server . "]");
     if (!isset($this->_objectsSharedEmission)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -690,7 +769,7 @@ abstract class User extends MceObject {
       $this->_objectsSharedEmission = [];
       $class = $this->__getNamespace() . '\\ObjectShare';
       foreach ($list as $key => $object) {
-        $this->_objectsSharedEmission[$key] = new $class($this->_server);
+        $this->_objectsSharedEmission[$key] = new $class($this->_server, $this->_itemName);
         $this->_objectsSharedEmission[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -706,7 +785,7 @@ abstract class User extends MceObject {
    * @return User[] Liste d'objets
    */
   public function getSharedEmission($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getSharedEmission() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getSharedEmission() [" . $this->_server . "]");
     if (!isset($this->_sharedEmission)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -722,7 +801,7 @@ abstract class User extends MceObject {
       $list = $this->objectmelanie->getBalpEmission($attributes, $filter);
       $this->_sharedEmission = [];
       foreach ($list as $key => $object) {
-        $this->_sharedEmission[$key] = new static($this->_server);
+        $this->_sharedEmission[$key] = new static($this->_server, $this->_itemName);
         $this->_sharedEmission[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -738,7 +817,7 @@ abstract class User extends MceObject {
    * @return ObjectShare[] Liste d'objets
    */
   public function getObjectsSharedGestionnaire($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getObjectsSharedGestionnaire() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getObjectsSharedGestionnaire() [" . $this->_server . "]");
     if (!isset($this->_objectsSharedGestionnaire)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -755,7 +834,7 @@ abstract class User extends MceObject {
       $this->_objectsSharedGestionnaire = [];
       $class = $this->__getNamespace() . '\\ObjectShare';
       foreach ($list as $key => $object) {
-        $this->_objectsSharedGestionnaire[$key] = new $class($this->_server);
+        $this->_objectsSharedGestionnaire[$key] = new $class($this->_server, $this->_itemName);
         $this->_objectsSharedGestionnaire[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -771,7 +850,7 @@ abstract class User extends MceObject {
    * @return User[] Liste d'objets
    */
   public function getSharedGestionnaire($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getSharedGestionnaire() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getSharedGestionnaire() [" . $this->_server . "]");
     if (!isset($this->_sharedGestionnaire)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -787,7 +866,7 @@ abstract class User extends MceObject {
       $list = $this->objectmelanie->getBalpGestionnaire($attributes, $filter);
       $this->_sharedGestionnaire = [];
       foreach ($list as $key => $object) {
-        $this->_sharedGestionnaire[$key] = new static($this->_server);
+        $this->_sharedGestionnaire[$key] = new static($this->_server, $this->_itemName);
         $this->_sharedGestionnaire[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -803,7 +882,7 @@ abstract class User extends MceObject {
    * @return Group[] Liste d'objets
    */
   public function getGroups($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getGroups() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getGroups() [" . $this->_server . "]");
     if (!isset($this->_lists)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -820,7 +899,7 @@ abstract class User extends MceObject {
       $this->_lists = [];
       $class = $this->__getNamespace() . '\\Group';
       foreach ($list as $key => $object) {
-        $this->_lists[$key] = new $class($this->_server);
+        $this->_lists[$key] = new $class($this->_server, $this->_itemName);
         $this->_lists[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -836,7 +915,7 @@ abstract class User extends MceObject {
    * @return Group[] Liste d'objets
    */
   public function getGroupsIsMember($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getGroupsIsMember() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getGroupsIsMember() [" . $this->_server . "]");
     if (!isset($this->_lists)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -853,7 +932,7 @@ abstract class User extends MceObject {
       $this->_lists = [];
       $class = $this->__getNamespace() . '\\Group';
       foreach ($list as $key => $object) {
-        $this->_lists[$key] = new $class($this->_server);
+        $this->_lists[$key] = new $class($this->_server, $this->_itemName);
         $this->_lists[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -869,7 +948,7 @@ abstract class User extends MceObject {
    * @return Group[] Liste d'objets
    */
   public function getListsIsMember($attributes = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getListsIsMember() [" . $this->_server . "]");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getListsIsMember() [" . $this->_server . "]");
     if (!isset($this->_lists)) {
       if (isset($attributes) && is_string($attributes)) {
         $attributes = [$attributes];
@@ -886,7 +965,7 @@ abstract class User extends MceObject {
       $this->_lists = [];
       $class = $this->__getNamespace() . '\\Group';
       foreach ($list as $key => $object) {
-        $this->_lists[$key] = new $class($this->_server);
+        $this->_lists[$key] = new $class($this->_server, $this->_itemName);
         $this->_lists[$key]->setObjectMelanie($object);
       }
       $this->executeCache();
@@ -1077,7 +1156,7 @@ abstract class User extends MceObject {
    * @return Workspace[]
    */
   public function getUserWorkspaces($orderby = null, $asc = true, $limit = null, $offset = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserWorkspaces()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserWorkspaces()");
     // Si on charge par orderby, limit ou offset
     if (isset($orderby) || isset($limit) || isset($offset)) {
       $_workspaces = $this->objectmelanie->getUserWorkspaces($orderby, $asc, $limit, $offset);
@@ -1148,7 +1227,7 @@ abstract class User extends MceObject {
    * @return Workspace[]
    */
   public function getSharedWorkspaces($orderby = null, $asc = true, $limit = null, $offset = null) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getSharedWorkspaces()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getSharedWorkspaces()");
     // Si on charge par orderby, limit ou offset
     if (isset($orderby) || isset($limit) || isset($offset)) {
       $_workspaces = $this->objectmelanie->getSharedWorkspaces($orderby, $asc, $limit, $offset);
@@ -1207,7 +1286,7 @@ abstract class User extends MceObject {
    * @return News\NewsShare[]
    */
   public function getUserNewsShares() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserNews()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserNewsShares()");
     // Si le DN de l'utilisateur n'est pas positionné
     if (!isset($this->uid)) {
       return null;
@@ -1336,10 +1415,10 @@ abstract class User extends MceObject {
   /**
    * Retourne toutes les news de l'utilisateur liées à son service ou à ses droits
    * 
-   * @return News\News
+   * @return News\News[]
    */
   public function getUserNews() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserNews()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserNews()");
     // Si le DN de l'utilisateur n'est pas positionné
     if (!isset($this->dn)) {
       return null;
@@ -1356,6 +1435,30 @@ abstract class User extends MceObject {
   }
 
   /**
+   * Retourne la dernière news de l'utilisateur liée à son service ou à ses droits
+   * 
+   * @return News\News
+   */
+  public function getUserLastNews() {
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserLastNews()");
+    // Si le DN de l'utilisateur n'est pas positionné
+    if (!isset($this->dn)) {
+      return null;
+    }
+    if (!isset($this->_userLastNews)) {
+      $news = new News\News();
+      $news->service = $this->_get_user_services();
+      $list = $news->getList([], "", [], "modified", false, 1);
+
+      // Ajouter une informations pour les news publisher
+      $this->_set_news_is_publisher($list);
+
+      $this->_userLastNews = array_pop($list);
+    }
+    return $this->_userLastNews;
+  }
+
+  /**
    * Récupère les deux dernières news associées à l'utilisateur
    * Retourne la news la plus récente du service le plus éloigné de l'utilisateur (service national)
    * et la news la plus récente du service le plus proche de l'utilisateur
@@ -1363,7 +1466,7 @@ abstract class User extends MceObject {
    * @return array 2 news au maximum, la plus proche et la plus loin
    */
   public function getUserLastTwoNews() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserLastTwoNews()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserLastTwoNews()");
 
     // Récupère les services associés à l'utilisateur
     $_services = $this->_get_user_services(false);
@@ -1373,7 +1476,7 @@ abstract class User extends MceObject {
 
     // Parcourir les news pour alimenter le tableau $newsByService
     foreach ($this->getUserNews() as $news) {
-      if ($newsByService[$news->service] === false) {
+      if (isset($newsByService[$news->service]) && $newsByService[$news->service] === false) {
         $newsByService[$news->service] = $news;
       }
     }
@@ -1402,6 +1505,7 @@ abstract class User extends MceObject {
    */
   public function cleanNews() {
     $this->_userNews = null;
+    $this->_userLastNews = null;
     $this->executeCache();
   }
 
@@ -1411,7 +1515,7 @@ abstract class User extends MceObject {
    * @return News\Rss
    */
   public function getUserRss() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserRss()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserRss()");
     // Si le DN de l'utilisateur n'est pas positionné
     if (!isset($this->dn)) {
       return null;
@@ -1469,7 +1573,7 @@ abstract class User extends MceObject {
    * @return boolean
    */
   public function readNotification($notification, $read = true) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->readNotification()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->readNotification()");
 
     // La notification est un uid
     if (is_string($notification)) {
@@ -1498,7 +1602,7 @@ abstract class User extends MceObject {
    * @return boolean
    */
   public function deleteNotification($notification) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->deleteNotification()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->deleteNotification()");
 
     // La notification est un uid
     if (is_string($notification)) {
@@ -1518,7 +1622,7 @@ abstract class User extends MceObject {
    * @return string|boolean Uid de la nouvelle notification si Ok, false sinon
    */
   public function addNotification($notification) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->addNotification()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->addNotification()");
 
     // Positionne le owner de la notification
     if (!isset($notification->owner)) {
@@ -1552,7 +1656,7 @@ abstract class User extends MceObject {
    * @return Calendar Calendrier par défaut de l'utilisateur, null s'il n'existe pas
    */
   public function getDefaultCalendar() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getDefaultCalendar()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getDefaultCalendar()");
     // Si le calendrier n'est pas déjà chargé
     if (!isset($this->_defaultCalendar) || !is_object($this->_defaultCalendar)) {
       // Charge depuis la base
@@ -1591,7 +1695,7 @@ abstract class User extends MceObject {
    * @return boolean
    */
   public function setDefaultCalendar($calendar) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setDefaultCalendar()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->setDefaultCalendar()");
     if (is_object($calendar)) {
       $calendar_id = $calendar->id;
     }
@@ -1652,7 +1756,7 @@ abstract class User extends MceObject {
    * @return Calendar[]
    */
   public function getUserCalendars() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserCalendars()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserCalendars()");
     // Si la liste des calendriers n'est pas encore chargée
     if (!isset($this->_userCalendars)) {
       $this->_userCalendars = [];
@@ -1703,7 +1807,7 @@ abstract class User extends MceObject {
    * @return Calendar[]
    */
   public function getSharedCalendars() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getSharedCalendars()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getSharedCalendars()");
     // Si la liste des calendriers n'est pas encore chargée on liste depuis la base
     if (!isset($this->_sharedCalendars)) {
       $_calendars = $this->objectmelanie->getSharedCalendars();
@@ -1748,7 +1852,7 @@ abstract class User extends MceObject {
    * @return Taskslist
    */
   public function getDefaultTaskslist() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getDefaultTaskslist()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getDefaultTaskslist()");
     // Si la liste de taches n'est pas déjà chargée
     if (!isset($this->_defaultTaskslist) || !is_object($this->_defaultTaskslist)) {
       // Charge depuis la base de données
@@ -1787,7 +1891,7 @@ abstract class User extends MceObject {
    * @return boolean
    */
   public function setDefaultTaskslist($taskslist) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setDefaultTaskslist()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->setDefaultTaskslist()");
     if (is_object($taskslist)) {
       $taskslist_id = $taskslist->id;
     }
@@ -1846,7 +1950,7 @@ abstract class User extends MceObject {
    * @return Taskslist[]
    */
   public function getUserTaskslists() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserTaskslists()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserTaskslists()");
     // Si la liste des listes de taches n'est pas encore chargée
     if (!isset($this->_userTaskslists)) {
       $this->_userTaskslists = [];
@@ -1896,7 +2000,7 @@ abstract class User extends MceObject {
    * @return Taskslist[]
    */
   public function getSharedTaskslists() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getSharedTaskslists()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getSharedTaskslists()");
     // Si la liste des listes de tâches n'est pas encore chargée on liste depuis la base
     if (!isset($this->_sharedTaskslists)) {
       $_taskslists = $this->objectmelanie->getSharedTaskslists();
@@ -1941,7 +2045,7 @@ abstract class User extends MceObject {
    * @return Addressbook
    */
   public function getDefaultAddressbook() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getDefaultAddressbook()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getDefaultAddressbook()");
     // Si le carnet n'est pas déjà chargé
     if (!isset($this->_defaultAddressbook)) {
       // Charge depuis la base de données
@@ -1979,7 +2083,7 @@ abstract class User extends MceObject {
    * @return boolean
    */
   public function setDefaultAddressbook($addressbook) {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->setDefaultAddressbook()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->setDefaultAddressbook()");
     if (is_object($addressbook)) {
       $addressbook_id = $addressbook->id;
     }
@@ -2038,7 +2142,7 @@ abstract class User extends MceObject {
    * @return Addressbook[]
    */
   public function getUserAddressbooks() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getUserAddressbooks()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getUserAddressbooks()");
     // Si la liste des carnets n'est pas encore chargée
     if (!isset($this->_userAddressbooks)) {
       $this->_userAddressbooks = [];
@@ -2087,7 +2191,7 @@ abstract class User extends MceObject {
    * @return Addressbook[]
    */
   public function getSharedAddressbooks() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getSharedAddressbooks()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getSharedAddressbooks()");
     // Si la liste des carnets n'est pas encore chargée on liste depuis la base
     if (!isset($this->_sharedAddressbooks)) {
       $_addressbooks = $this->objectmelanie->getSharedAddressbooks();
@@ -2136,7 +2240,12 @@ abstract class User extends MceObject {
    * @return boolean true s'il s'agit d'un objet de partage, false sinon
    */
   protected function getMapIs_objectshare() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapIs_objectshare()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getMapIs_objectshare()");
+
+    if (empty($this->getObjectShareDelimiter())) {
+      return false;
+    }
+
     return isset($this->uid) && strpos($this->uid, $this->getObjectShareDelimiter()) !== false 
         || isset($this->email) && strpos($this->email, $this->getObjectShareDelimiter()) !== false;
   }
@@ -2148,12 +2257,17 @@ abstract class User extends MceObject {
    * @return ObjectShare Objet de partage associé, null si pas d'objet de partage
    */
   protected function getMapObjectshare() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapObjectshare()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getMapObjectshare()");
+
+    if (empty($this->getObjectShareDelimiter())) {
+      return null;
+    }
+
     if (!isset($this->objectshare)) {
       if (isset($this->uid) && strpos($this->uid, $this->getObjectShareDelimiter()) !== false 
           || isset($this->email) && strpos($this->email, $this->getObjectShareDelimiter()) !== false) {
         $class = $this->__getNamespace() . '\\ObjectShare';
-        $this->objectshare = new $class();
+        $this->objectshare = new $class($this->_server, $this->_itemName);
         $this->objectshare->setObjectMelanie($this->objectmelanie);
       }
     }
@@ -2305,7 +2419,7 @@ abstract class User extends MceObject {
    * @return Share[] Liste des partages de l'objet
    */
   protected function getMapShares() {
-    M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getMapShares()");
+    M2Log::Log(M2Log::LEVEL_TRACE, $this->get_class . "->getMapShares()");
     if (!isset($this->_shares)) {
       $this->_shares = [];
     }

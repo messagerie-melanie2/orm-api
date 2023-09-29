@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'messagerie-melanie2/orm-m2' => array(
-            'pretty_version' => '0.6.5.22',
-            'version' => '0.6.5.22',
-            'reference' => 'b9434ac3ef979594b03f9f750b091d35db96f26a',
+            'pretty_version' => '0.6.5.23',
+            'version' => '0.6.5.23',
+            'reference' => 'cf3f73a41fd91c0133dd9b66b295dc3db90d6929',
             'type' => 'library',
             'install_path' => __DIR__ . '/../messagerie-melanie2/orm-m2',
             'aliases' => array(),

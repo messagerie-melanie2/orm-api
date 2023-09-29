@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "messagerie-melanie2/orm-m2",
-            "version": "0.6.5.22",
+            "version": "0.6.5.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/messagerie-melanie2/ORM-M2.git",
-                "reference": "b9434ac3ef979594b03f9f750b091d35db96f26a"
+                "reference": "cf3f73a41fd91c0133dd9b66b295dc3db90d6929"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/messagerie-melanie2/ORM-M2/zipball/b9434ac3ef979594b03f9f750b091d35db96f26a",
-                "reference": "b9434ac3ef979594b03f9f750b091d35db96f26a",
+                "url": "https://api.github.com/repos/messagerie-melanie2/ORM-M2/zipball/cf3f73a41fd91c0133dd9b66b295dc3db90d6929",
+                "reference": "cf3f73a41fd91c0133dd9b66b295dc3db90d6929",
                 "shasum": ""
             },
             "require": {
@@ -59,10 +59,10 @@
                 "Tasks"
             ],
             "support": {
-                "source": "https://github.com/messagerie-melanie2/ORM-M2/tree/0.6.5.22",
+                "source": "https://github.com/messagerie-melanie2/ORM-M2/tree/0.6.5.23",
                 "issues": "https://github.com/messagerie-melanie2/ORM-M2/issues"
             },
-            "time": "2023-09-22T14:48:56+00:00"
+            "time": "2023-09-29T16:18:45+00:00"
         }
     ],
     "packages-dev": [],

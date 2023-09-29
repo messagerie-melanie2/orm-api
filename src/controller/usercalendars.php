@@ -32,6 +32,8 @@ class UserCalendars extends Controller {
      */
     public static function get()
     {
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+
         $user = \Lib\Utils::getCurrentUser('uid');
 
         if (isset($user)) {
@@ -57,6 +59,8 @@ class UserCalendars extends Controller {
      */
     public static function default()
     {
+        \Lib\Log::LogTrace("default(): " . var_export($_GET, 1));
+
         $user = \Lib\Utils::getCurrentUser('uid');
 
         if (isset($user)) {
@@ -78,6 +82,8 @@ class UserCalendars extends Controller {
      */
     public static function shared()
     {
+        \Lib\Log::LogTrace("shared(): " . var_export($_GET, 1));
+
         $user = \Lib\Utils::getCurrentUser('uid');
 
         if (isset($user)) {

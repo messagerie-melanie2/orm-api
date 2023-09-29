@@ -32,6 +32,8 @@ class Calendar extends Controller {
      */
     public static function get()
     {
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = \Lib\Utils::getCurrentUser();
 
@@ -52,6 +54,8 @@ class Calendar extends Controller {
      */
     public static function events()
     {
+        \Lib\Log::LogTrace("events(): " . var_export($_GET, 1));
+
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = \Lib\Utils::getCurrentUser();
 
@@ -79,6 +83,8 @@ class Calendar extends Controller {
      */
     public static function shares()
     {
+        \Lib\Log::LogTrace("shares(): " . var_export($_GET, 1));
+
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = \Lib\Utils::getCurrentUser();
 
@@ -111,6 +117,8 @@ class Calendar extends Controller {
     public static function post()
     {
         $json = \Lib\Request::readJson();
+
+        \Lib\Log::LogTrace("post(): " . var_export($json, 1));
 
         if (isset($json) && $json !== false) {
 
@@ -146,6 +154,8 @@ class Calendar extends Controller {
      */
     public static function delete()
     {
+        \Lib\Log::LogTrace("delete(): " . var_export($_GET, 1));
+
         if (\Lib\Request::checkInputValues(['id'], \Lib\Request::INPUT_GET)) {
             $user = \Lib\Utils::getCurrentUser();
 

@@ -32,6 +32,8 @@ class User extends Controller {
      */
     public static function get()
     {
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+        
         $user = \Lib\Utils::getCurrentUser('uid');
 
         if (isset($user)) {

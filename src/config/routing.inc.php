@@ -108,6 +108,11 @@ $routing = [
             'DELETE'    => true,
         ],
     ],
+    'attachment'         => [
+        'methods'   => [
+            'GET'       => true,
+        ],
+    ],
     'addressbook'      => [
         'methods'   => [
             'GET'       => true,

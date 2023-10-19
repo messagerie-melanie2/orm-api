@@ -61,6 +61,7 @@ $mapping = [
         'transparency',
         [\Lib\Mapping::NAME => 'attendees', \Lib\Mapping::MAPPING => 'attendee', \Lib\Mapping::LIST => true],
         [\Lib\Mapping::NAME => 'organizer', \Lib\Mapping::MAPPING => 'organizer'],
+        [\Lib\Mapping::NAME => 'attachments', \Lib\Mapping::MAPPING => 'attachment', \Lib\Mapping::LIST => true, \Lib\Mapping::GET => ["Controller\\Attachment", "getAttachments"], \Lib\Mapping::SET => ["Controller\\Attachment", "setAttachments"]],
         'all_day',
         'start',
         'end',
@@ -89,6 +90,7 @@ $mapping = [
         'transparency',
         [\Lib\Mapping::NAME => 'attendees', \Lib\Mapping::MAPPING => 'attendee', \Lib\Mapping::LIST => true],
         [\Lib\Mapping::NAME => 'organizer', \Lib\Mapping::MAPPING => 'organizer'],
+        [\Lib\Mapping::NAME => 'attachments', \Lib\Mapping::MAPPING => 'attachment', \Lib\Mapping::LIST => true, \Lib\Mapping::GET => ["Controller\\Attachment", "getAttachments"]],
         'all_day',
         'start',
         'end',
@@ -102,6 +104,12 @@ $mapping = [
         'email',
         'role',
         'response',
+    ],
+    'attachment' => [
+        'name',
+        'path',
+        'owner',
+        'modified',
     ],
     'organizer' => [
         'name',

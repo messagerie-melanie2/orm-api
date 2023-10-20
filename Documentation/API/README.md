@@ -126,6 +126,16 @@ Actions autour d'un événement et des objets associés à un événement (pièc
 
 Voir [event](event/README.md#event)
 
+### attachment
+
+```url
+/api/api.php/attachment
+```
+
+Actions autour d'une pièce jointe d'événements.
+
+Voir [attachment](attachment/README.md#attachment)
+
 ### addressbook
 
 ```url

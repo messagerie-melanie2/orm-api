@@ -38,6 +38,39 @@ GET /api/api.php/event?calendar=<calendar_id>&uid=<event_uid>
 }
 ```
 
+### Événement avec pièce jointe
+```json
+{
+  "success": true,
+  "data": {
+    "uid": "<event_uid>",
+    "realuid": "<event_realuid>",
+    "calendar": "<calendar_id>",
+    "owner": "<event_owner>",
+    "title": "Événement avec pièce jointe",
+    "status": "confirmed",
+    "class": "public",
+    "sequence": 1,
+    "transparency": "OPAQUE",
+    "attachments": [
+      {
+        "name": "index.html",
+        "path": ".horde/kronolith/documents/<event_uid>/<event_owner>",
+        "contenttype": "text/html",
+        "size": 783,
+        "modified": 1697792052,
+        "owner": "<event_owner>"
+      }
+    ],
+    "start": "2023-10-20 11:30:00",
+    "end": "2023-10-20 12:00:00",
+    "created": 1697792051,
+    "modified": 1697792052,
+    "timezone": "Europe/Paris"
+  }
+}
+```
+
 #### Réunion récurrente avec exceptions
 ```json
 {
@@ -130,6 +163,7 @@ GET /api/api.php/event?calendar=<calendar_id>&uid=<event_uid>
 
  - `calendar_id` : [Obligatoire] identifiant du calendrier auquel appartient l'événement
  - `event_uid` : [Obligatoire] identifiant de l'événement à récupérer
+ - `_get_attachments_data` : `1` pour récupérer les données des pièces jointes encodées en base64, `0` pour ne pas récupérer les données (valeur par défaut)
 
 ## POST event
 
@@ -223,7 +257,19 @@ POST /api/api.php/event
       "enddate": "2022-04-22 11:30:00",
       "interval": "1",
       "type": "daily"
-    }
+    },
+    "attachments": [
+      {
+        "name": "<nom_pièce_jointe>",
+        "path": "<chemin_complet_vers_la_pièce_jointe>",
+        "contenttype": "<content_type_de_la_pièce_jointe>",
+        "size": 783,
+        "modified": 1697792052,
+        "owner": "<propriétaire_de_la_pièce_jointe>",
+        "encoding": "base64",
+        "data": "<données_de_la_pièce_jointe_encodées_en_base64>",
+      }
+    ]
 }
 ```
 

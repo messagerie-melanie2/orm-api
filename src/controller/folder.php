@@ -59,6 +59,7 @@ class Folder extends Controller
     public static function children()
     {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
 
         if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
             $folder = \Lib\Objects::gi()->folder();

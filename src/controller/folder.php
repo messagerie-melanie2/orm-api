@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
  * Ces API permettent d'accéder à la librairie en REST
@@ -22,39 +23,55 @@
 namespace Controller;
 
 /**
- * Classe de traitement pour un utilisateur
+ * Classe de traitement pour les folder
  * 
  * @package Controller
  */
-class User extends Controller {
+class Folder extends Controller
+{
     /**
-     * Récupération d'un utilisateur
+     * Récupération d'un événement
      */
     public static function get()
     {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
-        
-        $user = \Lib\Utils::getCurrentUser('uid');
 
-        if (isset($user)) {
+        if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
+            $folder = \Lib\Objects::gi()->folder();
+            $folder->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
 
             // Gestion des attributs
             $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
             if (isset($attributes)) {
                 $attributes = explode(',', $attributes);
             } else {
-                $attributes = \Lib\Mapping::get_mapping('user');
+                $attributes = \Lib\Mapping::get_mapping('folder');
             }
 
-            if ($user->load($attributes)) {
-                \Lib\Response::data(\Lib\Mapping::get('user', $user));
-            }
-            else {
-                \Lib\Response::error("User not found");
+            if ($folder->load($attributes)) {
+                \Lib\Response::data(\Lib\Mapping::get('folder', $folder));
+            } else {
+                \Lib\Response::error("Folder not found");
             }
         }
-        else {
-            \Lib\Response::error("Missing parameter uid");
+    }
+
+    public static function children()
+    {
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+
+        if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
+            $folder = \Lib\Objects::gi()->folder();
+            $folder->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
+
+            $type = \Lib\Request::getInputValue('type', \Lib\Request::INPUT_GET);
+
+            $data = $folder->getFolderChildren($type);
+            if (isset($data)) {
+                \Lib\Response::data(\Lib\Mapping::get('FolderChildren', $data));
+            } else {
+                \Lib\Response::error("Children not found");
+            }
         }
     }
 }

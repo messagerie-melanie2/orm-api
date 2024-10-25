@@ -58,6 +58,8 @@ class Response {
             }
         }
         header("Content-Type: application/json");
+        //Remove for production
+        header("Access-Control-Allow-Origin: http://localhost:5173");
 
         // Gestion des data
         if (isset(self::$data) && is_array(self::$data)) {

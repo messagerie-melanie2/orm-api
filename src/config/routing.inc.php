@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
  * Ces API permettent d'accéder à la librairie en REST
@@ -152,6 +153,28 @@ $routing = [
             'GET'       => true,
             'POST'      => true,
             'DELETE'    => true,
+        ],
+    ],
+    'folder'         => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => false,
+        ],
+        'routing' => [
+            'children' => [
+                'class' => 'Folder',
+                'methods'   => [
+                    'GET'       => 'children',
+                ],
+            ],
+        ]
+    ],
+    'group'         => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => false,
         ],
     ],
     'taskslist'     => [],

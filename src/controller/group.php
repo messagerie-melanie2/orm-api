@@ -22,39 +22,37 @@
 namespace Controller;
 
 /**
- * Classe de traitement pour un utilisateur
+ * Classe de traitement pour les folder
  * 
  * @package Controller
  */
-class User extends Controller {
+class Group extends Controller {
     /**
-     * Récupération d'un utilisateur
+     * Récupération d'un événement
      */
     public static function get()
     {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
-        
-        $user = \Lib\Utils::getCurrentUser('uid');
 
-        if (isset($user)) {
-
+        if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
+            $group = \Lib\Objects::gi()->group();
+            $group->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
+            
             // Gestion des attributs
             $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
             if (isset($attributes)) {
                 $attributes = explode(',', $attributes);
             } else {
-                $attributes = \Lib\Mapping::get_mapping('user');
+                $attributes = \Lib\Mapping::get_mapping('group');
             }
 
-            if ($user->load($attributes)) {
-                \Lib\Response::data(\Lib\Mapping::get('user', $user));
+            if ($group->load($attributes)) {
+                \Lib\Response::data(\Lib\Mapping::get('group', $group));
             }
             else {
-                \Lib\Response::error("User not found");
+                \Lib\Response::error("Group not found");
             }
-        }
-        else {
-            \Lib\Response::error("Missing parameter uid");
+
         }
     }
 }

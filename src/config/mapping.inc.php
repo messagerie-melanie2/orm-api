@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
  * Ces API permettent d'accéder à la librairie en REST
@@ -34,7 +35,7 @@ $mapping = [
         'email_list',
         'email_send',
         'email_send_list',
-        'type',
+        'type'
     ],
     'calendar' => [
         'id',
@@ -180,10 +181,39 @@ $mapping = [
         "role",
     ],
     'group' => [
-        "addressbook",
-        "uid",
-        "modified",
-        "members",
-        "lastname",
+        "dn",
+        "ou",
+        "fullname",
+        "email",
+        "description",
+        "type",
+        "phonenumber",
+        "faxnumber",
+        "phoneformat"
     ],
+    'folder' => [
+        "dn",
+        "ou",
+        "fullname",
+        "email",
+        "description",
+        "type",
+        "phonenumber",
+        "faxnumber",
+        "phoneformat"
+    ],
+    'FolderChildren' => [
+        'dn',
+        'fullname',
+        'lastname',
+        'firstname',
+        'gender',
+        'email',
+        'description',
+        'phonenumber',
+        'roomnumber',
+        'mobilephone',
+        'order',
+        'type'
+    ]
 ];

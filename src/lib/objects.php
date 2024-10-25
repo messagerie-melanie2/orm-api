@@ -168,6 +168,18 @@ class Objects {
     }
 
     /**
+     * Generate folder object from the ORM with the right Namespace
+     * 
+     * @param array $params [Optionnal] parameters of the constructor
+     * 
+     * @return \LibMelanie\Api\Defaut\Folder
+     */
+    public function folder($params = []) 
+    {
+        return $this->object('Folder', $params);
+    }
+
+    /**
      * Generate share object from the ORM with the right Namespace
      * 
      * @param array $params [Optionnal] parameters of the constructor

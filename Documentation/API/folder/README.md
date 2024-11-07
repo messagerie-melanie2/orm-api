@@ -6,8 +6,7 @@ API permettant de récupérer les informations d'un folder, d'un group et d'effe
 
 ## GET folder
 
-Récupérer un folder à partir de son dn
-Récupère aussi des informations liée à la BAL qui contient les infos supplémentaire du folder (email, etc...)
+Récupérer un folder à partir de son dn, récupère aussi des informations liée à la BAL qui contient les infos supplémentaire du folder (email, etc...)
 
 ### Utilisation
 

@@ -30,10 +30,10 @@ GET /api/api.php/folder?dn=<folder_dn>
       "phonenumber": "<folder_phonenumber>",
       "faxnumber": "<folder_faxnumber>",
       "phoneformat": "<folder_phoneformat>",
-      "street: "<folder_street>",
-      "postalcode: "<folder_postalcode>",
-      "locality: "<folder_locality>",
-      "service: "<folder_service>",
+      "street": "<folder_street>",
+      "postalcode": "<folder_postalcode>",
+      "locality": "<folder_locality>",
+      "service": "<folder_service>",
   }
 }
 ```
@@ -83,3 +83,45 @@ GET /api/api.php/folder/children?dn=<folder_dn>
 
  - `dn` : [Obligatoire] Chemin du dossier du folder à récupérer
  - `<field>` : [Optionnel] Filtre sur un des champs ex : (&type=user)
+
+## GET search
+
+Récupère les données recherchée dans le LDAP, prend en compte les folders, users et gorup
+
+### Utilisation
+
+```url
+GET /api/api.php/folder/search?query=<search_query>
+```
+
+### Résultat
+
+#### Événement simple
+```json
+{
+  "success": true,
+  "data": {
+    {
+     "dn": "<folder_dn>",
+      "ou": "<folder_ou>",
+      "fullname": "<folder_fullname>",
+      "email": "<bal_email>",
+      "description": "<folder_description>",
+      "type": "<folder_type>",
+    }
+    {
+     "dn": "<user_dn>",
+      "ou": "<user_ou>",
+      "fullname": "<user_fullname>",
+      "email": "<user_email>",
+      "description": "<user_description>",
+      "type": "<user_type>",
+    }
+  }
+}
+```
+
+### Paramètres
+
+ - `query` : [Obligatoire] Recherche de l'utilisateur
+

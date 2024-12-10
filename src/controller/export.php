@@ -30,7 +30,7 @@ namespace Controller;
 class Export extends Controller
 {
     /**
-     * Récupération d'un événement
+     * Récupération d'un export
      */
     public static function get()
     {
@@ -38,7 +38,7 @@ class Export extends Controller
 
         if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
 
-            $export = \Lib\Objects::gi()->export(); // =>folder
+            $export = \Lib\Objects::gi()->export();
             $export->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
 
             // Gestion des attributs
@@ -52,8 +52,8 @@ class Export extends Controller
 
             if (isset($data)) {
                 \Lib\Response::appendHeader("Content-Type: text/csv");
-                // \Lib\Response::appendHeader("Content-Disposition : inline; filename='test.csv'");
-                \Lib\Response::data(\Lib\Mapping::get('export', $data));
+                // \Lib\Response::appendHeader("Content-Disposition : inline");
+                \Lib\Response::data(\Lib\Mapping::get('user', $data));
             } else {
                 \Lib\Response::error("Export not found");
             }

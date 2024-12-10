@@ -30,7 +30,7 @@ namespace Controller;
 class Folder extends Controller
 {
     /**
-     * Récupération d'un événement
+     * Récupération d'un folder
      */
     public static function get()
     {        
@@ -56,6 +56,9 @@ class Folder extends Controller
         }
     }
 
+    /**
+     * Récupération des enfants d'un folder
+     */
     public static function children()
     {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
@@ -82,6 +85,9 @@ class Folder extends Controller
         }
     }
 
+    /**
+     * Récupération d'une recherche par mot clé
+     */
     public static function search() {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
 

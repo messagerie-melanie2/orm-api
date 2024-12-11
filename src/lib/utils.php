@@ -26,7 +26,8 @@ namespace Lib;
  * 
  * @package Lib
  */
-class Utils {
+class Utils
+{
     /**
      * Retourne l'utilisateur courant basé sur l'auth Basic ou la requête
      * 
@@ -44,14 +45,12 @@ class Utils {
         if (Request::issetUser()) {
             $user = Objects::gi()->user();
             $user->uid = Request::getUser();
-        }
-        else if (isset($json)) {
+        } else if (isset($json)) {
             if (isset($json[$param])) {
                 $user = Objects::gi()->user();
                 $user->uid = $json[$param];
             }
-        }
-        else {
+        } else {
             $uid = Request::getInputValue($param, $source);
             if (isset($uid)) {
                 $user = Objects::gi()->user();
@@ -60,5 +59,36 @@ class Utils {
         }
 
         return $user;
+    }
+
+    /**
+     * Faire docbloc
+     */
+    public static function parseObjectToCsv($datas, $attributes)
+    {
+        $output = fopen('php://output', 'w');
+        $mapping = [];
+        $csv_mapping = Config::get('csv_mapping', []);
+
+        foreach ($attributes as $attribute) {
+            if (isset($csv_mapping[$attribute])) {
+                $mapping[] = $csv_mapping[$attribute];
+            } else {
+                $mapping[] = $attribute;
+            }
+        }
+
+        fputcsv($output, $mapping);
+
+        foreach ($datas as $data) {
+            if (is_array($data)) {
+                $value = [];
+                foreach ($attributes as $attribute) {
+                    $value[] = $data[$attribute];
+                }
+                fputcsv($output, $value);
+            }
+        }
+        fclose($output);
     }
 }

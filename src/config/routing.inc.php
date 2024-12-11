@@ -67,5 +67,13 @@ $routing = [
         'methods'   => [
             'GET'       => true
         ],
+        'routing' => [
+            'fields' => [
+                'class' => 'Export',
+                'methods'   => [
+                    'GET'       => 'getExportFields',
+                ],
+            ],
+        ],
     ],
 ];

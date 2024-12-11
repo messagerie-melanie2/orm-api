@@ -30,11 +30,18 @@ namespace Lib;
 class Response
 {
     /**
-     * Données à retourner en réponse au format json
+     * Données à retourner en réponse
      * 
      * @var array
      */
     private static $data;
+
+    /**
+     * Faut il retourner les données aux format Json
+     * 
+     * @var boolean
+     */
+    private static $isJson = true;
 
     /**
      * Liste des headers à retourner au client
@@ -61,12 +68,11 @@ class Response
             foreach (self::$headers as $header) {
                 header($header);
             }
-        } else {
-            header("Content-Type: application/json");
         }
 
         // Gestion des data
-        if (isset(self::$data) && is_array(self::$data)) {
+        if (isset(self::$data) && is_array(self::$data) && self::$isJson) {
+            header("Content-Type: application/json");
             echo json_encode(self::$data);
         }
 
@@ -133,5 +139,14 @@ class Response
         self::success(false);
         self::append('error', $error);
         \Lib\Log::LogError($error);
+    }
+
+    public static function csv($data, $attributes)
+    {
+        self::appendHeader("Content-Type: text/csv");
+        self::appendHeader('Content-Disposition: attachment; filename="export.csv"');
+        self::$isJson = false;
+
+        \Lib\Utils::parseObjectToCsv($data, $attributes);
     }
 }

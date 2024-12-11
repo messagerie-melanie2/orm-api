@@ -51,12 +51,19 @@ class Export extends Controller
             $data = $export->getExportChildren($attributes);
 
             if (isset($data)) {
-                \Lib\Response::appendHeader("Content-Type: text/csv");
-                // \Lib\Response::appendHeader("Content-Disposition : inline");
-                \Lib\Response::data(\Lib\Mapping::get('user', $data));
+                \Lib\Response::csv(\Lib\Mapping::get('FolderChildren', $data), $attributes);
             } else {
                 \Lib\Response::error("Export not found");
             }
         }
+    }
+
+    /**
+     * Récupération des champs pour l'export depuis la config
+     */
+    public static function getExportFields() 
+    {
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+        \Lib\Response::data(\Lib\Config::get('csv_mapping', []));
     }
 }

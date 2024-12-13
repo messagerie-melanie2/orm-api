@@ -53,7 +53,12 @@ $routing = [
                     'GET'       => 'search',
                 ],
             ],
-
+            'default_dn' => [
+                'class' => 'Folder',
+                'methods'   => [
+                    'GET'       => 'getDefaultLdapDn',
+                ],
+            ],
         ]
     ],
     'group'         => [

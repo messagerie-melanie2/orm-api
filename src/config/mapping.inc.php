@@ -113,6 +113,7 @@ $mapping = [
         "postalcode",
         "locality",
         "service",
+        "can_export"
     ],
     'FolderChildren' => [
         'uid',

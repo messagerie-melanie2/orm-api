@@ -29,12 +29,133 @@
  * @var array
  */
 $routing = [
-    'user' => [
+    'user'          => [
+        'methods'   => [
+            'GET'       => true,
+        ],
+        'routing' => [
+            'calendars' => [
+                'methods'   => [
+                    'GET'       => true,
+                ],
+                'routing' => [
+                    'default' => [
+                        'class' => 'UserCalendars',
+                        'methods'   => [
+                            'GET'       => 'default',
+                        ],
+                    ],
+                    'shared' => [
+                        'class' => 'UserCalendars',
+                        'methods'   => [
+                            'GET'       => 'shared',
+                        ],
+                    ],
+                ],
+            ],
+            'addressbooks' => [
+                'methods'   => [
+                    'GET'       => true,
+                ],
+                'routing' => [
+                    'default' => [
+                        'class' => 'UserAddressbooks',
+                        'methods'   => [
+                            'GET'       => 'default',
+                        ],
+                    ],
+                    'shared' => [
+                        'class' => 'UserAddressbooks',
+                        'methods'   => [
+                            'GET'       => 'shared',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'calendar'      => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => true,
+        ],
+        'routing' => [
+            'events' => [
+                'class' => 'Calendar',
+                'methods'   => [
+                    'GET'       => 'events',
+                ],
+            ],
+            'shares' => [
+                'class' => 'Calendar',
+                'methods'   => [
+                    'GET'       => 'shares',
+                ],
+            ],
+            'share' => [
+                'methods'   => [
+                    'GET'       => true,
+                    'POST'      => true,
+                    'DELETE'    => true,
+                ],
+            ],
+        ],
+    ],
+    'event'         => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => true,
+        ],
+    ],
+    'attachment'         => [
         'methods'   => [
             'GET'       => true,
         ],
     ],
-    'folder' => [
+    'addressbook'      => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => true,
+        ],
+        'routing' => [
+            'contacts' => [
+                'class' => 'Addressbook',
+                'methods'   => [
+                    'GET'       => 'contacts',
+                ],
+            ],
+            'groups' => [
+                'class' => 'Addressbook',
+                'methods'   => [
+                    'GET'       => 'groups',
+                ],
+            ],
+            'shares' => [
+                'class' => 'Addressbook',
+                'methods'   => [
+                    'GET'       => 'shares',
+                ],
+            ],
+            'share' => [
+                'methods'   => [
+                    'GET'       => true,
+                    'POST'      => true,
+                    'DELETE'    => true,
+                ],
+            ],
+        ],
+    ],
+    'contact'         => [
+        'methods'   => [
+            'GET'       => true,
+            'POST'      => true,
+            'DELETE'    => true,
+        ],
+    ],
+    'folder'         => [
         'methods'   => [
             'GET'       => true,
             'POST'      => true,
@@ -68,17 +189,13 @@ $routing = [
             'DELETE'    => false,
         ],
     ],
+    'taskslist'     => [],
+    'task'          => [],
+    'share'         => [],
+
     'export' => [
         'methods'   => [
             'GET'       => true
-        ],
-        'routing' => [
-            'fields' => [
-                'class' => 'Export',
-                'methods'   => [
-                    'GET'       => 'getExportFields',
-                ],
-            ],
         ],
     ],
 ];

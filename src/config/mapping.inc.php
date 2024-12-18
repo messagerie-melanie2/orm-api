@@ -53,10 +53,7 @@ $mapping = [
         'description',
         'observation',
         'work',
-        'is_individuelle', //Savoir si boite d'une personne (photo, etc...) ou non
-
-        // 'objectclass', // A rajouter pour pouvoir utiliser mapping à la place de FolderChildren
-        // 'type',
+        'object_type'
     ],
     'other_user' => [
         'dn',
@@ -85,7 +82,7 @@ $mapping = [
         'description',
         'observation',
         'work',
-        'is_individuelle',
+        'object_type'
     ],
     'group' => [
         "dn",
@@ -96,7 +93,8 @@ $mapping = [
         "type",
         "phonenumber",
         "faxnumber",
-        "phoneformat"
+        "phoneformat",
+        'object_type'
     ],
     'folder' => [
         "dn",
@@ -113,7 +111,8 @@ $mapping = [
         "postalcode",
         "locality",
         "service",
-        "can_export"
+        "can_export",
+        'object_type'
     ],
     'FolderChildren' => [
         'uid',
@@ -134,6 +133,7 @@ $mapping = [
         'description',
         'objectclass',
         'type',
+        'object_type'
     ],
     'export' => [ //Prendre folder ou user ? (Choix déterminé par le front)
         "dn",

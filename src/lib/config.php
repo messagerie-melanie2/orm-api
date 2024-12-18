@@ -45,10 +45,10 @@ class Config {
         require_once __DIR__.'/../config/routing.inc.php';
 
         // Gestion du mapping
-        $config['mapping'] = self::get('mapping') !== [] ? self::get('mapping') : $mapping;
+        $config['mapping'] = !empty(self::get('mapping')) ? self::get('mapping') : $mapping;
 
         // Gestion du routing
-        $config['routing'] = self::get('routing') !== [] ? self::get('routing') : $routing;
+        $config['routing'] = !empty(self::get('routing')) ? self::get('routing') : $routing;
     }
 
     /**

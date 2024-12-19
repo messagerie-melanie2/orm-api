@@ -143,8 +143,8 @@ class Response
 
     public static function csv($data, $attributes)
     {
-        self::appendHeader("Content-Type: text/csv");
-        self::appendHeader('Content-Disposition: attachment; filename="annuaire.csv"');
+        header("Content-Type: text/csv; charset=utf-8");
+        header('Content-Disposition: attachment; filename="annuaire.csv"');
         self::$isJson = false;
 
         \Lib\Utils::parseObjectToCsv($data, $attributes);

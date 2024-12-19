@@ -62,7 +62,10 @@ class Utils
     }
 
     /**
-     * Faire docbloc
+     * Transforme un objet en CSV
+     * 
+     * @param Array $datas Données à transformer
+     * @param Array $attributes Attributs du csv
      */
     public static function parseObjectToCsv($datas, $attributes)
     {
@@ -84,11 +87,15 @@ class Utils
             if (is_array($data)) {
                 $value = [];
                 foreach ($attributes as $attribute) {
-                    $value[] = $data[$attribute];
+                    $value[] = $data[$attribute] ?? '';
                 }
-                fputcsv($output, $value);
+
+                if (is_array($value)) {
+                    fputcsv($output, $value);
+                }
             }
         }
         fclose($output);
+        exit;
     }
 }

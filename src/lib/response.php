@@ -145,7 +145,6 @@ class Response
     {
         header("Content-Type: text/csv; charset=utf-8");
         header('Content-Disposition: attachment; filename="annuaire.csv"');
-        self::$isJson = false;
 
         \Lib\Utils::parseObjectToCsv($data, $attributes);
     }

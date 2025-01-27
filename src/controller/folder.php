@@ -111,6 +111,7 @@ class Folder extends Controller
     }
 
     public static function getDefaultLdapDn() {
-        \Lib\Response::data(\Lib\Config::get('default_ldap_dn'));
+        $folder = \Lib\Objects::gi()->folder();
+        \Lib\Response::data($folder->getDefaultLdapDn());
     }
 }

@@ -55,6 +55,7 @@ $mapping = [
         'work',
         'object_type',
         'order',
+        'alias',
     ],
     'other_user' => [
         'dn',

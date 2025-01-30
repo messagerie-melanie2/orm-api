@@ -26,24 +26,33 @@ namespace Controller;
  * 
  * @package Controller
  */
-class Manager extends Controller {
+class Manager extends Controller
+{
 
   /**
    * Envoi vers le bon objet (user,folder,group) pour la gestion de l'annuaire
    */
-    public static function get()
-    {
-      \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+  public static function get()
+  {
+    \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
 
-      if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
-        $user = \Lib\Objects::gi()->user();
-        $user->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
+    if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
+      $user = \Lib\Objects::gi()->user();
+      $user->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
 
-        if ($user->load()) {
-          \Lib\Response::data(\Lib\Mapping::get('user', $user));
-        } else {
-          \Lib\Response::error("Type not found");
-        }
+      // Gestion des attributs
+      $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
+      if (isset($attributes)) {
+        $attributes = explode(',', $attributes);
+      } else {
+        $attributes = \Lib\Mapping::get_mapping('user');
+      }
+
+      if ($user->load($attributes)) {
+        \Lib\Response::data(\Lib\Mapping::get('user', $user));
+      } else {
+        \Lib\Response::error("Type not found");
       }
     }
+  }
 }

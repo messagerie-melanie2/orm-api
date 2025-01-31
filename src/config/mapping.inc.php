@@ -56,6 +56,7 @@ $mapping = [
         'object_type',
         'order',
         'alias',
+        'can_export'
     ],
     'other_user' => [
         'dn',

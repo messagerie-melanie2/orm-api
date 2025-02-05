@@ -42,5 +42,5 @@ else {
     Lib\Response::error("Authentication is not valid");
 }
 
-// Retourne la réponse
+// Retourne la réponse 
 Lib\Response::send();

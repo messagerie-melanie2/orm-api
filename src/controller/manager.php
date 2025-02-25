@@ -49,7 +49,7 @@ class Manager extends Controller
       }
 
       if ($user->load($attributes)) {
-        \Lib\Response::data(\Lib\Mapping::get('user', $user));
+        \Lib\Response::data(\Lib\Mapping::get(strtolower($user->object_type), $user->object));
       } else {
         \Lib\Response::error("Type not found");
       }

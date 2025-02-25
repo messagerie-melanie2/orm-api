@@ -54,6 +54,7 @@ $mapping = [
         'observation',
         'work',
         'object_type',
+        'object',
         'order',
         'alias',
         'can_export'

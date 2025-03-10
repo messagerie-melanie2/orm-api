@@ -35,24 +35,28 @@ class Manager extends Controller
   public static function get()
   {
     \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+    $user = \Lib\Objects::gi()->user();
 
-    if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
-      $user = \Lib\Objects::gi()->user();
+    if (\Lib\Request::checkInputValues(['email'], \Lib\Request::INPUT_GET, null, false)) {
+      $user->email = \Lib\Request::getInputValue('email', \Lib\Request::INPUT_GET);
+    } elseif (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
       $user->dn = \Lib\Request::getInputValue('dn', \Lib\Request::INPUT_GET);
+    } else {
+      return;
+    }
+    
+    // Gestion des attributs
+    $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
+    if (isset($attributes)) {
+      $attributes = explode(',', $attributes);
+    } else {
+      $attributes = \Lib\Mapping::get_mapping('user');
+    }
 
-      // Gestion des attributs
-      $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
-      if (isset($attributes)) {
-        $attributes = explode(',', $attributes);
-      } else {
-        $attributes = \Lib\Mapping::get_mapping('user');
-      }
-
-      if ($user->load($attributes)) {
-        \Lib\Response::data(\Lib\Mapping::get(strtolower($user->object_type), $user->object));
-      } else {
-        \Lib\Response::error("Type not found");
-      }
+    if ($user->load($attributes)) {
+      \Lib\Response::data(\Lib\Mapping::get(strtolower($user->object_type), $user->object));
+    } else {
+      \Lib\Response::error("Type not found");
     }
   }
 }

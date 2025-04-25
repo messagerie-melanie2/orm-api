@@ -60,8 +60,12 @@ class Response
      */
     public static function send()
     {
-        //Remove for production
-        header("Access-Control-Allow-Origin: http://localhost:5173");
+        $config_headers = Config::get('headers', []);
+        if(!empty($config_headers)) {
+            foreach ($config_headers as $key => $value) {
+               header($key . ': ' . $value);
+            }
+        }
 
         // Gestion des headers
         if (isset(self::$headers) && is_array(self::$headers)) {

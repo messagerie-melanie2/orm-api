@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
  * Ces API permettent d'accéder à la librairie en REST
@@ -26,14 +27,15 @@ namespace Controller;
  * 
  * @package Controller
  */
-class User extends Controller {
+class User extends Controller
+{
     /**
      * Récupération d'un utilisateur
      */
     public static function get()
     {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
-        
+
         $user = \Lib\Utils::getCurrentUser('uid');
 
         if (isset($user)) {
@@ -48,13 +50,41 @@ class User extends Controller {
 
             if ($user->load($attributes)) {
                 \Lib\Response::data(\Lib\Mapping::get('user', $user));
-            }
-            else {
+            } else {
                 \Lib\Response::error("User not found");
             }
-        }
-        else {
+        } else {
             \Lib\Response::error("Missing parameter uid");
+        }
+    }
+
+    /**
+     * Enregistrer/modifier un utilisateur
+     */
+    public static function post()
+    {
+        $json = \Lib\Request::readJson();
+
+        \Lib\Log::LogTrace("post(): " . var_export($json, 1));
+
+        if (isset($json) && $json !== false) {
+
+            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.user']);
+
+            $user->dn = 'ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';
+            $user->uid = $json['uid'];
+            $user->fullname = 'TEST1 Amedee - Test-PNE Messagerie/CETE Lyon/Modification pour voir';
+            $user->email = $json['email'][0]['email'];
+
+            $ret = $user->save();
+
+            if (!is_null($ret)) {
+                \Lib\Response::success(true);
+            } else {
+                \Lib\Response::error("Error when saving the calendar");
+            }
+        } else {
+            \Lib\Response::error("Invalid json parameter");
         }
     }
 }

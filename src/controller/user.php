@@ -69,19 +69,62 @@ class User extends Controller
 
         if (isset($json) && $json !== false) {
 
-            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.user']);
+            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.mailbox']);
 
-            $user->dn = 'ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';
-            $user->uid = $json['uid'];
-            $user->fullname = 'TEST1 Amedee - Test-PNE Messagerie/CETE Lyon/Modification pour voir';
-            $user->email = $json['email'][0]['email'];
+            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
+            ou=organisation,dc=equipement,dc=gouv,dc=fr';
+            // $user->dn = 'uid=' . $json['uid'] . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';           
 
-            $ret = $user->save();
+
+            foreach ($json as $key => $value) {
+                if (!empty($value) && in_array($key, \Lib\Mapping::get_mapping('user'))) {
+                    $user->$key = $value;
+                }
+            }
+
+            if (isset($json['amedee_email'])) {
+                $email_list = [];
+                $email_send_list = [];
+
+                foreach ($json['amedee_email'] as $value) {
+                    $email_list[] = $value['email'];
+
+                    if ($value['primary'] === true) {
+                        $user->email = $value['email'];
+                        $user->email_send = $value['email'];
+                        $email_send_list[] = $value['email'];
+                    } elseif ($value['emission'] === true) {
+                        $email_send_list[] = $value['email'];
+                    }
+                }
+
+                $user->email_list = $email_list;
+                $user->email_send_list = $email_send_list;
+            }
+
+            if (isset($json['amedee_phone'])) {
+              foreach ($json['amedee_phone'] as $key => $value) {
+                 if (!empty($value)) {
+                    $user->$key = $value;
+                }
+              }
+            }            
+
+            if (isset($json['amedee_address'])) {
+              foreach ($json['amedee_address'] as $key => $value) {
+                 if (!empty($value)) {
+                    $user->$key = $value;
+                }
+              }
+            }
+            
+
+            // $ret = $user->save();
 
             if (!is_null($ret)) {
                 \Lib\Response::success(true);
             } else {
-                \Lib\Response::error("Error when saving the calendar");
+                \Lib\Response::error("Error when saving the user");
             }
         } else {
             \Lib\Response::error("Invalid json parameter");

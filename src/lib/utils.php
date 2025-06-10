@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
  * Ces API permettent d'accéder à la librairie en REST
@@ -72,10 +73,21 @@ class Utils
         $output = fopen('php://output', 'w');
         $mapping = [];
         $csv_mapping = Config::get('csv_mapping', []);
+        $csv_mapping_custom = Config::get('csv_mapping_custom', []);
+        $mapping_custom_list = [];
+
+        foreach ($csv_mapping_custom as $key => $value) {
+            $mapping_custom_list = $mapping_custom_list + $value;
+        }
+
+        $csv_mapping_custom = $mapping_custom_list;
 
         foreach ($attributes as $attribute) {
+
             if (isset($csv_mapping[$attribute])) {
                 $mapping[] = $csv_mapping[$attribute];
+            } elseif (isset($csv_mapping_custom[$attribute])) {
+                $mapping[] = $csv_mapping_custom[$attribute];
             } else {
                 $mapping[] = $attribute;
             }

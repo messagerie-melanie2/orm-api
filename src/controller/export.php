@@ -52,7 +52,7 @@ class Export extends Controller
 
                 foreach ($attributes as $attribute) {
                     if (array_key_exists($attribute, $fields)) {
-                        foreach ($fields[$attribute] as $subkey) {
+                        foreach ($fields[$attribute] as $subkey => $value) {
                             array_push($updatedAttributes, $subkey);
                         }
                     } else {

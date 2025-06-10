@@ -45,6 +45,22 @@ class Export extends Controller
             $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
             if (isset($attributes)) {
                 $attributes = explode(',', $attributes);
+
+                $updatedAttributes = [];
+
+                $fields = \Lib\Config::get('csv_mapping_custom', []);
+
+                foreach ($attributes as $attribute) {
+                    if (array_key_exists($attribute, $fields)) {
+                        foreach ($fields[$attribute] as $subkey) {
+                            array_push($updatedAttributes, $subkey);
+                        }
+                    } else {
+                        array_push($updatedAttributes, $attribute);
+                    }
+                }
+                $attributes = $updatedAttributes;
+
             } else {
                 $attributes = \Lib\Mapping::get_mapping('export');
             }
@@ -61,7 +77,7 @@ class Export extends Controller
     /**
      * Récupération des champs pour l'export depuis la config
      */
-    public static function getExportFields() 
+    public static function getExportFields()
     {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
         \Lib\Response::data(\Lib\Config::get('csv_mapping', []));

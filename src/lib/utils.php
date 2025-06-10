@@ -74,20 +74,16 @@ class Utils
         $mapping = [];
         $csv_mapping = Config::get('csv_mapping', []);
         $csv_mapping_custom = Config::get('csv_mapping_custom', []);
-        $mapping_custom_list = [];
 
+        //On fusionne les champs de mapping avec les customs
         foreach ($csv_mapping_custom as $key => $value) {
-            $mapping_custom_list = $mapping_custom_list + $value;
+            $csv_mapping = array_merge($csv_mapping, $value);
         }
-
-        $csv_mapping_custom = $mapping_custom_list;
 
         foreach ($attributes as $attribute) {
 
             if (isset($csv_mapping[$attribute])) {
                 $mapping[] = $csv_mapping[$attribute];
-            } elseif (isset($csv_mapping_custom[$attribute])) {
-                $mapping[] = $csv_mapping_custom[$attribute];
             } else {
                 $mapping[] = $attribute;
             }

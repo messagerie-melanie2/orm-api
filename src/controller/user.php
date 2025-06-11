@@ -165,7 +165,7 @@ class User extends Controller
     {
         \Lib\Log::LogTrace("advancedSearchFields(): " . var_export($_GET, 1));
 
-        $user = \Lib\Objects::gi()->user();
+        $user = \Lib\Objects::gi()->user(); 
         $data['businessCategory'] = $user->list_business_categories;
         $data['mineqMission'] = $user->list_mineq_mission;
         $data['title'] = $user->list_title;

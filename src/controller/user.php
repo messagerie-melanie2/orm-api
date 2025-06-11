@@ -103,21 +103,20 @@ class User extends Controller
             }
 
             if (isset($json['amedee_phone'])) {
-              foreach ($json['amedee_phone'] as $key => $value) {
-                 if (!empty($value)) {
-                    $user->$key = $value;
+                foreach ($json['amedee_phone'] as $key => $value) {
+                    if (!empty($value)) {
+                        $user->$key = $value;
+                    }
                 }
-              }
-            }            
+            }
 
             if (isset($json['amedee_address'])) {
-              foreach ($json['amedee_address'] as $key => $value) {
-                 if (!empty($value)) {
-                    $user->$key = $value;
+                foreach ($json['amedee_address'] as $key => $value) {
+                    if (!empty($value)) {
+                        $user->$key = $value;
+                    }
                 }
-              }
             }
-            
 
             // $ret = $user->save();
 
@@ -129,5 +128,48 @@ class User extends Controller
         } else {
             \Lib\Response::error("Invalid json parameter");
         }
+    }
+
+    /**
+     * Recherche avancée d'utilisateurs
+     */
+    public static function advancedSearch()
+    {
+        \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
+
+        $json = \Lib\Request::readJson();
+
+        if ($json) {
+            $user = \Lib\Objects::gi()->user();
+
+            foreach ($json['data'] as $key => $value) {
+                if (!empty($value)) {
+                    $user->$key = $value;
+                }
+            }
+
+            $ret = $user->getList(\Lib\Mapping::get_mapping('user'));
+
+            if ($ret) {
+                \Lib\Response::data(\Lib\Mapping::get('user', $ret));
+            } else {
+                \Lib\Response::error("Children not found");
+            }
+        }
+    }
+
+    /**
+     * Récupération des champs dans les ressources de l'annuaire pour la recherche avancée
+     */
+    public static function advancedSearchFields()
+    {
+        \Lib\Log::LogTrace("advancedSearchFields(): " . var_export($_GET, 1));
+
+        $user = \Lib\Objects::gi()->user();
+        $data['businessCategory'] = $user->list_business_categories;
+        $data['mineqMission'] = $user->list_mineq_mission;
+        $data['title'] = $user->list_title;
+
+        \Lib\Response::data($data);
     }
 }

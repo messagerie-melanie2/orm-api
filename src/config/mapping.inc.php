@@ -48,7 +48,7 @@ $mapping = [
         'service',
         'street',
         'roomnumber',
-        'departmentnumber',
+        'service',
         'postalcode',
         'photo_src',
         'description',

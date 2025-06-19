@@ -63,7 +63,8 @@ $mapping = [
         'order',
         'alias',
         'can_export',
-        'business_category'
+        'business_category',
+        'mission'
     ],
     'other_user' => [
         'dn',

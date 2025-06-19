@@ -142,7 +142,7 @@ class User extends Controller
         if ($json) {
             $user = \Lib\Objects::gi()->user();
 
-            foreach ($json['data'] as $key => $value) {
+            foreach ($json['data'] as $key => $value) { 
                 if (!empty($value)) {
                     $user->$key = $value;
                 }

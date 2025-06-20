@@ -172,4 +172,14 @@ class User extends Controller
 
         \Lib\Response::data($data);
     }
+
+    /**
+     * Récupération de la valeur du nombre de résultats maximum pour la recherche avancée
+     */
+    public static function maximumSearchData()
+    {
+        \Lib\Log::LogTrace("maximumSearchData(): " . var_export($_GET, 1));
+
+        \Lib\Response::data(\LibMelanie\Config\Config::get(\LibMelanie\Config\Config::DEFAULT_ADVANCED_SEARCH_MAX_RESULTS));
+    }
 }

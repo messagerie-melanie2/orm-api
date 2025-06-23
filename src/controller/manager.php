@@ -44,7 +44,7 @@ class Manager extends Controller
     } else {
       return;
     }
-    
+
     // Gestion des attributs
     $attributes = \Lib\Request::getInputValue('attributes', \Lib\Request::INPUT_GET);
     if (isset($attributes)) {
@@ -59,4 +59,14 @@ class Manager extends Controller
       \Lib\Response::error("Type not found");
     }
   }
+
+    /**
+     * Récupération de la valeur du nombre de résultats maximum pour la recherche avancée
+     */
+    public static function getPortee()
+    {
+        \Lib\Log::LogTrace("getPortee(): " . var_export($_GET, 1));
+
+        \Lib\Response::data(\LibMelanie\Config\Config::get(\LibMelanie\Config\Config::MINEQ_PORTEE_MAPPING));
+    }
 }

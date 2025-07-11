@@ -69,4 +69,15 @@ class Manager extends Controller
 
         \Lib\Response::data(\LibMelanie\Config\Config::get(\LibMelanie\Config\Config::MINEQ_PORTEE_MAPPING));
     }
+
+    /**
+     * Récupération des champs dans les ressources de l'annuaire pour les champs smtp
+     */
+    public static function getSmtpDomains()
+    {
+        \Lib\Log::LogTrace("getSmtpDomains(): " . var_export($_GET, 1));
+
+        $user = \Lib\Objects::gi()->user();
+        \Lib\Response::data($user->mineq_domaines_SMTP);
+    }
 }

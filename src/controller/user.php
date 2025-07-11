@@ -71,8 +71,7 @@ class User extends Controller
 
             $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.mailbox']);
 
-            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
-            ou=organisation,dc=equipement,dc=gouv,dc=fr';
+            
             // $user->dn = 'uid=' . $json['uid'] . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';           
 
 
@@ -118,7 +117,11 @@ class User extends Controller
                 }
             }
 
-            // $ret = $user->save();
+            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
+            ou=organisation,dc=equipement,dc=gouv,dc=fr';
+
+
+            $ret = $user->save();
 
             if (!is_null($ret)) {
                 \Lib\Response::success(true);

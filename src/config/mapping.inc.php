@@ -170,7 +170,7 @@ $mapping = [
     'folder' => [
         "dn",
         'dnarray',
-        "ou",
+        "entityname",
         "fullname",
         "email",
         "description",
@@ -183,7 +183,13 @@ $mapping = [
         "locality",
         "service",
         "can_export",
-        'object_type'
+        'object_type',
+        'smtp',
+        'update_personnal_info',
+        'order',
+        'portee',
+        'facsimileTelephoneNumber',
+        'observation'
     ],
     'FolderChildren' => [
         'uid',

@@ -69,7 +69,7 @@ class User extends Controller
 
         if (isset($json) && $json !== false) {
 
-            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.mailbox']);
+            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.user']);
 
             
             // $user->dn = 'uid=' . $json['uid'] . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';           
@@ -117,7 +117,7 @@ class User extends Controller
                 }
             }
 
-            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
+            $user->dn = 'uid=amedee.testamedee2,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
             ou=organisation,dc=equipement,dc=gouv,dc=fr';
 
 

@@ -33,7 +33,7 @@ class Folder extends Controller
      * Récupération d'un folder
      */
     public static function get()
-    {        
+    {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
 
         if (\Lib\Request::checkInputValues(['dn'], \Lib\Request::INPUT_GET)) {
@@ -53,6 +53,51 @@ class Folder extends Controller
             } else {
                 \Lib\Response::error("Folder not found");
             }
+        }
+    }
+
+    /**
+     * Enregistrer/modifier un folder
+     */
+    public static function post()
+    {
+        $json = \Lib\Request::readJson();
+
+        \Lib\Log::LogTrace("post(): " . var_export($json, 1));
+
+        if (isset($json) && $json !== false) {
+
+            $folder = \Lib\Objects::gi()->folder([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.folder']);
+
+            foreach ($json as $key => $value) {
+                if (!empty($value) && in_array($key, \Lib\Mapping::get_mapping('folder'))) {
+                    $folder->$key = $value;
+                }
+            }
+
+            if (isset($json['amedee_smtp'])) {
+                $folder->smtp = explode("\n", $json['amedee_smtp']);
+            }
+
+            if (isset($json['amedee_address'])) {
+                foreach ($json['amedee_address'] as $key => $value) {
+                    if (!empty($value)) {
+                        $folder->$key = $value;
+                    }
+                }
+            }
+
+            $folder->dn = 'ou=' . strtolower($json['entityname']) . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';
+
+            $ret = $folder->save();
+
+            if (!is_null($ret)) {
+                \Lib\Response::success(true);
+            } else {
+                \Lib\Response::error("Error when saving the user");
+            }
+        } else {
+            \Lib\Response::error("Invalid json parameter");
         }
     }
 
@@ -88,7 +133,8 @@ class Folder extends Controller
     /**
      * Récupération d'une recherche par mot clé
      */
-    public static function search() {
+    public static function search()
+    {
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
 
         if (\Lib\Request::checkInputValues(['query'], \Lib\Request::INPUT_GET)) {
@@ -110,7 +156,8 @@ class Folder extends Controller
         }
     }
 
-    public static function getDefaultLdapDn() {
+    public static function getDefaultLdapDn()
+    {
         $folder = \Lib\Objects::gi()->folder();
         \Lib\Response::data($folder->getDefaultLdapDn());
     }

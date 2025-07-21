@@ -170,7 +170,7 @@ $mapping = [
     'folder' => [
         "dn",
         'dnarray',
-        "entityname",
+        "ou",
         "fullname",
         "email",
         "description",
@@ -189,7 +189,10 @@ $mapping = [
         'order',
         'portee',
         'facsimileTelephoneNumber',
-        'observation'
+        'observation',
+        'manager',
+        'internet_access_admin',
+        'wifi'
     ],
     'FolderChildren' => [
         'uid',

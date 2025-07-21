@@ -70,7 +70,7 @@ class Folder extends Controller
             $folder = \Lib\Objects::gi()->folder([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.folder']);
 
             foreach ($json as $key => $value) {
-                if (!empty($value) && in_array($key, \Lib\Mapping::get_mapping('folder'))) {
+                if (in_array($key, \Lib\Mapping::get_mapping('folder'))) {
                     $folder->$key = $value;
                 }
             }
@@ -87,7 +87,7 @@ class Folder extends Controller
                 }
             }
 
-            $folder->dn = 'ou=' . strtolower($json['entityname']) . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';
+            $folder->dn = 'ou=' . strtolower($json['ou']) . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';
 
             $ret = $folder->save();
 

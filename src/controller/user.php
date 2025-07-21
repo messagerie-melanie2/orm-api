@@ -76,7 +76,7 @@ class User extends Controller
 
 
             foreach ($json as $key => $value) {
-                if (!empty($value) && in_array($key, \Lib\Mapping::get_mapping('user'))) {
+                if (in_array($key, \Lib\Mapping::get_mapping('user'))) {
                     $user->$key = $value;
                 }
             }

@@ -76,7 +76,11 @@ class Folder extends Controller
             }
 
             if (isset($json['amedee_smtp'])) {
-                $folder->smtp = explode("\n", $json['amedee_smtp']);
+                if (!is_array($json['amedee_smtp'])) {
+                    $folder->smtp = explode("\n", $json['amedee_smtp']);
+                } else {
+                    $folder->smtp = $json['amedee_smtp'];
+                }                
             }
 
             if (isset($json['amedee_address'])) {

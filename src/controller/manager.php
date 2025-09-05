@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ce fichier est développé pour la gestion des API de la librairie Mélanie2
  * Ces API permettent d'accéder à la librairie en REST
@@ -60,24 +61,42 @@ class Manager extends Controller
     }
   }
 
-    /**
-     * Récupération de la valeur du nombre de résultats maximum pour la recherche avancée
-     */
-    public static function getPortee()
-    {
-        \Lib\Log::LogTrace("getPortee(): " . var_export($_GET, 1));
+  /**
+   * Récupération de la valeur du nombre de résultats maximum pour la recherche avancée
+   */
+  public static function getPortee()
+  {
+    \Lib\Log::LogTrace("getPortee(): " . var_export($_GET, 1));
 
-        \Lib\Response::data(\LibMelanie\Config\Config::get(\LibMelanie\Config\Config::MINEQ_PORTEE_MAPPING));
+    \Lib\Response::data(\LibMelanie\Config\Config::get(\LibMelanie\Config\Config::MINEQ_PORTEE_MAPPING));
+  }
+
+  /**
+   * Récupération des champs dans les ressources de l'annuaire pour les champs smtp
+   */
+  public static function getSmtpDomains()
+  {
+    \Lib\Log::LogTrace("getSmtpDomains(): " . var_export($_GET, 1));
+
+    $user = \Lib\Objects::gi()->user();
+    \Lib\Response::data($user->mineq_domaines_SMTP);
+  }
+
+  public static function getParentsInfos()
+  {
+     $json = \Lib\Request::readJson();
+    \Lib\Log::LogTrace("getParentsInfos(): ");
+    
+    if (isset($json) && $json !== false) {
+
+     foreach ($json as $dn) {
+       $folder = \Lib\Objects::gi()->folder();
+       $folder->dn = $dn['dn'];
+       if ($folder->load(\Lib\Mapping::get_mapping('folder'))) {
+         $data[] = \Lib\Mapping::get('folder', $folder)[0];
+       }
+     }
+     \Lib\Response::data($data);
     }
-
-    /**
-     * Récupération des champs dans les ressources de l'annuaire pour les champs smtp
-     */
-    public static function getSmtpDomains()
-    {
-        \Lib\Log::LogTrace("getSmtpDomains(): " . var_export($_GET, 1));
-
-        $user = \Lib\Objects::gi()->user();
-        \Lib\Response::data($user->mineq_domaines_SMTP);
-    }
+  }
 }

@@ -64,7 +64,8 @@ $mapping = [
         'alias',
         'can_export',
         'business_category',
-        'mission'
+        'mission',
+        'smtp'
     ],
     'other_user' => [
         'dn',

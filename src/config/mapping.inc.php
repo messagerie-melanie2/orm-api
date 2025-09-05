@@ -64,7 +64,8 @@ $mapping = [
         'alias',
         'can_export',
         'business_category',
-        'mission'
+        'mission',
+        'smtp'
     ],
     'other_user' => [
         'dn',
@@ -183,7 +184,16 @@ $mapping = [
         "locality",
         "service",
         "can_export",
-        'object_type'
+        'object_type',
+        'smtp',
+        'update_personnal_info',
+        'order',
+        'portee',
+        'facsimileTelephoneNumber',
+        'observation',
+        'manager',
+        'internet_access_admin',
+        'wifi'
     ],
     'FolderChildren' => [
         'uid',

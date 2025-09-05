@@ -69,15 +69,14 @@ class User extends Controller
 
         if (isset($json) && $json !== false) {
 
-            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, 'amedee.mailbox']);
+            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, $json['custom_object'] === 'melboite' ? 'amedee.mailbox' : 'amedee.user']);
 
-            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
-            ou=organisation,dc=equipement,dc=gouv,dc=fr';
+            
             // $user->dn = 'uid=' . $json['uid'] . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';           
 
 
             foreach ($json as $key => $value) {
-                if (!empty($value) && in_array($key, \Lib\Mapping::get_mapping('user'))) {
+                if (in_array($key, \Lib\Mapping::get_mapping('user'))) {
                     $user->$key = $value;
                 }
             }
@@ -118,7 +117,11 @@ class User extends Controller
                 }
             }
 
-            // $ret = $user->save();
+            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
+            ou=organisation,dc=equipement,dc=gouv,dc=fr';
+
+
+            $ret = $user->save();
 
             if (!is_null($ret)) {
                 \Lib\Response::success(true);

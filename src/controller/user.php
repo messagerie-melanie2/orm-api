@@ -136,7 +136,7 @@ class User extends Controller
                 \Lib\Response::error("Invalid json parameter");
             }
         }
-        catch (\Exception $ex) {
+        catch (\LibMelanie\Exceptions\RegexpException $ex) {
             \Lib\Response::error("Error :" . $ex);
         }
     }

@@ -63,73 +63,81 @@ class User extends Controller
      */
     public static function post()
     {
-        $json = \Lib\Request::readJson();
+        try {
+            $json = \Lib\Request::readJson();
 
-        \Lib\Log::LogTrace("post(): " . var_export($json, 1));
+            \Lib\Log::LogTrace("post(): " . var_export($json, 1));
 
-        if (isset($json) && $json !== false) {
+            if (isset($json) && $json !== false) {
 
-            $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, $json['custom_object'] === 'melboite' ? 'amedee.mailbox' : 'amedee.user']);
+                $user = \Lib\Objects::gi()->user([\LibMelanie\Config\Ldap::$MASTER_LDAP, $json['custom_object'] === 'melboite' ? 'amedee.mailbox' : 'amedee.user']);
 
-            
-            // $user->dn = 'uid=' . $json['uid'] . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';           
-
-
-            foreach ($json as $key => $value) {
-                if (in_array($key, \Lib\Mapping::get_mapping('user'))) {
-                    $user->$key = $value;
-                }
-            }
-
-            if (isset($json['amedee_email'])) {
-                $email_list = [];
-                $email_send_list = [];
-
-                foreach ($json['amedee_email'] as $value) {
-                    $email_list[] = $value['email'];
-
-                    if ($value['primary'] === true) {
-                        $user->email = $value['email'];
-                        $user->email_send = $value['email'];
-                        $email_send_list[] = $value['email'];
-                    } elseif ($value['emission'] === true) {
-                        $email_send_list[] = $value['email'];
-                    }
+                $user->uid = $json['uid'];
+                
+                if ($json['request_type'] === 'create' && $user->load() || $json['request_type'] === 'edit' && !$user->load()) {
+                    \Lib\Response::error("Invalid uid or request");
                 }
 
-                $user->email_list = $email_list;
-                $user->email_send_list = $email_send_list;
-            }
-
-            if (isset($json['amedee_phone'])) {
-                foreach ($json['amedee_phone'] as $key => $value) {
-                    if (!empty($value)) {
+                foreach ($json as $key => $value) {
+                    if (in_array($key, \Lib\Mapping::get_mapping('user'))) {
                         $user->$key = $value;
                     }
                 }
-            }
 
-            if (isset($json['amedee_address'])) {
-                foreach ($json['amedee_address'] as $key => $value) {
-                    if (!empty($value)) {
-                        $user->$key = $value;
+                if (isset($json['amedee_email'])) {
+                    $email_list = [];
+                    $email_send_list = [];
+
+                    foreach ($json['amedee_email'] as $value) {
+                        $email_list[] = $value['email'];
+
+                        if ($value['primary'] === true) {
+                            $user->email = $value['email'];
+                            $user->email_send = $value['email'];
+                            $email_send_list[] = $value['email'];
+                        } elseif ($value['emission'] === true) {
+                            $email_send_list[] = $value['email'];
+                        }
+                    }
+
+                    $user->email_list = $email_list;
+                    $user->email_send_list = $email_send_list;
+                }
+
+                if (isset($json['amedee_phone'])) {
+                    foreach ($json['amedee_phone'] as $key => $value) {
+                        if (!empty($value)) {
+                            $user->$key = $value;
+                        }
                     }
                 }
-            }
 
-            $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
-            ou=organisation,dc=equipement,dc=gouv,dc=fr';
+                if (isset($json['amedee_address'])) {
+                    foreach ($json['amedee_address'] as $key => $value) {
+                        if (!empty($value)) {
+                            $user->$key = $value;
+                        }
+                    }
+                }
+
+                $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
+                ou=organisation,dc=equipement,dc=gouv,dc=fr';
 
 
-            $ret = $user->save();
+                $ret = $user->save();
 
-            if (!is_null($ret)) {
-                \Lib\Response::success(true);
+                if (!is_null($ret)) {
+                    \Lib\Response::success(true);
+                } else {
+                    \Lib\Response::error("Error when saving the user");
+                }
+
             } else {
-                \Lib\Response::error("Error when saving the user");
+                \Lib\Response::error("Invalid json parameter");
             }
-        } else {
-            \Lib\Response::error("Invalid json parameter");
+        }
+        catch (\Exception $ex) {
+            \Lib\Response::error("Error :" . $ex);
         }
     }
 

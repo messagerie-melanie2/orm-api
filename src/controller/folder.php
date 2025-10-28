@@ -83,14 +83,6 @@ class Folder extends Controller
                 }                
             }
 
-            if (isset($json['amedee_address'])) {
-                foreach ($json['amedee_address'] as $key => $value) {
-                    if (!empty($value)) {
-                        $folder->$key = $value;
-                    }
-                }
-            }
-
             $folder->dn = 'ou=' . strtolower($json['ou']) . ',ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,ou=organisation,dc=equipement,dc=gouv,dc=fr';
 
             $ret = $folder->save();

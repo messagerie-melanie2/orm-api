@@ -103,23 +103,7 @@ class User extends Controller
                     $user->email_list = $email_list;
                     $user->email_send_list = $email_send_list;
                 }
-
-                if (isset($json['amedee_phone'])) {
-                    foreach ($json['amedee_phone'] as $key => $value) {
-                        if (!empty($value)) {
-                            $user->$key = $value;
-                        }
-                    }
-                }
-
-                if (isset($json['amedee_address'])) {
-                    foreach ($json['amedee_address'] as $key => $value) {
-                        if (!empty($value)) {
-                            $user->$key = $value;
-                        }
-                    }
-                }
-
+                
                 $user->dn = 'uid=amedee.testamedee,ou=AmedeeV2,ou=Test-PNE Messagerie,ou=TF,ou=melanie,
                 ou=organisation,dc=equipement,dc=gouv,dc=fr';
 

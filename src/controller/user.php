@@ -133,7 +133,9 @@ class User extends Controller
         \Lib\Log::LogTrace("get(): " . var_export($_GET, 1));
 
         $json = \Lib\Request::readJson();
-
+        $base_dn = $json['data']['dn'];
+        unset($json['data']['dn']);
+        
         if ($json) {
             $user = \Lib\Objects::gi()->user();
 
@@ -143,8 +145,7 @@ class User extends Controller
                 }
             }
 
-            $ret = $user->getList(\Lib\Mapping::get_mapping('user'));
-
+            $ret = $user->getList(\Lib\Mapping::get_mapping('user'), "", [], "", true, null, null, [], null, 'INNER', null, null, [], null, [],$base_dn);
             if ($ret) {
                 \Lib\Response::data(\Lib\Mapping::get('user', $ret));
             } else {

@@ -301,9 +301,9 @@ abstract class MceObject implements Serializable {
 	 *          Liste des champs pour lesquels on ne sera pas sensible à la casse
 	 * @return Contact[] Array
 	 */
-	public function getList($fields = [], $filter = "", $operators = [], $orderby = "", $asc = true, $limit = null, $offset = null, $case_unsensitive_fields = []) {
+	public function getList($fields = [], $filter = "", $operators = [], $orderby = "", $asc = true, $limit = null, $offset = null, $case_unsensitive_fields = [], $base_dn) {
 		M2Log::Log(M2Log::LEVEL_DEBUG, $this->get_class . "->getList()");
-		$_objects = $this->objectmelanie->getList($fields, $filter, $operators, $orderby, $asc, $limit, $offset, $case_unsensitive_fields);
+		$_objects = $this->objectmelanie->getList($fields, $filter, $operators, $orderby, $asc, $limit, $offset, $case_unsensitive_fields, null, 'INNER', null, null, [], null, [], $base_dn);
 		if (!isset($_objects)) {
 			return null;
 		}

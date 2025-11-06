@@ -74,6 +74,7 @@ class Utils
         $output = fopen('php://output', 'w');
         fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
         $mapping = [];
+        $separator = ";";
         $csv_mapping = Config::get('csv_mapping', []);
         $csv_mapping_custom = Config::get('csv_mapping_custom', []);
 
@@ -91,7 +92,7 @@ class Utils
             }
         }
 
-        fputcsv($output, $mapping, ';');
+        fputcsv($output, $mapping, $separator);
 
         foreach ($datas as $data) {
             if (is_array($data)) {
@@ -101,7 +102,7 @@ class Utils
                 }
 
                 if (is_array($value)) {
-                    fputcsv($output, $value);
+                     fputcsv($output, $value, $separator);
                 }
             }
         }

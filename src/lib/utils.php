@@ -101,7 +101,7 @@ class Utils
                 }
 
                 if (is_array($value)) {
-                    fputcsv($output, $value);
+                     fputcsv($output, $value, ';');
                 }
             }
         }

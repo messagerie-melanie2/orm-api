@@ -64,7 +64,7 @@ class Export extends Controller
             } else {
                 $attributes = \Lib\Mapping::get_mapping('export');
             }
-            $data = $export->getExportChildren($attributes);
+            $data = $export->getExportChildren($attributes); 
 
             if (isset($data)) {
                 \Lib\Response::csv(\Lib\Mapping::get('FolderChildren', $data), $attributes);

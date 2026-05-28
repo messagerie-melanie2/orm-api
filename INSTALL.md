@@ -1,6 +1,6 @@
 # Installation de l'API ORM MCE
 
-## Pré-requis 
+## Pré-requis
 
 L'API ORM MCE est un site web écrit en PHP, il nécessite donc un serveur web (Apache2/NGinx) et PHP (module ou FastCGI) pour fonctionner. La version de PHP recommandée pour utiliser l'API est 7.3.
 

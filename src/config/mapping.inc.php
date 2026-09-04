@@ -225,7 +225,8 @@ $mapping = [
         'businessCategory',
         'title',
         'mission',
-        'service'
+        'service',
+        'employee_number'
     ],
     'export' => [ //Prendre folder ou user ? (Choix déterminé par le front)
         "dn",
